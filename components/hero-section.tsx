@@ -371,6 +371,8 @@ export function HeroSection() {
                       src={s.cardImage}
                       alt={s.label}
                       fill
+                      loading="eager"
+                      priority={isActive}
                       className="object-cover"
                       sizes="340px"
                       style={{
