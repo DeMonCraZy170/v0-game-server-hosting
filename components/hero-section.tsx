@@ -90,9 +90,9 @@ const gameSlides: GameSlide[] = [
 ]
 
 const VISIBLE_CARDS = 5
-const CARD_H = 68
-const CARD_H_ACTIVE = 96
-const GAP = 8
+const CARD_H = 80
+const CARD_H_ACTIVE = 112
+const GAP = 10
 
 export function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -340,7 +340,7 @@ export function HeroSection() {
 
           {/* RIGHT: Vertical card carousel */}
           <div
-            className="hidden lg:block relative w-52 xl:w-60"
+            className="hidden lg:block relative w-64 xl:w-72 ml-auto"
             style={{ height: totalH }}
           >
             <div className="relative w-full h-full">
@@ -372,7 +372,7 @@ export function HeroSection() {
                       alt={s.label}
                       fill
                       className="object-cover"
-                      sizes="240px"
+                      sizes="288px"
                       style={{
                         transform: isActive ? "scale(1.1)" : "scale(1)",
                         transition: "transform 3s ease-out",
@@ -390,13 +390,29 @@ export function HeroSection() {
                       }}
                     />
 
-                    {/* Border glow */}
+                    {/* Border glow - diffused */}
                     <div
-                      className="absolute inset-0 rounded-xl pointer-events-none"
+                      className="absolute -inset-[1px] rounded-xl pointer-events-none"
+                      style={{
+                        background: isActive
+                          ? "linear-gradient(135deg, rgba(245,166,35,0.8), rgba(245,166,35,0.3), rgba(245,166,35,0.6))"
+                          : "linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))",
+                        mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                        WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                        maskComposite: "exclude",
+                        WebkitMaskComposite: "xor",
+                        padding: isActive ? "2px" : "1px",
+                        filter: isActive ? "blur(1px)" : "none",
+                        transition: "all 0.6s ease",
+                      }}
+                    />
+                    {/* Outer glow */}
+                    <div
+                      className="absolute -inset-1 rounded-xl pointer-events-none"
                       style={{
                         boxShadow: isActive
-                          ? "inset 0 0 0 2px rgba(245,166,35,0.85), 0 0 24px -4px rgba(245,166,35,0.2)"
-                          : "inset 0 0 0 1px rgba(255,255,255,0.06)",
+                          ? "0 0 20px 2px rgba(245,166,35,0.25), 0 0 40px 4px rgba(245,166,35,0.1)"
+                          : "none",
                         transition: "box-shadow 0.6s ease",
                       }}
                     />
@@ -419,7 +435,7 @@ export function HeroSection() {
                       <span
                         className="font-bold tracking-wider leading-tight"
                         style={{
-                          fontSize: isActive ? 15 : 11,
+                          fontSize: isActive ? 16 : 12,
                           color: isActive ? "#f5f5f5" : "#888",
                           textShadow: isActive ? "0 2px 8px rgba(0,0,0,0.5)" : "none",
                           transition: "all 0.5s ease",
