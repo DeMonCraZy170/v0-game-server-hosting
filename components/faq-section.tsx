@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDown, MessageCircle } from "lucide-react"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const faqs = [
   {
@@ -33,22 +34,29 @@ const faqs = [
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [leftRef, leftVisible] = useScrollReveal()
+  const [rightRef, rightVisible] = useScrollReveal({ threshold: 0.08 })
 
   return (
     <section className="py-20 bg-background">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Left side */}
-          <div className="lg:w-1/3">
+          <div
+            ref={leftRef}
+            className="lg:w-1/3 transition-all duration-700 ease-out"
+            style={{
+              opacity: leftVisible ? 1 : 0,
+              transform: leftVisible ? "translateX(0)" : "translateX(-30px)",
+            }}
+          >
             <h2
               className="text-3xl md:text-4xl font-bold text-foreground mb-4"
-              style={{ fontFamily: 'var(--font-heading)' }}
+              style={{ fontFamily: "var(--font-heading)" }}
             >
               Preguntas Frecuentes
             </h2>
-            <p className="text-muted-foreground mb-6">
-              {"No encuentras lo que buscas?"}
-            </p>
+            <p className="text-muted-foreground mb-6">{"No encuentras lo que buscas?"}</p>
             <a
               href="#"
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 py-2.5 rounded-lg hover:bg-primary/90 transition-colors text-sm"
@@ -63,11 +71,17 @@ export function FAQSection() {
           </div>
 
           {/* Right side - FAQ items */}
-          <div className="lg:w-2/3 flex flex-col gap-3">
+          <div ref={rightRef} className="lg:w-2/3 flex flex-col gap-3">
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-card border border-border rounded-xl overflow-hidden"
+                className="bg-card border border-border rounded-xl overflow-hidden transition-all duration-600 ease-out"
+                style={{
+                  opacity: rightVisible ? 1 : 0,
+                  transform: rightVisible ? "translateY(0)" : "translateY(25px)",
+                  transitionDelay: `${index * 80}ms`,
+                  transitionDuration: "600ms",
+                }}
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -77,23 +91,28 @@ export function FAQSection() {
                     <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                       <span className="text-primary font-bold text-sm">?</span>
                     </div>
-                    <span className="font-medium text-foreground text-sm">
-                      {faq.question}
-                    </span>
+                    <span className="font-medium text-foreground text-sm">{faq.question}</span>
                   </div>
                   <ChevronDown
-                    className={`h-5 w-5 text-muted-foreground shrink-0 ml-4 transition-transform ${
+                    className={`h-5 w-5 text-muted-foreground shrink-0 ml-4 transition-transform duration-300 ${
                       openIndex === index ? "rotate-180" : ""
                     }`}
                   />
                 </button>
-                {openIndex === index && (
+                <div
+                  className="overflow-hidden transition-all duration-400 ease-out"
+                  style={{
+                    maxHeight: openIndex === index ? "200px" : "0px",
+                    opacity: openIndex === index ? 1 : 0,
+                    transition: "max-height 0.4s ease-out, opacity 0.3s ease-out",
+                  }}
+                >
                   <div className="px-6 pb-4">
                     <p className="text-sm text-muted-foreground leading-relaxed pl-11">
                       {faq.answer}
                     </p>
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </div>

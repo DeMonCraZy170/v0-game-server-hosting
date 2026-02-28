@@ -1,4 +1,7 @@
+"use client"
+
 import { Cpu, DollarSign, Shield, Clock, Zap, ShieldCheck } from "lucide-react"
+import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
 const perks = [
   {
@@ -40,37 +43,52 @@ const perks = [
 ]
 
 export function PerksSection() {
+  const [headerRef, headerVisible] = useScrollReveal()
+  const [gridRef, gridVisible] = useScrollReveal({ threshold: 0.08 })
+
   return (
     <section className="py-20 bg-secondary">
       <div className="mx-auto max-w-7xl px-4">
         {/* Section header */}
-        <div className="mb-12 text-center">
+        <div
+          ref={headerRef}
+          className="mb-12 text-center transition-all duration-700 ease-out"
+          style={{
+            opacity: headerVisible ? 1 : 0,
+            transform: headerVisible ? "translateY(0)" : "translateY(30px)",
+          }}
+        >
           <p className="text-primary text-sm font-semibold mb-2 uppercase tracking-wider">
             Ventajas Lideres en la Industria
           </p>
           <h2
             className="text-3xl md:text-4xl font-bold text-foreground mb-4"
-            style={{ fontFamily: 'var(--font-heading)' }}
+            style={{ fontFamily: "var(--font-heading)" }}
           >
             Con funciones exclusivas que no encontraras en ningun otro lugar.
           </h2>
         </div>
 
         {/* Perks grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {perks.map((perk) => {
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {perks.map((perk, index) => {
             const Icon = perk.icon
             return (
               <div
                 key={perk.title}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors group"
+                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all duration-700 ease-out group"
+                style={{
+                  opacity: gridVisible ? 1 : 0,
+                  transform: gridVisible ? "translateY(0)" : "translateY(40px)",
+                  transitionDelay: `${staggerDelay(index, 100)}ms`,
+                }}
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <Icon className="h-6 w-6 text-primary" />
                 </div>
                 <h3
                   className="text-lg font-bold text-foreground mb-2"
-                  style={{ fontFamily: 'var(--font-heading)' }}
+                  style={{ fontFamily: "var(--font-heading)" }}
                 >
                   {perk.title}
                 </h3>

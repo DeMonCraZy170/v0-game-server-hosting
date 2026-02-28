@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Star, ChevronLeft, ChevronRight } from "lucide-react"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const reviews = [
   {
@@ -46,6 +47,7 @@ export function ReviewsSection() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
+  const [sectionRef, sectionVisible] = useScrollReveal({ threshold: 0.1 })
 
   const updateScrollButtons = () => {
     if (scrollRef.current) {
@@ -76,16 +78,22 @@ export function ReviewsSection() {
 
   return (
     <section className="py-20 bg-background">
-      <div className="mx-auto max-w-7xl px-4">
+      <div ref={sectionRef} className="mx-auto max-w-7xl px-4">
         {/* Section header */}
-        <div className="flex items-end justify-between mb-10">
+        <div
+          className="flex items-end justify-between mb-10 transition-all duration-700 ease-out"
+          style={{
+            opacity: sectionVisible ? 1 : 0,
+            transform: sectionVisible ? "translateY(0)" : "translateY(30px)",
+          }}
+        >
           <div>
             <p className="text-primary text-sm font-semibold mb-2 uppercase tracking-wider">
               {"Respaldado Por 2,000+ Resenas Positivas"}
             </p>
             <h2
               className="text-3xl md:text-4xl font-bold text-foreground"
-              style={{ fontFamily: 'var(--font-heading)' }}
+              style={{ fontFamily: "var(--font-heading)" }}
             >
               Lo que dicen nuestros clientes
             </h2>
@@ -113,27 +121,33 @@ export function ReviewsSection() {
         {/* Reviews carousel */}
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory transition-all duration-700 ease-out"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            opacity: sectionVisible ? 1 : 0,
+            transform: sectionVisible ? "translateY(0)" : "translateY(40px)",
+            transitionDelay: "0.15s",
+          }}
         >
-          {reviews.map((review) => (
+          {reviews.map((review, index) => (
             <div
               key={review.name}
-              className="flex-shrink-0 w-80 bg-card border border-border rounded-2xl p-6 snap-start hover:border-primary/30 transition-colors"
+              className="flex-shrink-0 w-80 bg-card border border-border rounded-2xl p-6 snap-start hover:border-primary/30 transition-all duration-500"
+              style={{
+                opacity: sectionVisible ? 1 : 0,
+                transform: sectionVisible ? "translateY(0) scale(1)" : "translateY(20px) scale(0.97)",
+                transitionDelay: `${200 + index * 80}ms`,
+                transitionDuration: "600ms",
+              }}
             >
-              {/* Stars */}
               <div className="flex gap-0.5 mb-3">
                 {Array.from({ length: review.rating }).map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                 ))}
               </div>
-              {/* Title */}
               <h4 className="font-bold text-foreground mb-2">{review.title}</h4>
-              {/* Text */}
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                {review.text}
-              </p>
-              {/* Author */}
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">{review.text}</p>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-bold">
                   {review.name.charAt(0)}

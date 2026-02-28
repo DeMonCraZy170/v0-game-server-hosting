@@ -1,4 +1,7 @@
+"use client"
+
 import { Monitor, FolderOpen, Download, Puzzle, Lock, ArrowLeftRight, Scissors, ArrowRight, ExternalLink } from "lucide-react"
+import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
 const features = [
   { icon: Monitor, label: "Consola de Servidor Intuitiva" },
@@ -11,18 +14,28 @@ const features = [
 ]
 
 export function ApolloPanelSection() {
+  const [leftRef, leftVisible] = useScrollReveal()
+  const [rightRef, rightVisible] = useScrollReveal({ threshold: 0.1 })
+
   return (
     <section className="py-20 bg-secondary">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Left side */}
-          <div className="flex-1">
+          <div
+            ref={leftRef}
+            className="flex-1 transition-all duration-700 ease-out"
+            style={{
+              opacity: leftVisible ? 1 : 0,
+              transform: leftVisible ? "translateX(0)" : "translateX(-40px)",
+            }}
+          >
             <p className="text-primary text-sm font-semibold mb-2 uppercase tracking-wider">
               Panel Apollo
             </p>
             <h2
               className="text-3xl md:text-4xl font-bold text-foreground mb-4"
-              style={{ fontFamily: 'var(--font-heading)' }}
+              style={{ fontFamily: "var(--font-heading)" }}
             >
               Un panel de control que simplemente funciona.
             </h2>
@@ -33,10 +46,18 @@ export function ApolloPanelSection() {
 
             {/* Feature list */}
             <ul className="flex flex-col gap-3 mb-8">
-              {features.map((feature) => {
+              {features.map((feature, index) => {
                 const Icon = feature.icon
                 return (
-                  <li key={feature.label} className="flex items-center gap-3">
+                  <li
+                    key={feature.label}
+                    className="flex items-center gap-3 transition-all duration-500 ease-out"
+                    style={{
+                      opacity: leftVisible ? 1 : 0,
+                      transform: leftVisible ? "translateX(0)" : "translateX(-20px)",
+                      transitionDelay: `${staggerDelay(index, 60)}ms`,
+                    }}
+                  >
                     <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                       <Icon className="h-4 w-4 text-primary" />
                     </div>
@@ -66,9 +87,16 @@ export function ApolloPanelSection() {
           </div>
 
           {/* Right side - Panel Preview */}
-          <div className="flex-1 w-full">
+          <div
+            ref={rightRef}
+            className="flex-1 w-full transition-all duration-700 ease-out"
+            style={{
+              opacity: rightVisible ? 1 : 0,
+              transform: rightVisible ? "translateX(0) scale(1)" : "translateX(40px) scale(0.97)",
+              transitionDelay: "0.15s",
+            }}
+          >
             <div className="bg-card border border-border rounded-2xl overflow-hidden">
-              {/* Mock window bar */}
               <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary">
                 <div className="w-3 h-3 rounded-full bg-destructive/60" />
                 <div className="w-3 h-3 rounded-full bg-primary/60" />
@@ -79,7 +107,6 @@ export function ApolloPanelSection() {
                   </div>
                 </div>
               </div>
-              {/* Console content */}
               <div className="p-6 font-mono text-xs">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-2 h-2 rounded-full bg-green-500" />
@@ -101,8 +128,14 @@ export function ApolloPanelSection() {
                 </div>
               </div>
             </div>
-            {/* Testimonial below panel */}
-            <div className="mt-6 border-l-2 border-primary pl-4">
+            <div
+              className="mt-6 border-l-2 border-primary pl-4 transition-all duration-700 ease-out"
+              style={{
+                opacity: rightVisible ? 1 : 0,
+                transform: rightVisible ? "translateY(0)" : "translateY(20px)",
+                transitionDelay: "0.35s",
+              }}
+            >
               <p className="text-sm text-muted-foreground italic leading-relaxed">
                 {"\"Estan constantemente mejorando — ya sea el panel de control, el area de cliente, o nuevas funciones. Es genial ver y experimentar estas actualizaciones cada vez que uso sus servicios.\""}
               </p>

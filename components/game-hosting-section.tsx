@@ -1,4 +1,7 @@
+"use client"
+
 import { Gamepad2, Server, Cloud, ArrowRight, CheckCircle } from "lucide-react"
+import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
 const hostingCategories = [
   {
@@ -37,14 +40,24 @@ const hostingCategories = [
 ]
 
 export function GameHostingSection() {
+  const [headerRef, headerVisible] = useScrollReveal()
+  const [cardsRef, cardsVisible] = useScrollReveal({ threshold: 0.1 })
+
   return (
     <section id="games" className="py-20 bg-background">
       <div className="mx-auto max-w-7xl px-4">
         {/* Section header */}
-        <div className="mb-12">
+        <div
+          ref={headerRef}
+          className="mb-12 transition-all duration-700 ease-out"
+          style={{
+            opacity: headerVisible ? 1 : 0,
+            transform: headerVisible ? "translateY(0)" : "translateY(30px)",
+          }}
+        >
           <h2
             className="text-3xl md:text-4xl font-bold text-foreground mb-4"
-            style={{ fontFamily: 'var(--font-heading)' }}
+            style={{ fontFamily: "var(--font-heading)" }}
           >
             Hacemos hosting de servidores de juegos a precios increibles.
           </h2>
@@ -58,35 +71,41 @@ export function GameHostingSection() {
         </div>
 
         {/* Hosting cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {hostingCategories.map((category) => {
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {hostingCategories.map((category, index) => {
             const Icon = category.icon
             return (
               <div
                 key={category.title}
-                className={`group relative bg-card border border-border rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 ${category.borderColor}`}
+                className={`group relative bg-card border border-border rounded-2xl p-6 transition-all duration-700 ease-out hover:shadow-xl hover:shadow-primary/5 ${category.borderColor}`}
+                style={{
+                  opacity: cardsVisible ? 1 : 0,
+                  transform: cardsVisible ? "translateY(0)" : "translateY(40px)",
+                  transitionDelay: `${staggerDelay(index, 120)}ms`,
+                }}
               >
-                <div className={`absolute inset-0 bg-gradient-to-b ${category.color} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity`} />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-b ${category.color} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity`}
+                />
                 <div className="relative">
-                  {/* Icon */}
                   <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mb-4">
                     <Icon className="h-6 w-6 text-primary" />
                   </div>
-
-                  {/* Title */}
-                  <h3 className="text-2xl font-bold text-foreground mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
+                  <h3
+                    className="text-2xl font-bold text-foreground mb-1"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                  >
                     {category.title}
                   </h3>
-                  <p className="text-2xl font-bold text-primary mb-3" style={{ fontFamily: 'var(--font-heading)' }}>
+                  <p
+                    className="text-2xl font-bold text-primary mb-3"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                  >
                     {category.subtitle}
                   </p>
-
-                  {/* Description */}
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                     {category.description}
                   </p>
-
-                  {/* Features */}
                   <ul className="flex flex-col gap-2 mb-6">
                     {category.features.map((feature) => (
                       <li key={feature} className="flex items-center gap-2 text-sm text-foreground">
@@ -95,8 +114,6 @@ export function GameHostingSection() {
                       </li>
                     ))}
                   </ul>
-
-                  {/* CTA */}
                   <a
                     href="#"
                     className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
