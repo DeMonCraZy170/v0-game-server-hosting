@@ -239,7 +239,6 @@ export function HeroSection() {
               fill
               className="object-cover"
               priority={i < 3}
-              quality={90}
               sizes="100vw"
               style={{
                 transform: isCurrent ? "scale(1.06)" : "scale(1.18)",
@@ -373,7 +372,6 @@ export function HeroSection() {
                       alt={s.label}
                       fill
                       className="object-cover"
-                      quality={85}
                       sizes="240px"
                       style={{
                         transform: isActive ? "scale(1.1)" : "scale(1)",
