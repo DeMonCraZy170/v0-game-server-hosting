@@ -53,11 +53,11 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2">
-          <Zap className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold text-foreground" style={{ fontFamily: 'var(--font-heading)' }}>
+          <Zap className="h-9 w-9 text-primary" />
+          <span className="text-2xl font-extrabold tracking-tight text-foreground" style={{ fontFamily: 'var(--font-heading)' }}>
             FORZA <span className="text-primary">HOST</span>
           </span>
         </a>
@@ -71,9 +71,9 @@ export function Navbar() {
               onMouseEnter={() => setOpenDropdown(item.label)}
               onMouseLeave={() => setOpenDropdown(null)}
             >
-              <button className="flex items-center gap-1 px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary">
+              <button className="flex items-center gap-1 px-3 py-2 text-[15px] font-semibold text-foreground/90 hover:text-foreground transition-colors rounded-lg hover:bg-secondary">
                 {item.label}
-                {item.hasDropdown && <ChevronDown className="h-3.5 w-3.5" />}
+                {item.hasDropdown && <ChevronDown className="h-4 w-4" />}
               </button>
               {item.hasDropdown && openDropdown === item.label && (
                 <div className="absolute top-full left-0 mt-1 w-56 bg-card border border-border rounded-lg shadow-xl py-2 z-50">
@@ -94,10 +94,10 @@ export function Navbar() {
 
         {/* Desktop Icons */}
         <div className="hidden lg:flex items-center gap-2">
-          <button className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary">
+          <button className="p-2 text-foreground/80 hover:text-foreground transition-colors rounded-lg hover:bg-secondary">
             <BookOpen className="h-5 w-5" />
           </button>
-          <button className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary">
+          <button className="p-2 text-foreground/80 hover:text-foreground transition-colors rounded-lg hover:bg-secondary">
             <HelpCircle className="h-5 w-5" />
           </button>
         </div>
