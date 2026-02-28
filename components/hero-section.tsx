@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react"
 import { ArrowRight, CheckCircle } from "lucide-react"
+import Image from "next/image"
 
 interface GameSlide {
   id: string
@@ -16,7 +17,7 @@ interface GameSlide {
 const gameSlides: GameSlide[] = [
   {
     id: "dedicated",
-    title: "Servidor Dedicado",
+    title: "Servidor\nDedicado",
     label: "SERVIDOR DEDICADO",
     badges: ["Rendimiento Maximo", "Control Total", "Mejor Precio"],
     cta: "INICIAR MI SERVIDOR DEDICADO",
@@ -31,6 +32,15 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI BOT DE DISCORD",
     bgImage: "/images/hero-discord.jpg",
     cardImage: "/images/card-discord.jpg",
+  },
+  {
+    id: "astroneer",
+    title: "Hosting de Servidores\nAstroneer",
+    label: "ASTRONEER",
+    badges: ["Configuracion Instantanea", "Proteccion DDoS", "Hardware Potente"],
+    cta: "INICIAR MI SERVIDOR ASTRONEER",
+    bgImage: "/images/hero-astroneer.jpg",
+    cardImage: "/images/card-astroneer.jpg",
   },
   {
     id: "minecraft",
@@ -77,106 +87,168 @@ const gameSlides: GameSlide[] = [
     bgImage: "/images/hero-hytale.jpg",
     cardImage: "/images/card-hytale.jpg",
   },
-  {
-    id: "astroneer",
-    title: "Hosting de Servidores\nAstroneer",
-    label: "ASTRONEER",
-    badges: ["Configuracion Instantanea", "Proteccion DDoS", "Hardware Potente"],
-    cta: "INICIAR MI SERVIDOR ASTRONEER",
-    bgImage: "/images/hero-astroneer.jpg",
-    cardImage: "/images/card-astroneer.jpg",
-  },
 ]
 
-// How many cards visible at once in the right column
 const VISIBLE_CARDS = 5
+const CARD_HEIGHT_ACTIVE = 96 // px
+const CARD_HEIGHT_INACTIVE = 64 // px
+const CARD_GAP = 10 // px
 
 export function HeroSection() {
-  const [activeIndex, setActiveIndex] = useState(2) // Start on Minecraft
-  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(3) // Start on Minecraft
+  const [prevIndex, setPrevIndex] = useState(3)
+  const [bgTransitioning, setBgTransitioning] = useState(false)
+  const [contentKey, setContentKey] = useState(0)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const totalSlides = gameSlides.length
 
-  const goToSlide = useCallback((index: number) => {
-    if (isTransitioning) return
-    setIsTransitioning(true)
-    setActiveIndex(index)
-    setTimeout(() => setIsTransitioning(false), 600)
-  }, [isTransitioning])
-
-  // Auto-rotate
-  useEffect(() => {
+  const startAutoRotate = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % gameSlides.length)
-    }, 6000)
+      setPrevIndex((prev) => {
+        const next = (prev + 1) % totalSlides
+        return prev
+      })
+      setActiveIndex((prev) => {
+        const next = (prev + 1) % totalSlides
+        setPrevIndex(prev)
+        setBgTransitioning(true)
+        setContentKey((k) => k + 1)
+        return next
+      })
+    }, 5000)
+  }, [totalSlides])
+
+  useEffect(() => {
+    startAutoRotate()
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)
     }
-  }, [])
+  }, [startAutoRotate])
 
-  // Reset timer when user clicks
-  const handleCardClick = useCallback((index: number) => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    goToSlide(index)
-    timerRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % gameSlides.length)
-    }, 6000)
-  }, [goToSlide])
+  // Clear bg transition flag after animation completes
+  useEffect(() => {
+    if (bgTransitioning) {
+      const timeout = setTimeout(() => setBgTransitioning(false), 900)
+      return () => clearTimeout(timeout)
+    }
+  }, [bgTransitioning])
+
+  const handleCardClick = useCallback(
+    (index: number) => {
+      if (index === activeIndex) return
+      setPrevIndex(activeIndex)
+      setActiveIndex(index)
+      setBgTransitioning(true)
+      setContentKey((k) => k + 1)
+      startAutoRotate()
+    },
+    [activeIndex, startAutoRotate]
+  )
 
   const activeSlide = gameSlides[activeIndex]
 
-  // Calculate which cards to show (centered on active with 2 above and 2 below)
+  // Build the visible cards array - centered on active with items above and below
   const getVisibleCards = () => {
-    const cards: { slide: GameSlide; globalIndex: number }[] = []
+    const cards: { slide: GameSlide; globalIndex: number; position: number }[] = []
     const half = Math.floor(VISIBLE_CARDS / 2)
     for (let i = -half; i <= half; i++) {
-      const idx = ((activeIndex + i) % gameSlides.length + gameSlides.length) % gameSlides.length
-      cards.push({ slide: gameSlides[idx], globalIndex: idx })
+      const idx =
+        ((activeIndex + i) % totalSlides + totalSlides) % totalSlides
+      cards.push({ slide: gameSlides[idx], globalIndex: idx, position: i })
     }
     return cards
   }
 
   const visibleCards = getVisibleCards()
 
+  // Calculate total height of carousel viewport
+  const carouselHeight =
+    CARD_HEIGHT_ACTIVE +
+    (VISIBLE_CARDS - 1) * CARD_HEIGHT_INACTIVE +
+    (VISIBLE_CARDS - 1) * CARD_GAP
+
   return (
     <section className="relative min-h-[600px] lg:min-h-[700px] overflow-hidden">
-      {/* Background images - crossfade */}
-      {gameSlides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className="absolute inset-0 transition-opacity duration-700 ease-in-out"
-          style={{ opacity: index === activeIndex ? 1 : 0 }}
-        >
-          <img
-            src={slide.bgImage}
-            alt=""
-            className="w-full h-full object-cover"
-            crossOrigin="anonymous"
-          />
-        </div>
-      ))}
+      {/* ========== Background layers with crossfade + subtle zoom ========== */}
+      {gameSlides.map((slide, index) => {
+        const isActive = index === activeIndex
+        const wasPrev = index === prevIndex && bgTransitioning
+
+        return (
+          <div
+            key={slide.id}
+            className="absolute inset-0"
+            style={{
+              opacity: isActive ? 1 : wasPrev ? 0 : 0,
+              transition: "opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1)",
+              zIndex: isActive ? 2 : wasPrev ? 1 : 0,
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                transform: isActive && bgTransitioning ? "scale(1.05)" : "scale(1)",
+                transition: "transform 6s cubic-bezier(0.25, 0.1, 0.25, 1)",
+              }}
+            >
+              <Image
+                src={slide.bgImage}
+                alt=""
+                fill
+                className="object-cover"
+                priority={index <= 3}
+                sizes="100vw"
+              />
+            </div>
+          </div>
+        )
+      })}
 
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0d0d0d] via-[#0d0d0d]/85 to-[#0d0d0d]/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-[#0d0d0d]/40" />
+      <div
+        className="absolute inset-0 z-[3]"
+        style={{
+          background:
+            "linear-gradient(to right, #0d0d0d 0%, rgba(13,13,13,0.92) 25%, rgba(13,13,13,0.7) 55%, rgba(13,13,13,0.3) 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 z-[3]"
+        style={{
+          background:
+            "linear-gradient(to top, #0d0d0d 0%, transparent 40%, rgba(13,13,13,0.5) 100%)",
+        }}
+      />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-16 lg:py-24 flex items-center min-h-[600px] lg:min-h-[700px]">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center w-full gap-8">
-          {/* Left content - changes with active slide */}
+      {/* ========== Main content ========== */}
+      <div className="relative z-[4] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24 flex items-center min-h-[600px] lg:min-h-[700px]">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center w-full gap-8 lg:gap-12">
+          {/* ===== Left content ===== */}
           <div className="flex-1 max-w-2xl">
-            <p className="text-[#a0a0a0] text-sm mb-3 tracking-wide">
+            <p className="text-[#a0a0a0] text-sm mb-4 tracking-wide">
               {"100,000+ Clientes Satisfechos"}
             </p>
 
-            {/* Animated title area */}
-            <div className="relative min-h-[140px] md:min-h-[180px] lg:min-h-[200px] mb-6">
+            {/* Animated title */}
+            <div className="relative min-h-[130px] md:min-h-[170px] lg:min-h-[200px] mb-6 overflow-hidden">
               {gameSlides.map((slide, index) => (
                 <h1
                   key={slide.id}
-                  className="absolute top-0 left-0 text-4xl md:text-5xl lg:text-6xl font-bold text-[#f5f5f5] leading-tight transition-all duration-500 whitespace-pre-line"
+                  className="absolute top-0 left-0 text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-[#f5f5f5] leading-[1.1] whitespace-pre-line"
                   style={{
-                    fontFamily: 'var(--font-heading)',
+                    fontFamily: "var(--font-heading)",
                     opacity: index === activeIndex ? 1 : 0,
-                    transform: index === activeIndex ? 'translateY(0)' : 'translateY(20px)',
+                    transform:
+                      index === activeIndex
+                        ? "translateY(0)"
+                        : index === prevIndex
+                          ? "translateY(-30px)"
+                          : "translateY(30px)",
+                    transition:
+                      index === activeIndex
+                        ? "opacity 0.6s cubic-bezier(0.4,0,0.2,1) 0.15s, transform 0.6s cubic-bezier(0.4,0,0.2,1) 0.15s"
+                        : "opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1)",
                   }}
                 >
                   {slide.title}
@@ -184,11 +256,14 @@ export function HeroSection() {
               ))}
             </div>
 
-            {/* Feature badges - animated */}
-            <div className="min-h-[60px] mb-8">
+            {/* Feature badges */}
+            <div className="mb-8 overflow-hidden">
               <div
-                className="flex flex-wrap gap-x-4 gap-y-2 transition-opacity duration-500"
-                key={activeSlide.id}
+                key={`badges-${contentKey}`}
+                className="flex flex-wrap gap-x-5 gap-y-2"
+                style={{
+                  animation: "fadeSlideIn 0.5s cubic-bezier(0.4,0,0.2,1) 0.2s both",
+                }}
               >
                 {activeSlide.badges.map((badge) => (
                   <div key={badge} className="flex items-center gap-1.5">
@@ -207,17 +282,23 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* CTAs - animated */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            {/* CTA buttons */}
+            <div
+              key={`cta-${contentKey}`}
+              className="flex flex-col sm:flex-row gap-3"
+              style={{
+                animation: "fadeSlideIn 0.5s cubic-bezier(0.4,0,0.2,1) 0.3s both",
+              }}
+            >
               <a
                 href="#"
-                className="inline-flex items-center justify-center bg-[#f5a623] text-[#0d0d0d] font-bold px-6 py-3 rounded-lg hover:bg-[#f5a623]/90 transition-all duration-300 text-sm tracking-wide"
+                className="inline-flex items-center justify-center bg-[#f5a623] text-[#0d0d0d] font-bold px-6 py-3 rounded-lg hover:bg-[#e09510] transition-colors duration-200 text-sm tracking-wide"
               >
                 {activeSlide.cta}
               </a>
               <a
                 href="#games"
-                className="inline-flex items-center justify-center border border-[#2a2a2a] text-[#f5f5f5] font-semibold px-6 py-3 rounded-lg hover:bg-[#1a1a1a] transition-colors text-sm gap-2"
+                className="inline-flex items-center justify-center border border-[#333] text-[#f5f5f5] font-semibold px-6 py-3 rounded-lg hover:bg-[#1a1a1a] transition-colors duration-200 text-sm gap-2"
               >
                 VER TODOS LOS JUEGOS
                 <ArrowRight className="h-4 w-4" />
@@ -225,66 +306,126 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right side - Vertical game card carousel */}
-          <div className="hidden lg:flex flex-col gap-2.5 w-52 xl:w-56">
-            {visibleCards.map(({ slide, globalIndex }) => {
-              const isActive = globalIndex === activeIndex
-              return (
-                <button
-                  key={`${slide.id}-${globalIndex}`}
-                  onClick={() => handleCardClick(globalIndex)}
-                  className={`relative overflow-hidden rounded-xl transition-all duration-500 text-left group ${
-                    isActive
-                      ? "h-24 ring-2 ring-[#f5a623] shadow-lg shadow-[#f5a623]/20"
-                      : "h-16 opacity-60 hover:opacity-90"
-                  }`}
-                >
-                  {/* Card background image */}
-                  <img
-                    src={slide.cardImage}
-                    alt={slide.label}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    crossOrigin="anonymous"
-                  />
-                  {/* Overlay */}
-                  <div className={`absolute inset-0 transition-colors duration-300 ${
-                    isActive
-                      ? "bg-gradient-to-r from-[#0d0d0d]/70 to-[#0d0d0d]/40"
-                      : "bg-[#0d0d0d]/60 group-hover:bg-[#0d0d0d]/50"
-                  }`} />
-                  {/* Label */}
-                  <div className="relative h-full flex flex-col justify-center px-4">
-                    <span className={`font-bold tracking-wider transition-all duration-300 ${
-                      isActive ? "text-base text-[#f5f5f5]" : "text-xs text-[#a0a0a0] group-hover:text-[#f5f5f5]"
-                    }`}>
-                      {slide.label}
-                    </span>
+          {/* ===== Right side - Vertical sliding card carousel ===== */}
+          <div
+            className="hidden lg:block relative w-52 xl:w-56"
+            style={{ height: carouselHeight }}
+          >
+            {/* Fade masks top/bottom for depth illusion */}
+            <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-[#0d0d0d]/60 to-transparent z-10 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#0d0d0d]/60 to-transparent z-10 pointer-events-none" />
+
+            <div className="relative w-full h-full overflow-hidden">
+              {visibleCards.map(({ slide, globalIndex, position }) => {
+                const isActive = globalIndex === activeIndex
+                // Calculate Y offset: cards above active are inactive height, active is in middle
+                const half = Math.floor(VISIBLE_CARDS / 2)
+                let yOffset = 0
+                for (let p = -half; p < position; p++) {
+                  const h = p === 0 ? CARD_HEIGHT_ACTIVE : CARD_HEIGHT_INACTIVE
+                  yOffset += h + CARD_GAP
+                }
+
+                return (
+                  <button
+                    key={`card-${globalIndex}-${activeIndex}`}
+                    onClick={() => handleCardClick(globalIndex)}
+                    className="absolute left-0 w-full overflow-hidden rounded-xl text-left group"
+                    style={{
+                      height: isActive ? CARD_HEIGHT_ACTIVE : CARD_HEIGHT_INACTIVE,
+                      top: 0,
+                      transform: `translateY(${yOffset}px)`,
+                      transition:
+                        "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), height 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
+                      opacity: isActive ? 1 : 0.55,
+                      zIndex: isActive ? 5 : 1,
+                    }}
+                  >
+                    {/* Card bg image */}
+                    <Image
+                      src={slide.cardImage}
+                      alt={slide.label}
+                      fill
+                      className="object-cover"
+                      sizes="224px"
+                    />
+                    {/* Dark overlay */}
+                    <div
+                      className="absolute inset-0 transition-all duration-500"
+                      style={{
+                        background: isActive
+                          ? "linear-gradient(135deg, rgba(13,13,13,0.65) 0%, rgba(13,13,13,0.35) 100%)"
+                          : "rgba(13,13,13,0.55)",
+                      }}
+                    />
+                    {/* Active ring glow */}
                     {isActive && (
-                      <span className="text-[10px] text-[#f5a623] font-semibold tracking-widest mt-0.5">
+                      <div
+                        className="absolute inset-0 rounded-xl"
+                        style={{
+                          boxShadow: "inset 0 0 0 2px #f5a623, 0 0 20px rgba(245,166,35,0.25)",
+                        }}
+                      />
+                    )}
+                    {/* Label */}
+                    <div className="relative h-full flex flex-col justify-center px-4 z-[2]">
+                      <span
+                        className="font-bold tracking-wider transition-all duration-500"
+                        style={{
+                          fontSize: isActive ? "15px" : "11px",
+                          color: isActive ? "#f5f5f5" : "#888",
+                        }}
+                      >
+                        {slide.label}
+                      </span>
+                      <span
+                        className="text-[10px] text-[#f5a623] font-semibold tracking-widest transition-all duration-500"
+                        style={{
+                          opacity: isActive ? 1 : 0,
+                          transform: isActive ? "translateY(0)" : "translateY(-4px)",
+                          marginTop: isActive ? "2px" : 0,
+                        }}
+                      >
                         HOSTING
                       </span>
-                    )}
-                  </div>
-                </button>
-              )
-            })}
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile slide indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 lg:hidden">
+      {/* Mobile indicators */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 lg:hidden z-[5]">
         {gameSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => handleCardClick(index)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              index === activeIndex ? "bg-[#f5a623] w-6" : "bg-[#a0a0a0]/40 w-1.5"
-            }`}
+            className="h-1.5 rounded-full transition-all duration-300"
+            style={{
+              width: index === activeIndex ? 24 : 6,
+              backgroundColor: index === activeIndex ? "#f5a623" : "rgba(160,160,160,0.35)",
+            }}
             aria-label={`Ir a diapositiva ${index + 1}`}
           />
         ))}
       </div>
+
+      {/* Keyframe animation for content */}
+      <style jsx>{`
+        @keyframes fadeSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   )
 }
