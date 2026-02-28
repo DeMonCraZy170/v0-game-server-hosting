@@ -343,14 +343,14 @@ export function HeroSection() {
             className="hidden lg:block relative w-52 xl:w-60"
             style={{ height: totalH }}
           >
-            {/* Top/bottom edge fades */}
+            {/* Top/bottom subtle edge fades - thin and transparent */}
             <div
-              className="absolute top-0 left-0 right-0 h-20 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, rgba(13,13,13,0.5), transparent)" }}
+              className="absolute top-0 left-0 right-0 h-8 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to bottom, rgba(13,13,13,0.25), transparent)" }}
             />
             <div
-              className="absolute bottom-0 left-0 right-0 h-20 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to top, rgba(13,13,13,0.5), transparent)" }}
+              className="absolute bottom-0 left-0 right-0 h-8 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to top, rgba(13,13,13,0.25), transparent)" }}
             />
 
             <div className="relative w-full h-full">
