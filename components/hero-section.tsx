@@ -218,7 +218,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-[640px] lg:min-h-[780px] overflow-hidden">
+    <section className="relative min-h-[640px] lg:min-h-[780px] overflow-hidden pb-24 lg:pb-32">
       {/* ===== BACKGROUND with crossfade + zoom ===== */}
       {gameSlides.map((s, i) => {
         const isCurrent = i === activeIndex
@@ -258,10 +258,12 @@ export function HeroSection() {
             "linear-gradient(to right, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0.8) 30%, rgba(13,13,13,0.4) 55%, rgba(13,13,13,0.05) 100%)",
         }}
       />
+      {/* Extended bottom fade - tall gradient for smooth blend into section below */}
       <div
-        className="absolute inset-0 z-[3]"
+        className="absolute left-0 right-0 bottom-0 z-[3]"
         style={{
-          background: "linear-gradient(to top, rgba(13,13,13,1) 0%, transparent 20%)",
+          height: "55%",
+          background: "linear-gradient(to top, rgba(13,13,13,1) 0%, rgba(13,13,13,0.95) 20%, rgba(13,13,13,0.6) 50%, rgba(13,13,13,0) 100%)",
         }}
       />
 
@@ -357,7 +359,7 @@ export function HeroSection() {
                   <button
                     key={s.id}
                     onClick={() => handleCardClick(slideIdx)}
-                    className="absolute left-0 w-full rounded-xl overflow-hidden text-left group focus:outline-none"
+                    className="absolute left-0 w-full rounded-2xl overflow-hidden text-left group focus:outline-none"
                     style={{
                       height: h,
                       transform: `translateY(${y}px) scale(${cardScale})`,
@@ -386,15 +388,15 @@ export function HeroSection() {
                       className="absolute inset-0"
                       style={{
                         background: isActive
-                          ? "linear-gradient(135deg, rgba(0,0,0,0.15), rgba(0,0,0,0.05))"
-                          : "rgba(0,0,0,0.55)",
+                          ? "linear-gradient(135deg, rgba(0,0,0,0.2), rgba(0,0,0,0.05))"
+                          : "rgba(0,0,0,0.45)",
                         transition: "background 0.6s ease",
                       }}
                     />
 
                     {/* Border glow - diffused */}
                     <div
-                      className="absolute -inset-[1px] rounded-xl pointer-events-none"
+                      className="absolute -inset-[1px] rounded-2xl pointer-events-none"
                       style={{
                         background: isActive
                           ? "linear-gradient(135deg, rgba(245,166,35,0.8), rgba(245,166,35,0.3), rgba(245,166,35,0.6))"
@@ -410,7 +412,7 @@ export function HeroSection() {
                     />
                     {/* Outer glow */}
                     <div
-                      className="absolute -inset-1 rounded-xl pointer-events-none"
+                      className="absolute -inset-1 rounded-2xl pointer-events-none"
                       style={{
                         boxShadow: isActive
                           ? "0 0 20px 2px rgba(245,166,35,0.25), 0 0 40px 4px rgba(245,166,35,0.1)"
@@ -421,7 +423,7 @@ export function HeroSection() {
 
                     {/* Animated light sweep on active */}
                     {isActive && (
-                      <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none z-[3]">
+                      <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none z-[3]">
                         <div
                           className="absolute top-0 -left-full w-1/2 h-full"
                           style={{
@@ -461,7 +463,7 @@ export function HeroSection() {
                     {/* Hover highlight for non-active */}
                     {!isActive && (
                       <div
-                        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none"
+                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none"
                         style={{
                           boxShadow: "inset 0 0 0 1px rgba(245,166,35,0.25)",
                           transition: "opacity 0.3s ease",

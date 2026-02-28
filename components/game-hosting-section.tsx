@@ -44,7 +44,7 @@ export function GameHostingSection() {
   const [cardsRef, cardsVisible] = useScrollReveal({ threshold: 0.1 })
 
   return (
-    <section id="games" className="py-20 bg-background">
+    <section id="games" className="pt-8 pb-20 bg-background">
       <div className="mx-auto max-w-7xl px-4">
         {/* Section header */}
         <div
