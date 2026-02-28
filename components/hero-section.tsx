@@ -90,64 +90,65 @@ const gameSlides: GameSlide[] = [
 ]
 
 const VISIBLE_CARDS = 5
-const CARD_H = 72
-const CARD_H_ACTIVE = 100
-const GAP = 8
+const CARD_HEIGHT = 72
+const CARD_HEIGHT_ACTIVE = 108
+const CARD_GAP = 10
 
 export function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(3)
-  const [direction, setDirection] = useState<"up" | "down">("down")
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [contentVisible, setContentVisible] = useState(true)
+  const [prevIndex, setPrevIndex] = useState(3)
+  const [phase, setPhase] = useState<"idle" | "exit" | "enter">("idle")
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const phaseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const total = gameSlides.length
 
-  // Preload all background images
+  // Preload images
   useEffect(() => {
     gameSlides.forEach((slide) => {
       const img = new window.Image()
       img.crossOrigin = "anonymous"
       img.src = slide.bgImage
+      const card = new window.Image()
+      card.crossOrigin = "anonymous"
+      card.src = slide.cardImage
     })
   }, [])
 
   const goTo = useCallback(
     (nextIndex: number) => {
-      if (nextIndex === activeIndex || isTransitioning) return
-      setIsTransitioning(true)
-      setDirection(nextIndex > activeIndex ? "down" : "up")
+      if (nextIndex === activeIndex || phase !== "idle") return
 
-      // Fade out content first
-      setContentVisible(false)
+      // Phase 1: Exit current content
+      setPhase("exit")
+      setPrevIndex(activeIndex)
 
-      // After short delay, switch index and fade content back in
-      setTimeout(() => {
+      phaseTimerRef.current = setTimeout(() => {
+        // Phase 2: Switch slide and enter new content
         setActiveIndex(nextIndex)
-        // Let the new background start fading in, then show content
-        setTimeout(() => {
-          setContentVisible(true)
-          setIsTransitioning(false)
-        }, 200)
-      }, 300)
+        setPhase("enter")
+
+        phaseTimerRef.current = setTimeout(() => {
+          setPhase("idle")
+        }, 700)
+      }, 350)
     },
-    [activeIndex, isTransitioning]
+    [activeIndex, phase]
   )
 
   const goNext = useCallback(() => {
-    const next = (activeIndex + 1) % total
-    goTo(next)
+    goTo((activeIndex + 1) % total)
   }, [activeIndex, total, goTo])
 
-  // Auto-rotate
   const startAutoRotate = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(goNext, 5000)
+    timerRef.current = setInterval(goNext, 5500)
   }, [goNext])
 
   useEffect(() => {
     startAutoRotate()
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)
+      if (phaseTimerRef.current) clearTimeout(phaseTimerRef.current)
     }
   }, [startAutoRotate])
 
@@ -160,8 +161,9 @@ export function HeroSection() {
   )
 
   const activeSlide = gameSlides[activeIndex]
+  const showContent = phase === "idle" || phase === "enter"
 
-  // Build visible card indices centered around active
+  // Get carousel card positions
   const getVisibleIndices = () => {
     const half = Math.floor(VISIBLE_CARDS / 2)
     const indices: number[] = []
@@ -172,92 +174,138 @@ export function HeroSection() {
   }
 
   const visibleIndices = getVisibleIndices()
-  const carouselHeight = CARD_H_ACTIVE + (VISIBLE_CARDS - 1) * CARD_H + (VISIBLE_CARDS - 1) * GAP
+  const centerPos = Math.floor(VISIBLE_CARDS / 2)
+  const totalCarouselH = CARD_HEIGHT_ACTIVE + (VISIBLE_CARDS - 1) * CARD_HEIGHT + (VISIBLE_CARDS - 1) * CARD_GAP
+
+  // Calculate vertical position for each card slot
+  const getCardY = (posIndex: number) => {
+    let y = 0
+    for (let p = 0; p < posIndex; p++) {
+      y += (p === centerPos ? CARD_HEIGHT_ACTIVE : CARD_HEIGHT) + CARD_GAP
+    }
+    return y
+  }
 
   return (
     <section className="relative min-h-[640px] lg:min-h-[720px] overflow-hidden">
-      {/* ===== Background images - crossfade with slow scale ===== */}
-      {gameSlides.map((slide, i) => (
-        <div
-          key={slide.id}
-          className="absolute inset-0 will-change-[opacity,transform]"
-          style={{
-            opacity: i === activeIndex ? 1 : 0,
-            transition: "opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
-            zIndex: i === activeIndex ? 2 : 1,
-          }}
-        >
+      {/* ===== BACKGROUNDS with cinematic crossfade + blur pulse ===== */}
+      {gameSlides.map((slide, i) => {
+        const isActive = i === activeIndex
+        const wasActive = i === prevIndex
+        const isInTransition = phase === "exit" || phase === "enter"
+
+        return (
           <div
-            className="absolute inset-0 will-change-transform"
+            key={slide.id}
+            className="absolute inset-0"
             style={{
-              transform: i === activeIndex ? "scale(1.08)" : "scale(1)",
-              transition: "transform 8s cubic-bezier(0.25, 0.1, 0.25, 1)",
+              opacity: isActive ? 1 : wasActive && isInTransition ? 0.4 : 0,
+              transition: isActive
+                ? "opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1)"
+                : "opacity 0.8s cubic-bezier(0.4, 0, 1, 1)",
+              zIndex: isActive ? 2 : wasActive ? 1 : 0,
             }}
           >
-            <Image
-              src={slide.bgImage}
-              alt=""
-              fill
-              className="object-cover"
-              priority={i <= 3}
-              sizes="100vw"
-            />
+            <div
+              className="absolute inset-[-20px]"
+              style={{
+                transform: isActive
+                  ? "scale(1.06)"
+                  : "scale(1.12)",
+                filter: isActive && !isInTransition
+                  ? "blur(0px) brightness(1)"
+                  : "blur(6px) brightness(0.7)",
+                transition: isActive
+                  ? "transform 10s cubic-bezier(0.25, 0.1, 0.25, 1), filter 1.4s cubic-bezier(0.16, 1, 0.3, 1)"
+                  : "transform 0.8s ease-out, filter 0.6s ease-out",
+              }}
+            >
+              <Image
+                src={slide.bgImage}
+                alt=""
+                fill
+                className="object-cover"
+                priority={i <= 3}
+                sizes="100vw"
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
 
       {/* Gradient overlays */}
       <div
         className="absolute inset-0 z-[3]"
         style={{
-          background:
-            "linear-gradient(to right, rgba(13,13,13,0.97) 0%, rgba(13,13,13,0.88) 30%, rgba(13,13,13,0.6) 55%, rgba(13,13,13,0.2) 100%)",
+          background: "linear-gradient(to right, rgba(13,13,13,0.97) 0%, rgba(13,13,13,0.88) 30%, rgba(13,13,13,0.55) 55%, rgba(13,13,13,0.15) 100%)",
         }}
       />
       <div
         className="absolute inset-0 z-[3]"
         style={{
-          background:
-            "linear-gradient(to top, rgba(13,13,13,1) 0%, rgba(13,13,13,0.0) 30%, rgba(13,13,13,0.3) 100%)",
+          background: "linear-gradient(to top, rgba(13,13,13,1) 0%, transparent 30%, rgba(13,13,13,0.25) 100%)",
         }}
       />
 
-      {/* ===== Content ===== */}
+      {/* ===== CONTENT AREA ===== */}
       <div className="relative z-[4] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex items-center min-h-[640px] lg:min-h-[720px]">
         <div className="flex flex-col lg:flex-row items-start lg:items-center w-full gap-8 lg:gap-16">
-          {/* Left side content with smooth transitions */}
+
+          {/* ===== LEFT: Text content ===== */}
           <div className="flex-1 max-w-2xl">
+            {/* Subtitle */}
             <p
-              className="text-[#a0a0a0] text-sm mb-5 tracking-wide transition-all duration-500"
+              className="text-sm mb-5 tracking-wide"
               style={{
-                opacity: contentVisible ? 1 : 0,
-                transform: contentVisible ? "translateY(0)" : "translateY(-8px)",
+                color: "#a0a0a0",
+                opacity: showContent ? 1 : 0,
+                transform: showContent ? "translateY(0)" : "translateY(-12px)",
+                filter: showContent ? "blur(0px)" : "blur(4px)",
+                transition: showContent
+                  ? "all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s"
+                  : "all 0.3s cubic-bezier(0.4, 0, 1, 1)",
               }}
             >
               {"100,000+ Clientes Satisfechos"}
             </p>
 
-            {/* Title - each slide has its own positioned title */}
+            {/* Title - cinematic slide with blur */}
             <div className="relative min-h-[140px] md:min-h-[180px] lg:min-h-[210px] mb-7">
               {gameSlides.map((slide, i) => {
                 const isActive = i === activeIndex
-                const exitDir = direction === "down" ? -40 : 40
-                const enterDir = direction === "down" ? 40 : -40
+                const isExiting = i === prevIndex && phase === "exit"
+
+                let opacity = 0
+                let translateY = 30
+                let blur = 8
+                let scale = 0.97
+
+                if (isActive && showContent) {
+                  opacity = 1
+                  translateY = 0
+                  blur = 0
+                  scale = 1
+                } else if (isExiting) {
+                  opacity = 0
+                  translateY = -25
+                  blur = 6
+                  scale = 0.98
+                }
+
                 return (
                   <h1
                     key={slide.id}
-                    className="absolute top-0 left-0 text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-[#f5f5f5] leading-[1.08] whitespace-pre-line will-change-[opacity,transform]"
+                    className="absolute top-0 left-0 text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] whitespace-pre-line"
                     style={{
                       fontFamily: "var(--font-heading)",
-                      opacity: isActive && contentVisible ? 1 : 0,
-                      transform: isActive && contentVisible
-                        ? "translateY(0)"
-                        : isActive
-                          ? `translateY(${enterDir}px)`
-                          : `translateY(${exitDir}px)`,
-                      transition: isActive && contentVisible
-                        ? "opacity 0.65s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s, transform 0.65s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s"
-                        : "opacity 0.35s cubic-bezier(0.4, 0, 1, 1), transform 0.35s cubic-bezier(0.4, 0, 1, 1)",
+                      color: "#f5f5f5",
+                      opacity,
+                      transform: `translateY(${translateY}px) scale(${scale})`,
+                      filter: `blur(${blur}px)`,
+                      transition: isActive && showContent
+                        ? "all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s"
+                        : "all 0.35s cubic-bezier(0.4, 0, 1, 1)",
+                      willChange: "transform, opacity, filter",
                     }}
                   >
                     {slide.title}
@@ -266,49 +314,74 @@ export function HeroSection() {
               })}
             </div>
 
-            {/* Badges */}
-            <div
-              className="mb-8 flex flex-wrap gap-x-5 gap-y-2 transition-all duration-500 ease-out"
-              style={{
-                opacity: contentVisible ? 1 : 0,
-                transform: contentVisible ? "translateY(0)" : "translateY(16px)",
-                transitionDelay: contentVisible ? "0.2s" : "0s",
-              }}
-            >
-              {activeSlide.badges.map((badge) => (
-                <div key={badge} className="flex items-center gap-1.5">
-                  <CheckCircle className="h-4 w-4 text-[#f5a623] shrink-0" />
-                  <span className="text-sm text-[#f5f5f5]">{badge}</span>
+            {/* Badges - staggered entrance */}
+            <div className="mb-8 flex flex-wrap gap-x-5 gap-y-2">
+              {[...activeSlide.badges, "Hardware Potente", "Soporte 24/7"].map((badge, idx) => (
+                <div
+                  key={`${activeSlide.id}-${badge}`}
+                  className="flex items-center gap-1.5"
+                  style={{
+                    opacity: showContent ? 1 : 0,
+                    transform: showContent ? "translateY(0) translateX(0)" : "translateY(12px) translateX(-8px)",
+                    filter: showContent ? "blur(0px)" : "blur(3px)",
+                    transition: showContent
+                      ? `all 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + idx * 0.06}s`
+                      : "all 0.25s cubic-bezier(0.4, 0, 1, 1)",
+                  }}
+                >
+                  <CheckCircle className="h-4 w-4 shrink-0" style={{ color: "#f5a623" }} />
+                  <span className="text-sm" style={{ color: "#f5f5f5" }}>{badge}</span>
                 </div>
               ))}
-              <div className="flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4 text-[#f5a623] shrink-0" />
-                <span className="text-sm text-[#f5f5f5]">Hardware Potente</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4 text-[#f5a623] shrink-0" />
-                <span className="text-sm text-[#f5f5f5]">Soporte 24/7</span>
-              </div>
             </div>
 
             {/* CTA Buttons */}
-            <div
-              className="flex flex-col sm:flex-row gap-3 transition-all duration-500 ease-out"
-              style={{
-                opacity: contentVisible ? 1 : 0,
-                transform: contentVisible ? "translateY(0)" : "translateY(20px)",
-                transitionDelay: contentVisible ? "0.28s" : "0s",
-              }}
-            >
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href="#"
-                className="inline-flex items-center justify-center bg-[#f5a623] text-[#0d0d0d] font-bold px-6 py-3 rounded-lg hover:bg-[#e09510] transition-colors duration-200 text-sm tracking-wide"
+                className="inline-flex items-center justify-center font-bold px-6 py-3 rounded-lg text-sm tracking-wide"
+                style={{
+                  backgroundColor: "#f5a623",
+                  color: "#0d0d0d",
+                  opacity: showContent ? 1 : 0,
+                  transform: showContent ? "translateY(0) scale(1)" : "translateY(16px) scale(0.96)",
+                  filter: showContent ? "blur(0px)" : "blur(3px)",
+                  transition: showContent
+                    ? "all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s"
+                    : "all 0.25s cubic-bezier(0.4, 0, 1, 1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#e09510"
+                  e.currentTarget.style.transform = "translateY(-2px) scale(1.02)"
+                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(245,166,35,0.3)"
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#f5a623"
+                  e.currentTarget.style.transform = showContent ? "translateY(0) scale(1)" : ""
+                  e.currentTarget.style.boxShadow = "none"
+                }}
               >
                 {activeSlide.cta}
               </a>
               <a
                 href="#games"
-                className="inline-flex items-center justify-center border border-[#333] text-[#f5f5f5] font-semibold px-6 py-3 rounded-lg hover:bg-[#1a1a1a] transition-colors duration-200 text-sm gap-2"
+                className="inline-flex items-center justify-center font-semibold px-6 py-3 rounded-lg text-sm gap-2"
+                style={{
+                  border: "1px solid #333",
+                  color: "#f5f5f5",
+                  opacity: showContent ? 1 : 0,
+                  transform: showContent ? "translateY(0)" : "translateY(16px)",
+                  filter: showContent ? "blur(0px)" : "blur(3px)",
+                  transition: showContent
+                    ? "all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.32s"
+                    : "all 0.25s cubic-bezier(0.4, 0, 1, 1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#1a1a1a"
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent"
+                }}
               >
                 VER TODOS LOS JUEGOS
                 <ArrowRight className="h-4 w-4" />
@@ -316,93 +389,148 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* ===== Right side - Vertical carousel ===== */}
+          {/* ===== RIGHT: Vertical Card Carousel ===== */}
           <div
-            className="hidden lg:block relative w-52 xl:w-56"
-            style={{ height: carouselHeight }}
+            className="hidden lg:block relative w-52 xl:w-60"
+            style={{ height: totalCarouselH }}
           >
-            {/* Fade masks */}
-            <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-[#0d0d0d]/80 to-transparent z-10 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#0d0d0d]/80 to-transparent z-10 pointer-events-none" />
+            {/* Edge fade masks */}
+            <div
+              className="absolute top-0 left-0 right-0 h-16 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to bottom, rgba(13,13,13,0.85), transparent)" }}
+            />
+            <div
+              className="absolute bottom-0 left-0 right-0 h-16 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to top, rgba(13,13,13,0.85), transparent)" }}
+            />
 
+            {/* Cards container */}
             <div className="relative w-full h-full">
               {visibleIndices.map((slideIndex, posIndex) => {
                 const slide = gameSlides[slideIndex]
                 const isActive = slideIndex === activeIndex
-                const centerPos = Math.floor(VISIBLE_CARDS / 2)
-
-                // Calculate Y based on position in visible list
-                let y = 0
-                for (let p = 0; p < posIndex; p++) {
-                  y += (p === centerPos ? CARD_H_ACTIVE : CARD_H) + GAP
-                }
-
                 const distFromCenter = Math.abs(posIndex - centerPos)
-                const opacityVal = isActive ? 1 : distFromCenter <= 1 ? 0.6 : 0.3
+                const y = getCardY(posIndex)
+
+                // Parallax-like depth: further cards are smaller
+                const depthScale = isActive ? 1 : 1 - distFromCenter * 0.04
+                const depthOpacity = isActive ? 1 : Math.max(0.2, 1 - distFromCenter * 0.28)
+                const depthBlur = isActive ? 0 : distFromCenter * 1.2
+
+                // Horizontal offset for depth feel
+                const depthX = isActive ? 0 : distFromCenter * 4
 
                 return (
                   <button
-                    key={`${slideIndex}-${activeIndex}`}
+                    key={`card-${slideIndex}`}
                     onClick={() => handleCardClick(slideIndex)}
-                    className="absolute left-0 w-full overflow-hidden rounded-xl text-left will-change-transform"
+                    className="absolute left-0 w-full overflow-hidden rounded-xl text-left group"
                     style={{
-                      height: isActive ? CARD_H_ACTIVE : CARD_H,
-                      transform: `translateY(${y}px) scale(${isActive ? 1 : 0.97})`,
-                      transition: "all 0.8s cubic-bezier(0.4, 0, 0.15, 1)",
-                      opacity: opacityVal,
-                      zIndex: isActive ? 5 : 3 - distFromCenter,
+                      height: isActive ? CARD_HEIGHT_ACTIVE : CARD_HEIGHT,
+                      transform: `translateY(${y}px) translateX(${depthX}px) scale(${depthScale})`,
+                      opacity: depthOpacity,
+                      filter: `blur(${depthBlur}px)`,
+                      transition: "all 0.85s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      zIndex: isActive ? 5 : 4 - distFromCenter,
+                      willChange: "transform, opacity, height, filter",
                     }}
                   >
+                    {/* Card background image */}
                     <Image
                       src={slide.cardImage}
                       alt={slide.label}
                       fill
-                      className="object-cover transition-transform duration-[1.2s] ease-out"
+                      className="object-cover"
                       style={{
-                        transform: isActive ? "scale(1.05)" : "scale(1)",
+                        transform: isActive ? "scale(1.08)" : "scale(1.02)",
+                        transition: "transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
                       }}
-                      sizes="224px"
+                      sizes="240px"
                     />
+
+                    {/* Card overlay */}
                     <div
-                      className="absolute inset-0 transition-all duration-700"
+                      className="absolute inset-0"
                       style={{
                         background: isActive
-                          ? "linear-gradient(135deg, rgba(13,13,13,0.5) 0%, rgba(13,13,13,0.25) 100%)"
-                          : "rgba(13,13,13,0.6)",
+                          ? "linear-gradient(135deg, rgba(13,13,13,0.35), rgba(13,13,13,0.15))"
+                          : "rgba(13,13,13,0.65)",
+                        transition: "background 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
                       }}
                     />
-                    {/* Active glow border */}
+
+                    {/* Active glow border with animated sweep */}
                     <div
-                      className="absolute inset-0 rounded-xl transition-all duration-700"
+                      className="absolute inset-0 rounded-xl"
                       style={{
                         boxShadow: isActive
-                          ? "inset 0 0 0 2px rgba(245,166,35,0.9), 0 0 24px rgba(245,166,35,0.2)"
+                          ? "inset 0 0 0 2px rgba(245,166,35,0.85), 0 0 28px -4px rgba(245,166,35,0.25), 0 4px 20px -4px rgba(0,0,0,0.5)"
                           : "inset 0 0 0 1px rgba(255,255,255,0.06)",
+                        transition: "box-shadow 0.85s cubic-bezier(0.34, 1.56, 0.64, 1)",
                       }}
                     />
+
+                    {/* Animated light sweep on active card */}
+                    {isActive && (
+                      <div
+                        className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none"
+                        style={{ zIndex: 3 }}
+                      >
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: "-100%",
+                            width: "60%",
+                            height: "100%",
+                            background: "linear-gradient(90deg, transparent, rgba(245,166,35,0.08), transparent)",
+                            animation: "cardSweep 3s ease-in-out infinite",
+                          }}
+                        />
+                      </div>
+                    )}
+
+                    {/* Card content */}
                     <div className="relative h-full flex flex-col justify-center px-4 z-[2]">
                       <span
-                        className="font-bold tracking-wider transition-all duration-700"
+                        className="font-bold tracking-wider"
                         style={{
                           fontSize: isActive ? "15px" : "11px",
-                          color: isActive ? "#f5f5f5" : "#777",
+                          color: isActive ? "#f5f5f5" : "#888",
+                          textShadow: isActive ? "0 2px 8px rgba(0,0,0,0.5)" : "none",
+                          transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
                         }}
                       >
                         {slide.label}
                       </span>
                       <span
-                        className="text-[10px] text-[#f5a623] font-semibold tracking-widest transition-all duration-700"
+                        className="text-[10px] font-semibold tracking-widest"
                         style={{
+                          color: "#f5a623",
                           opacity: isActive ? 1 : 0,
-                          transform: isActive ? "translateY(0)" : "translateY(-6px)",
+                          transform: isActive ? "translateY(0)" : "translateY(-8px)",
                           maxHeight: isActive ? "20px" : "0px",
-                          marginTop: isActive ? "3px" : "0px",
+                          marginTop: isActive ? "4px" : "0px",
                           overflow: "hidden",
+                          transition: isActive
+                            ? "all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s"
+                            : "all 0.3s ease-out",
                         }}
                       >
                         HOSTING
                       </span>
                     </div>
+
+                    {/* Hover glow for non-active cards */}
+                    {!isActive && (
+                      <div
+                        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none"
+                        style={{
+                          boxShadow: "inset 0 0 0 1px rgba(245,166,35,0.3)",
+                          transition: "opacity 0.4s ease",
+                        }}
+                      />
+                    )}
                   </button>
                 )
               })}
@@ -411,21 +539,31 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Mobile indicators */}
+      {/* Mobile game pill selector */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 lg:hidden z-[5]">
         {gameSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => handleCardClick(index)}
-            className="h-1.5 rounded-full transition-all duration-500"
+            className="h-1.5 rounded-full"
             style={{
               width: index === activeIndex ? 28 : 6,
               backgroundColor: index === activeIndex ? "#f5a623" : "rgba(160,160,160,0.3)",
+              transition: "all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
             }}
             aria-label={`Ir a diapositiva ${index + 1}`}
           />
         ))}
       </div>
+
+      {/* CSS Keyframe for card light sweep */}
+      <style jsx>{`
+        @keyframes cardSweep {
+          0% { left: -100%; }
+          50% { left: 200%; }
+          100% { left: 200%; }
+        }
+      `}</style>
     </section>
   )
 }
