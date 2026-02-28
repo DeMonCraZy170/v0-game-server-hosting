@@ -6,8 +6,8 @@ import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 const hostingCategories = [
   {
     icon: "/images/icon-minecraft.avif",
-    iconWidth: 72,
-    iconHeight: 72,
+    iconWidth: 60,
+    iconHeight: 60,
     title: "Minecraft",
     subtitle: "Hosting",
     description:
@@ -18,8 +18,8 @@ const hostingCategories = [
   },
   {
     icon: "/images/icon-gamehosting.avif",
-    iconWidth: 110,
-    iconHeight: 72,
+    iconWidth: 140,
+    iconHeight: 90,
     title: "Hosting de",
     subtitle: "Juegos",
     description:
@@ -30,8 +30,8 @@ const hostingCategories = [
   },
   {
     icon: "/images/icon-cloud.avif",
-    iconWidth: 72,
-    iconHeight: 72,
+    iconWidth: 90,
+    iconHeight: 90,
     title: "Cloud",
     subtitle: "Hosting",
     description:
