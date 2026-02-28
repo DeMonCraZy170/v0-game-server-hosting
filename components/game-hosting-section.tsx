@@ -1,42 +1,44 @@
 "use client"
 
-import { ArrowRight, CheckCircle } from "lucide-react"
 import Image from "next/image"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
 const hostingCategories = [
   {
-    icon: "/images/icon-minecraft.jpg",
+    icon: "/images/icon-minecraft.avif",
+    iconWidth: 56,
+    iconHeight: 56,
     title: "Minecraft",
     subtitle: "Hosting",
     description:
       "99.9% de uptime respaldado por soporte 24/7 y la confianza de mas de 1500+ resenas de 5 estrellas.",
     features: ["Mejor Precio", "Hardware Potente", "Facil de Usar"],
     cta: "Encontrar Mi Hosting Minecraft",
-    accentColor: "#22c55e",
-    buttonGradient: "from-green-600 to-green-700 hover:from-green-500 hover:to-green-600",
+    href: "#",
   },
   {
-    icon: "/images/icon-gamehosting.jpg",
+    icon: "/images/icon-gamehosting.avif",
+    iconWidth: 80,
+    iconHeight: 56,
     title: "Hosting de",
     subtitle: "Juegos",
     description:
       "Obtiene hosting de juegos mas potente por menos de lo que pagarias en cualquier otro lugar.",
     features: ["30+ Juegos Disponibles", "Soporte Experto 24/7", "Facil Configuracion"],
     cta: "Elegir Mi Hosting de Juegos",
-    accentColor: "#3b82f6",
-    buttonGradient: "from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600",
+    href: "#",
   },
   {
-    icon: "/images/icon-cloud.jpg",
+    icon: "/images/icon-cloud.avif",
+    iconWidth: 56,
+    iconHeight: 56,
     title: "Cloud",
     subtitle: "Hosting",
     description:
       "Necesitas un sitio web? Iniciando un proyecto en la nube? Asegurate de obtener el mejor precio.",
     features: ["Flexibilidad Total", "Facil Configuracion", "Proteccion DDoS"],
     cta: "Obtener Mi Cloud Hosting",
-    accentColor: "#6366f1",
-    buttonGradient: "from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600",
+    href: "#",
   },
 ]
 
@@ -50,7 +52,7 @@ export function GameHostingSection() {
         {/* Section header */}
         <div
           ref={headerRef}
-          className="mb-14 transition-all duration-700 ease-out"
+          className="mb-20 transition-all duration-700 ease-out"
           style={{
             opacity: headerVisible ? 1 : 0,
             transform: headerVisible ? "translateY(0)" : "translateY(30px)",
@@ -71,73 +73,111 @@ export function GameHostingSection() {
           </p>
         </div>
 
-        {/* Hosting cards grid */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Hosting cards grid - extra top padding for overflowing icons */}
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-7">
           {hostingCategories.map((category, index) => (
-            <div
+            <a
               key={category.title}
-              className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden transition-all duration-700 ease-out hover:border-border/80 hover:shadow-2xl hover:shadow-black/20"
+              href={category.href}
+              className="group relative flex flex-col rounded-xl transition-all duration-500 ease-out"
               style={{
                 opacity: cardsVisible ? 1 : 0,
                 transform: cardsVisible ? "translateY(0)" : "translateY(40px)",
                 transitionDelay: `${staggerDelay(index, 120)}ms`,
+                marginTop: 28,
               }}
             >
-              {/* Card content */}
-              <div className="relative flex flex-col flex-1 p-7">
-                {/* Large icon image */}
-                <div className="w-16 h-16 rounded-xl overflow-hidden mb-5 relative">
-                  <Image
-                    src={category.icon}
-                    alt={category.title}
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                  />
-                </div>
+              {/* Card border - default subtle, brighter on hover */}
+              <div
+                className="absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none"
+                style={{
+                  border: "1px solid rgba(255,255,255,0.07)",
+                }}
+              />
+              <div
+                className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
+                style={{
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  boxShadow: "0 0 20px rgba(255,255,255,0.03), 0 4px 30px rgba(0,0,0,0.3)",
+                }}
+              />
 
+              {/* Card background */}
+              <div
+                className="absolute inset-0 rounded-xl"
+                style={{ background: "#1a1a1f" }}
+              />
+
+              {/* Icon - overflowing above the card */}
+              <div
+                className="absolute z-10 left-7"
+                style={{
+                  top: -28,
+                  width: category.iconWidth,
+                  height: category.iconHeight,
+                }}
+              >
+                <Image
+                  src={category.icon}
+                  alt={category.title}
+                  width={category.iconWidth}
+                  height={category.iconHeight}
+                  className="object-contain drop-shadow-lg"
+                  sizes="80px"
+                />
+              </div>
+
+              {/* Card content - with top padding to clear the icon */}
+              <div className="relative z-[1] flex flex-col flex-1 pt-10 px-7 pb-7">
                 {/* Title */}
                 <h3
-                  className="text-2xl font-bold text-foreground leading-tight"
+                  className="text-[22px] font-bold text-foreground leading-tight"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
                   {category.title}
                 </h3>
                 <p
-                  className="text-2xl font-bold leading-tight mb-4"
-                  style={{ fontFamily: "var(--font-heading)", color: category.accentColor }}
+                  className="text-[22px] font-bold leading-tight mb-4 text-primary"
+                  style={{ fontFamily: "var(--font-heading)" }}
                 >
                   {category.subtitle}
                 </p>
 
                 {/* Description */}
-                <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+                <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
                   {category.description}
                 </p>
 
-                {/* Features */}
-                <ul className="flex flex-col gap-2.5 mb-6">
+                {/* Features with green dots */}
+                <ul className="flex flex-col gap-3 mb-6">
                   {category.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2.5 text-sm text-foreground">
-                      <CheckCircle className="h-4 w-4 shrink-0" style={{ color: category.accentColor }} />
+                    <li key={feature} className="flex items-center gap-3 text-sm text-foreground/90">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full shrink-0"
+                        style={{
+                          background: "#22c55e",
+                          boxShadow: "0 0 6px rgba(34,197,94,0.5)",
+                        }}
+                      />
                       {feature}
                     </li>
                   ))}
                 </ul>
 
-                {/* Spacer pushes button to bottom */}
+                {/* Spacer to push button to bottom */}
                 <div className="flex-1" />
               </div>
 
-              {/* Full-width CTA button at the bottom */}
-              <a
-                href="#"
-                className={`flex items-center justify-center gap-2 px-6 py-4 text-sm font-bold text-foreground tracking-wide bg-gradient-to-r ${category.buttonGradient} transition-all duration-300`}
+              {/* Full-width CTA button - solid teal matching SparkedHost */}
+              <div
+                className="relative z-[1] flex items-center justify-center rounded-b-xl px-6 py-4 text-[15px] font-bold text-white tracking-wide transition-all duration-300 group-hover:brightness-110"
+                style={{
+                  background: "linear-gradient(135deg, #0891b2, #0ea5e9, #38bdf8)",
+                }}
               >
                 {category.cta}
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
+              </div>
+            </a>
           ))}
         </div>
       </div>
