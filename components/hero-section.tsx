@@ -90,9 +90,9 @@ const gameSlides: GameSlide[] = [
 ]
 
 const VISIBLE_CARDS = 5
-const CARD_H = 80
-const CARD_H_ACTIVE = 112
-const GAP = 10
+const CARD_H = 96
+const CARD_H_ACTIVE = 140
+const GAP = 12
 
 export function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -218,7 +218,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-[640px] lg:min-h-[720px] overflow-hidden">
+    <section className="relative min-h-[640px] lg:min-h-[780px] overflow-hidden">
       {/* ===== BACKGROUND with crossfade + zoom ===== */}
       {gameSlides.map((s, i) => {
         const isCurrent = i === activeIndex
@@ -266,7 +266,7 @@ export function HeroSection() {
       />
 
       {/* ===== CONTENT ===== */}
-      <div className="relative z-[4] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex items-center min-h-[640px] lg:min-h-[720px]">
+      <div className="relative z-[4] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex items-center min-h-[640px] lg:min-h-[780px]">
         <div className="flex flex-col lg:flex-row items-start lg:items-center w-full gap-8 lg:gap-16">
 
           {/* LEFT: Staggered content */}
@@ -340,7 +340,7 @@ export function HeroSection() {
 
           {/* RIGHT: Vertical card carousel */}
           <div
-            className="hidden lg:block relative w-64 xl:w-72 ml-auto"
+            className="hidden lg:block relative w-72 xl:w-80 2xl:w-[340px] ml-auto"
             style={{ height: totalH }}
           >
             <div className="relative w-full h-full">
@@ -372,7 +372,7 @@ export function HeroSection() {
                       alt={s.label}
                       fill
                       className="object-cover"
-                      sizes="288px"
+                      sizes="340px"
                       style={{
                         transform: isActive ? "scale(1.1)" : "scale(1)",
                         transition: "transform 3s ease-out",
@@ -431,12 +431,12 @@ export function HeroSection() {
                     )}
 
                     {/* Card label */}
-                    <div className="relative h-full flex flex-col justify-center px-4 z-[2]">
+                    <div className="relative h-full flex flex-col justify-center px-5 z-[2]">
                       <span
                         className="font-bold tracking-wider leading-tight"
                         style={{
-                          fontSize: isActive ? 16 : 12,
-                          color: isActive ? "#f5f5f5" : "#888",
+                          fontSize: isActive ? 20 : 14,
+                          color: isActive ? "#f5f5f5" : "#999",
                           textShadow: isActive ? "0 2px 8px rgba(0,0,0,0.5)" : "none",
                           transition: "all 0.5s ease",
                         }}
@@ -444,7 +444,7 @@ export function HeroSection() {
                         {s.label}
                       </span>
                       <span
-                        className="text-[10px] font-semibold tracking-widest mt-1"
+                        className="text-[11px] font-semibold tracking-widest mt-1"
                         style={{
                           color: "#f5a623",
                           opacity: isActive ? 1 : 0,
