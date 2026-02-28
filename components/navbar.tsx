@@ -104,7 +104,7 @@ export function Navbar() {
     <>
       <nav
         className={`transition-all duration-300 ${
-          scrolled
+          scrolled || openDropdown === "Hosting Minecraft"
             ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-black/20"
             : "bg-transparent"
         }`}
