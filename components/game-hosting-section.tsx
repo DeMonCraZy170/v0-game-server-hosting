@@ -15,6 +15,11 @@ const hostingCategories = [
     features: ["Mejor Precio", "Hardware Potente", "Facil de Usar"],
     cta: "Encontrar Mi Hosting Minecraft",
     href: "#",
+    accentColor: "#22c55e",
+    accentGlow: "rgba(34,197,94,0.5)",
+    buttonBg: "linear-gradient(135deg, #16a34a, #22c55e, #4ade80)",
+    dotColor: "#22c55e",
+    dotGlow: "rgba(34,197,94,0.5)",
   },
   {
     icon: "/images/icon-gamehosting.avif",
@@ -27,6 +32,11 @@ const hostingCategories = [
     features: ["30+ Juegos Disponibles", "Soporte Experto 24/7", "Facil Configuracion"],
     cta: "Elegir Mi Hosting de Juegos",
     href: "#",
+    accentColor: "#a855f7",
+    accentGlow: "rgba(168,85,247,0.5)",
+    buttonBg: "linear-gradient(135deg, #7c3aed, #a855f7, #c084fc)",
+    dotColor: "#a855f7",
+    dotGlow: "rgba(168,85,247,0.5)",
   },
   {
     icon: "/images/icon-cloud.avif",
@@ -39,6 +49,11 @@ const hostingCategories = [
     features: ["Flexibilidad Total", "Facil Configuracion", "Proteccion DDoS"],
     cta: "Obtener Mi Cloud Hosting",
     href: "#",
+    accentColor: "#3b82f6",
+    accentGlow: "rgba(59,130,246,0.5)",
+    buttonBg: "linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa)",
+    dotColor: "#3b82f6",
+    dotGlow: "rgba(59,130,246,0.5)",
   },
 ]
 
@@ -97,8 +112,8 @@ export function GameHostingSection() {
               <div
                 className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
                 style={{
-                  border: "1px solid rgba(14,165,233,0.5)",
-                  boxShadow: "0 0 15px rgba(14,165,233,0.15), 0 0 30px rgba(14,165,233,0.05), 0 4px 30px rgba(0,0,0,0.3)",
+                  border: `1px solid ${category.accentGlow}`,
+                  boxShadow: `0 0 15px ${category.accentGlow.replace("0.5", "0.15")}, 0 0 30px ${category.accentGlow.replace("0.5", "0.05")}, 0 4px 30px rgba(0,0,0,0.3)`,
                 }}
               />
 
@@ -155,8 +170,8 @@ export function GameHostingSection() {
                       <span
                         className="w-2.5 h-2.5 rounded-full shrink-0"
                         style={{
-                          background: "#22c55e",
-                          boxShadow: "0 0 6px rgba(34,197,94,0.5)",
+                          background: category.dotColor,
+                          boxShadow: `0 0 6px ${category.dotGlow}`,
                         }}
                       />
                       {feature}
@@ -172,7 +187,7 @@ export function GameHostingSection() {
               <div
                 className="relative z-[1] flex items-center justify-center rounded-b-xl px-6 py-4 text-[15px] font-bold text-white tracking-wide transition-all duration-300 group-hover:brightness-110"
                 style={{
-                  background: "linear-gradient(135deg, #0891b2, #0ea5e9, #38bdf8)",
+                  background: category.buttonBg,
                 }}
               >
                 {category.cta}
