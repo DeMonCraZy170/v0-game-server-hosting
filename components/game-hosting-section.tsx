@@ -6,8 +6,8 @@ import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 const hostingCategories = [
   {
     icon: "/images/icon-minecraft.avif",
-    iconWidth: 56,
-    iconHeight: 56,
+    iconWidth: 72,
+    iconHeight: 72,
     title: "Minecraft",
     subtitle: "Hosting",
     description:
@@ -18,8 +18,8 @@ const hostingCategories = [
   },
   {
     icon: "/images/icon-gamehosting.avif",
-    iconWidth: 80,
-    iconHeight: 56,
+    iconWidth: 110,
+    iconHeight: 72,
     title: "Hosting de",
     subtitle: "Juegos",
     description:
@@ -30,8 +30,8 @@ const hostingCategories = [
   },
   {
     icon: "/images/icon-cloud.avif",
-    iconWidth: 56,
-    iconHeight: 56,
+    iconWidth: 72,
+    iconHeight: 72,
     title: "Cloud",
     subtitle: "Hosting",
     description:
@@ -84,7 +84,7 @@ export function GameHostingSection() {
                 opacity: cardsVisible ? 1 : 0,
                 transform: cardsVisible ? "translateY(0)" : "translateY(40px)",
                 transitionDelay: `${staggerDelay(index, 120)}ms`,
-                marginTop: 28,
+                marginTop: 36,
               }}
             >
               {/* Card border - default subtle, brighter on hover */}
@@ -97,8 +97,8 @@ export function GameHostingSection() {
               <div
                 className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
                 style={{
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  boxShadow: "0 0 20px rgba(255,255,255,0.03), 0 4px 30px rgba(0,0,0,0.3)",
+                  border: "1px solid rgba(14,165,233,0.5)",
+                  boxShadow: "0 0 15px rgba(14,165,233,0.15), 0 0 30px rgba(14,165,233,0.05), 0 4px 30px rgba(0,0,0,0.3)",
                 }}
               />
 
@@ -112,7 +112,7 @@ export function GameHostingSection() {
               <div
                 className="absolute z-10 left-7"
                 style={{
-                  top: -28,
+                  top: -36,
                   width: category.iconWidth,
                   height: category.iconHeight,
                 }}
@@ -123,12 +123,12 @@ export function GameHostingSection() {
                   width={category.iconWidth}
                   height={category.iconHeight}
                   className="object-contain drop-shadow-lg"
-                  sizes="80px"
+                  sizes="110px"
                 />
               </div>
 
               {/* Card content - with top padding to clear the icon */}
-              <div className="relative z-[1] flex flex-col flex-1 pt-10 px-7 pb-7">
+              <div className="relative z-[1] flex flex-col flex-1 pt-12 px-7 pb-7">
                 {/* Title */}
                 <h3
                   className="text-[22px] font-bold text-foreground leading-tight"
