@@ -1,41 +1,42 @@
 "use client"
 
-import { Gamepad2, Server, Cloud, ArrowRight, CheckCircle } from "lucide-react"
+import { ArrowRight, CheckCircle } from "lucide-react"
+import Image from "next/image"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
 const hostingCategories = [
   {
-    icon: Gamepad2,
+    icon: "/images/icon-minecraft.jpg",
     title: "Minecraft",
     subtitle: "Hosting",
     description:
       "99.9% de uptime respaldado por soporte 24/7 y la confianza de mas de 1500+ resenas de 5 estrellas.",
     features: ["Mejor Precio", "Hardware Potente", "Facil de Usar"],
     cta: "Encontrar Mi Hosting Minecraft",
-    color: "from-green-500/20 to-green-500/5",
-    borderColor: "hover:border-green-500/50",
+    accentColor: "#22c55e",
+    buttonGradient: "from-green-600 to-green-700 hover:from-green-500 hover:to-green-600",
   },
   {
-    icon: Server,
+    icon: "/images/icon-gamehosting.jpg",
     title: "Hosting de",
     subtitle: "Juegos",
     description:
       "Obtiene hosting de juegos mas potente por menos de lo que pagarias en cualquier otro lugar.",
     features: ["30+ Juegos Disponibles", "Soporte Experto 24/7", "Facil Configuracion"],
     cta: "Elegir Mi Hosting de Juegos",
-    color: "from-blue-500/20 to-blue-500/5",
-    borderColor: "hover:border-blue-500/50",
+    accentColor: "#3b82f6",
+    buttonGradient: "from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600",
   },
   {
-    icon: Cloud,
+    icon: "/images/icon-cloud.jpg",
     title: "Cloud",
     subtitle: "Hosting",
     description:
       "Necesitas un sitio web? Iniciando un proyecto en la nube? Asegurate de obtener el mejor precio.",
     features: ["Flexibilidad Total", "Facil Configuracion", "Proteccion DDoS"],
     cta: "Obtener Mi Cloud Hosting",
-    color: "from-purple-500/20 to-purple-500/5",
-    borderColor: "hover:border-purple-500/50",
+    accentColor: "#6366f1",
+    buttonGradient: "from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600",
   },
 ]
 
@@ -49,7 +50,7 @@ export function GameHostingSection() {
         {/* Section header */}
         <div
           ref={headerRef}
-          className="mb-12 transition-all duration-700 ease-out"
+          className="mb-14 transition-all duration-700 ease-out"
           style={{
             opacity: headerVisible ? 1 : 0,
             transform: headerVisible ? "translateY(0)" : "translateY(30px)",
@@ -72,59 +73,72 @@ export function GameHostingSection() {
 
         {/* Hosting cards grid */}
         <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {hostingCategories.map((category, index) => {
-            const Icon = category.icon
-            return (
-              <div
-                key={category.title}
-                className={`group relative bg-card border border-border rounded-2xl p-6 transition-all duration-700 ease-out hover:shadow-xl hover:shadow-primary/5 ${category.borderColor}`}
-                style={{
-                  opacity: cardsVisible ? 1 : 0,
-                  transform: cardsVisible ? "translateY(0)" : "translateY(40px)",
-                  transitionDelay: `${staggerDelay(index, 120)}ms`,
-                }}
-              >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-b ${category.color} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity`}
-                />
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mb-4">
-                    <Icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3
-                    className="text-2xl font-bold text-foreground mb-1"
-                    style={{ fontFamily: "var(--font-heading)" }}
-                  >
-                    {category.title}
-                  </h3>
-                  <p
-                    className="text-2xl font-bold text-primary mb-3"
-                    style={{ fontFamily: "var(--font-heading)" }}
-                  >
-                    {category.subtitle}
-                  </p>
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                    {category.description}
-                  </p>
-                  <ul className="flex flex-col gap-2 mb-6">
-                    {category.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-sm text-foreground">
-                        <CheckCircle className="h-4 w-4 text-primary shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
-                  >
-                    {category.cta}
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
+          {hostingCategories.map((category, index) => (
+            <div
+              key={category.title}
+              className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden transition-all duration-700 ease-out hover:border-border/80 hover:shadow-2xl hover:shadow-black/20"
+              style={{
+                opacity: cardsVisible ? 1 : 0,
+                transform: cardsVisible ? "translateY(0)" : "translateY(40px)",
+                transitionDelay: `${staggerDelay(index, 120)}ms`,
+              }}
+            >
+              {/* Card content */}
+              <div className="relative flex flex-col flex-1 p-7">
+                {/* Large icon image */}
+                <div className="w-16 h-16 rounded-xl overflow-hidden mb-5 relative">
+                  <Image
+                    src={category.icon}
+                    alt={category.title}
+                    fill
+                    className="object-cover"
+                    sizes="64px"
+                  />
                 </div>
+
+                {/* Title */}
+                <h3
+                  className="text-2xl font-bold text-foreground leading-tight"
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
+                  {category.title}
+                </h3>
+                <p
+                  className="text-2xl font-bold leading-tight mb-4"
+                  style={{ fontFamily: "var(--font-heading)", color: category.accentColor }}
+                >
+                  {category.subtitle}
+                </p>
+
+                {/* Description */}
+                <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+                  {category.description}
+                </p>
+
+                {/* Features */}
+                <ul className="flex flex-col gap-2.5 mb-6">
+                  {category.features.map((feature) => (
+                    <li key={feature} className="flex items-center gap-2.5 text-sm text-foreground">
+                      <CheckCircle className="h-4 w-4 shrink-0" style={{ color: category.accentColor }} />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Spacer pushes button to bottom */}
+                <div className="flex-1" />
               </div>
-            )
-          })}
+
+              {/* Full-width CTA button at the bottom */}
+              <a
+                href="#"
+                className={`flex items-center justify-center gap-2 px-6 py-4 text-sm font-bold text-foreground tracking-wide bg-gradient-to-r ${category.buttonGradient} transition-all duration-300`}
+              >
+                {category.cta}
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          ))}
         </div>
       </div>
     </section>
