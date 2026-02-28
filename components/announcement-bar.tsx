@@ -1,8 +1,28 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { ArrowRight } from "lucide-react"
 
 export function AnnouncementBar() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   return (
-    <div className="bg-primary/10 border-b border-border">
+    <div
+      className={`transition-all duration-300 ${
+        scrolled
+          ? "bg-primary/10 border-b border-border"
+          : "bg-transparent border-b border-white/5"
+      }`}
+    >
       <div className="mx-auto max-w-7xl px-4 py-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="bg-primary text-primary-foreground text-xs font-bold px-2 py-0.5 rounded">

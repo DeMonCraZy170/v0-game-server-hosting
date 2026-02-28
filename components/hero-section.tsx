@@ -268,7 +268,7 @@ export function HeroSection() {
       />
 
       {/* ===== CONTENT ===== */}
-      <div className="relative z-[4] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex items-center min-h-[640px] lg:min-h-[780px]">
+      <div className="relative z-[4] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-32 lg:pt-36 pb-20 lg:pb-28 flex items-center min-h-[640px] lg:min-h-[780px]">
         <div className="flex flex-col lg:flex-row items-start lg:items-center w-full gap-8 lg:gap-16">
 
           {/* LEFT: Staggered content */}
