@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { ChevronDown, Menu, X, Zap, HelpCircle, BookOpen } from "lucide-react"
+import { ChevronDown, Menu, X, Zap, HelpCircle, BookOpen, ArrowRight, Gamepad2, Sword, TreePine, Pickaxe, Flame, Bug, Shield, Rocket, Globe, Mountain, Skull, Factory, Compass, Crosshair, Swords } from "lucide-react"
 import Image from "next/image"
 
 /* ── Minecraft Hosting mega-dropdown cards ── */
@@ -40,36 +40,63 @@ const minecraftCards = [
   },
 ]
 
+/* ── Game Hosting mega-dropdown data ── */
+const gameNewReleases = [
+  { label: "Palworld", href: "#", icon: Globe, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Enshrouded", href: "#", icon: Flame, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Soulmask", href: "#", icon: Skull, badge: "NUEVO!", badgeColor: "#f5a623" },
+]
+
+const gamePopular = [
+  { label: "Rust", href: "#", icon: Shield, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
+  { label: "Valheim", href: "#", icon: Sword },
+  { label: "Unturned", href: "#", icon: Bug },
+  { label: "Terraria", href: "#", icon: Pickaxe, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
+  { label: "DayZ", href: "#", icon: Crosshair },
+  { label: "Project Zomboid", href: "#", icon: Skull },
+  { label: "Garry's Mod", href: "#", icon: Gamepad2 },
+  { label: "7 Days to Die", href: "#", icon: Swords },
+  { label: "Ark: Survival", href: "#", icon: Mountain },
+  { label: "Satisfactory", href: "#", icon: Factory },
+  { label: "Astroneer", href: "#", icon: Rocket },
+  { label: "Factorio", href: "#", icon: Compass },
+]
+
 /* ── Standard dropdown items ── */
 const navItems = [
   {
     label: "Hosting Minecraft",
     hasDropdown: true,
     isMega: true,
+    megaType: "minecraft" as const,
     items: [],
   },
   {
     label: "Hosting de Juegos",
     hasDropdown: true,
-    isMega: false,
-    items: ["Valheim", "Terraria", "Satisfactory", "Factorio", "Astroneer", "Unturned"],
+    isMega: true,
+    megaType: "games" as const,
+    items: [],
   },
   {
     label: "Cloud Hosting",
     hasDropdown: true,
     isMega: false,
+    megaType: undefined,
     items: ["VPS KVM", "Servidor Dedicado", "Hosting Web"],
   },
   {
     label: "Recursos",
     hasDropdown: true,
     isMega: false,
+    megaType: undefined,
     items: ["Base de Conocimiento", "Blog", "Estado del Servicio"],
   },
   {
     label: "Mas",
     hasDropdown: true,
     isMega: false,
+    megaType: undefined,
     items: ["Sobre Nosotros", "Contacto", "Programa de Afiliados"],
   },
 ]
@@ -104,7 +131,7 @@ export function Navbar() {
     <>
       <nav
         className={`transition-all duration-300 ${
-          scrolled || openDropdown === "Hosting Minecraft"
+          scrolled || openDropdown === "Hosting Minecraft" || openDropdown === "Hosting de Juegos"
             ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-black/20"
             : "bg-transparent"
         }`}
@@ -244,6 +271,116 @@ export function Navbar() {
         </div>
       </div>
 
+      {/* ── Game Hosting Mega Dropdown ── */}
+      <div
+        className={`hidden lg:block overflow-hidden transition-all duration-300 ease-in-out ${
+          openDropdown === "Hosting de Juegos"
+            ? "max-h-[400px] opacity-100"
+            : "max-h-0 opacity-0 pointer-events-none"
+        }`}
+        style={{
+          background: scrolled
+            ? "rgba(13,13,13,0.97)"
+            : "linear-gradient(to bottom, rgba(13,13,13,0.95), rgba(13,13,13,0.85))",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}
+        onMouseEnter={() => handleMouseEnter("Hosting de Juegos")}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="mx-auto max-w-7xl px-4 py-6">
+          <div className="flex gap-10">
+            {/* New Releases column */}
+            <div className="shrink-0">
+              <h4
+                className="text-sm font-bold text-foreground mb-4 tracking-wide"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Nuevos Lanzamientos
+              </h4>
+              <div className="flex flex-col gap-1">
+                {gameNewReleases.map((game) => {
+                  const Icon = game.icon
+                  return (
+                    <a
+                      key={game.label}
+                      href={game.href}
+                      className="group/game flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-secondary/60 transition-colors"
+                    >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-md bg-secondary text-muted-foreground group-hover/game:text-primary transition-colors">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="text-sm font-medium text-foreground/90 group-hover/game:text-foreground transition-colors">
+                        {game.label}
+                      </span>
+                      {game.badge && (
+                        <span
+                          className="text-[10px] font-bold text-background px-1.5 py-0.5 rounded ml-1"
+                          style={{ background: game.badgeColor }}
+                        >
+                          {game.badge}
+                        </span>
+                      )}
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="w-px bg-border/50 self-stretch" />
+
+            {/* Popular Games columns */}
+            <div className="flex-1">
+              <h4
+                className="text-sm font-bold text-foreground mb-4 tracking-wide"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Juegos Populares
+              </h4>
+              <div className="grid grid-cols-4 gap-x-2 gap-y-1">
+                {gamePopular.map((game) => {
+                  const Icon = game.icon
+                  return (
+                    <a
+                      key={game.label}
+                      href={game.href}
+                      className="group/game flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-secondary/60 transition-colors"
+                    >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-md bg-secondary text-muted-foreground group-hover/game:text-primary transition-colors">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="text-sm font-medium text-foreground/90 group-hover/game:text-foreground transition-colors whitespace-nowrap">
+                        {game.label}
+                      </span>
+                      {game.badge && (
+                        <span
+                          className="text-[10px] font-bold text-background px-1.5 py-0.5 rounded ml-1 shrink-0"
+                          style={{ background: game.badgeColor }}
+                        >
+                          {game.badge}
+                        </span>
+                      )}
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* View all games link */}
+          <div className="mt-5 pt-4 border-t border-border/40 flex justify-center">
+            <a
+              href="#"
+              className="group/all flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors"
+            >
+              Ver todos los juegos
+              <ArrowRight className="h-4 w-4 transition-transform group-hover/all:translate-x-1" />
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="lg:hidden border-t border-border bg-background px-4 py-4">
@@ -266,7 +403,7 @@ export function Navbar() {
               </button>
               {openDropdown === item.label && (
                 <div className="mt-2 ml-4 flex flex-col gap-2">
-                  {item.isMega
+                  {item.isMega && item.megaType === "minecraft"
                     ? minecraftCards.map((card) => (
                         <a
                           key={card.label}
@@ -274,6 +411,24 @@ export function Navbar() {
                           className="text-sm text-muted-foreground hover:text-foreground"
                         >
                           {card.label}
+                        </a>
+                      ))
+                    : item.isMega && item.megaType === "games"
+                    ? [...gameNewReleases, ...gamePopular].map((game) => (
+                        <a
+                          key={game.label}
+                          href={game.href}
+                          className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-2"
+                        >
+                          {game.label}
+                          {game.badge && (
+                            <span
+                              className="text-[9px] font-bold text-background px-1 py-0.5 rounded"
+                              style={{ background: game.badgeColor }}
+                            >
+                              {game.badge}
+                            </span>
+                          )}
                         </a>
                       ))
                     : item.items?.map((subItem) => (
