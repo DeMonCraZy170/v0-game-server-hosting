@@ -1,7 +1,10 @@
 "use client"
 
-import { Zap, Ticket, MessageSquare, Headphones, ArrowLeft } from "lucide-react"
+import { Ticket, MessageSquare, Headphones } from "lucide-react"
 import Link from "next/link"
+import { AnnouncementBar } from "@/components/announcement-bar"
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
 
 const contactMethods = [
   {
@@ -37,30 +40,14 @@ const contactMethods = [
 export function ContactPageContent() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header / Navbar */}
-      <nav className="border-b border-border bg-background/95 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <Zap className="h-9 w-9 text-primary" />
-            <span
-              className="text-2xl font-extrabold tracking-tight text-foreground"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              FORZA <span className="text-primary">HOST</span>
-            </span>
-          </Link>
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Volver al Inicio
-          </Link>
-        </div>
-      </nav>
+      {/* Shared Navbar */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <AnnouncementBar />
+        <Navbar />
+      </div>
 
       {/* Breadcrumb */}
-      <div className="mx-auto max-w-7xl px-4 pt-6">
+      <div className="mx-auto max-w-7xl px-4 pt-32">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Link href="/" className="hover:text-foreground transition-colors">
             Inicio
@@ -163,23 +150,8 @@ export function ContactPageContent() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="border-t border-border mt-12">
-        <div className="mx-auto max-w-7xl px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-primary" />
-            <span
-              className="text-lg font-bold text-foreground"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              FORZA<span className="text-primary">HOST</span>
-            </span>
-          </Link>
-          <p className="text-xs text-muted-foreground">
-            {"2024 ForzaHost. Todos los derechos reservados."}
-          </p>
-        </div>
-      </div>
+      {/* Shared Footer */}
+      <Footer />
     </div>
   )
 }
