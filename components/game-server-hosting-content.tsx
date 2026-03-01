@@ -16,7 +16,6 @@ import {
   Activity,
   Newspaper,
   ArrowRight,
-  MapPin,
   Signal,
   Search,
   ChevronRight,
@@ -624,7 +623,7 @@ export function GameServerHostingContent() {
             </p>
           </div>
 
-          {/* World Map with dots */}
+          {/* World Map Image */}
           <div
             className="relative mx-auto mb-12 transition-all duration-700 ease-out"
             style={{
@@ -634,23 +633,16 @@ export function GameServerHostingContent() {
               transitionDelay: "200ms",
             }}
           >
-            <div className="relative w-full" style={{ paddingBottom: "50%" }}>
-              <svg
-                viewBox="0 0 1000 500"
-                className="absolute inset-0 w-full h-full"
-                fill="none"
-              >
-                {generateWorldMapDots().map((dot, i) => (
-                  <circle
-                    key={i}
-                    cx={dot.x}
-                    cy={dot.y}
-                    r={2}
-                    fill="rgba(160,160,160,0.2)"
-                  />
-                ))}
-              </svg>
+            <div className="relative w-full" style={{ aspectRatio: "2/1" }}>
+              <Image
+                src="/images/map.avif"
+                alt="Mapa mundial de ubicaciones de servidores"
+                fill
+                className="object-contain"
+                sizes="(max-width: 900px) 100vw, 900px"
+              />
 
+              {/* Interactive location dots overlaid on the map image */}
               {locationDots.map((dot) => (
                 <div
                   key={dot.name}
@@ -666,7 +658,7 @@ export function GameServerHostingContent() {
                   <div
                     className="w-3 h-3 rounded-full transition-all duration-300 cursor-pointer"
                     style={{
-                      backgroundColor: dot.active ? "#f5a623" : "#666",
+                      backgroundColor: dot.active ? "#f5a623" : "#888",
                       boxShadow: dot.active
                         ? "0 0 12px rgba(245,166,35,0.6), 0 0 24px rgba(245,166,35,0.3)"
                         : "0 0 6px rgba(100,100,100,0.3)",
@@ -680,7 +672,10 @@ export function GameServerHostingContent() {
                         border: "1px solid rgba(255,255,255,0.1)",
                       }}
                     >
-                      <p className="text-foreground font-bold">{dot.name}</p>
+                      <div className="flex items-center gap-2">
+                        <FlagEmoji code={locationDots.find((d) => d.name === dot.name)?.active ? "CA" : ""} />
+                        <p className="text-foreground font-bold">{dot.name}</p>
+                      </div>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <Signal className="w-3 h-3" style={{ color: dot.active ? "#22c55e" : "#f5a623" }} />
                         <span style={{ color: dot.active ? "#22c55e" : "#f5a623" }}>
@@ -888,102 +883,4 @@ export function GameServerHostingContent() {
   )
 }
 
-/* ─── World map dot generator ─── */
 
-function generateWorldMapDots() {
-  const dots: { x: number; y: number }[] = []
-  for (let row = 0; row < 12; row++) {
-    for (let col = 0; col < 18; col++) {
-      const x = 80 + col * 14
-      const y = 80 + row * 14
-      if (isInNorthAmerica(x, y)) dots.push({ x, y })
-    }
-  }
-  for (let row = 0; row < 16; row++) {
-    for (let col = 0; col < 10; col++) {
-      const x = 180 + col * 14
-      const y = 250 + row * 14
-      if (isInSouthAmerica(x, y)) dots.push({ x, y })
-    }
-  }
-  for (let row = 0; row < 10; row++) {
-    for (let col = 0; col < 14; col++) {
-      const x = 430 + col * 14
-      const y = 60 + row * 14
-      if (isInEurope(x, y)) dots.push({ x, y })
-    }
-  }
-  for (let row = 0; row < 14; row++) {
-    for (let col = 0; col < 12; col++) {
-      const x = 430 + col * 14
-      const y = 200 + row * 14
-      if (isInAfrica(x, y)) dots.push({ x, y })
-    }
-  }
-  for (let row = 0; row < 16; row++) {
-    for (let col = 0; col < 22; col++) {
-      const x = 580 + col * 14
-      const y = 50 + row * 14
-      if (isInAsia(x, y)) dots.push({ x, y })
-    }
-  }
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 12; col++) {
-      const x = 780 + col * 14
-      const y = 310 + row * 14
-      if (isInAustralia(x, y)) dots.push({ x, y })
-    }
-  }
-  return dots
-}
-
-function isInNorthAmerica(x: number, y: number) {
-  if (x < 80 || x > 320 || y < 80 || y > 240) return false
-  if (y < 100 && x > 280) return false
-  if (y > 200 && x < 100) return false
-  if (y > 220 && x > 300) return false
-  const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return rand - Math.floor(rand) > 0.2
-}
-
-function isInSouthAmerica(x: number, y: number) {
-  if (x < 180 || x > 320 || y < 250 || y > 470) return false
-  const cx = x - 250
-  const cy = y - 350
-  if ((cx * cx) / 4900 + (cy * cy) / 14400 > 1) return false
-  const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return rand - Math.floor(rand) > 0.25
-}
-
-function isInEurope(x: number, y: number) {
-  if (x < 430 || x > 620 || y < 60 || y > 200) return false
-  if (y > 180 && x > 580) return false
-  const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return rand - Math.floor(rand) > 0.2
-}
-
-function isInAfrica(x: number, y: number) {
-  if (x < 430 || x > 600 || y < 200 || y > 400) return false
-  const cx = x - 510
-  const cy = y - 300
-  if ((cx * cx) / 6400 + (cy * cy) / 10000 > 1) return false
-  const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return rand - Math.floor(rand) > 0.25
-}
-
-function isInAsia(x: number, y: number) {
-  if (x < 580 || x > 900 || y < 50 || y > 280) return false
-  if (y > 240 && x < 650) return false
-  if (y < 80 && x < 650) return false
-  const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return rand - Math.floor(rand) > 0.2
-}
-
-function isInAustralia(x: number, y: number) {
-  if (x < 780 || x > 920 || y < 310 || y > 410) return false
-  const cx = x - 850
-  const cy = y - 360
-  if ((cx * cx) / 4900 + (cy * cy) / 2500 > 1) return false
-  const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return rand - Math.floor(rand) > 0.2
-}
