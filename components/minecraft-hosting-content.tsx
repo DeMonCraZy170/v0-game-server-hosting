@@ -1257,7 +1257,7 @@ function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cy
           border: plan.bestSeller ? "none" : "1px solid rgba(255,255,255,0.1)",
         }}
       >
-        {`Ordenar en ${locationName.split(",")[0]}`}
+        {`Ordenar en ${locationName.replace("OVH ", "")}`}
       </button>
     </div>
   )
