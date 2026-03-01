@@ -42,24 +42,24 @@ const minecraftCards = [
 
 /* ── Game Hosting mega-dropdown data ── */
 const gameNewReleases = [
-  { label: "Palworld", href: "/proximamente", icon: Globe, badge: "NUEVO!", badgeColor: "#f5a623" },
-  { label: "Enshrouded", href: "/proximamente", icon: Flame, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Palworld", href: "/game-server-hosting/palworld", icon: Globe, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Enshrouded", href: "/game-server-hosting/enshrouded", icon: Flame, badge: "NUEVO!", badgeColor: "#f5a623" },
   { label: "Soulmask", href: "/proximamente", icon: Skull, badge: "NUEVO!", badgeColor: "#f5a623" },
 ]
 
 const gamePopular = [
-  { label: "Rust", href: "/proximamente", icon: Shield, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
-  { label: "Valheim", href: "/proximamente", icon: Sword },
-  { label: "Unturned", href: "/proximamente", icon: Bug },
-  { label: "Terraria", href: "/proximamente", icon: Pickaxe, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
-  { label: "DayZ", href: "/proximamente", icon: Crosshair },
-  { label: "Project Zomboid", href: "/proximamente", icon: Skull },
-  { label: "Garry's Mod", href: "/proximamente", icon: Gamepad2 },
-  { label: "7 Days to Die", href: "/proximamente", icon: Swords },
-  { label: "Ark: Survival", href: "/proximamente", icon: Mountain },
-  { label: "Satisfactory", href: "/proximamente", icon: Factory },
+  { label: "Rust", href: "/game-server-hosting/rust", icon: Shield, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
+  { label: "Valheim", href: "/game-server-hosting/valheim", icon: Sword },
+  { label: "Unturned", href: "/game-server-hosting/unturned", icon: Bug },
+  { label: "Terraria", href: "/game-server-hosting/terraria", icon: Pickaxe, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
+  { label: "DayZ", href: "/game-server-hosting/dayz", icon: Crosshair },
+  { label: "Project Zomboid", href: "/game-server-hosting/project-zomboid", icon: Skull },
+  { label: "Garry's Mod", href: "/game-server-hosting/garrys-mod", icon: Gamepad2 },
+  { label: "7 Days to Die", href: "/game-server-hosting/7-days-to-die", icon: Swords },
+  { label: "Ark: Survival", href: "/game-server-hosting/ark-survival-evolved", icon: Mountain },
+  { label: "Satisfactory", href: "/game-server-hosting/satisfactory", icon: Factory },
   { label: "Astroneer", href: "/proximamente", icon: Rocket },
-  { label: "Factorio", href: "/proximamente", icon: Compass },
+  { label: "Factorio", href: "/game-server-hosting/factorio", icon: Compass },
 ]
 
 /* ── Cloud Hosting mega-dropdown data ── */

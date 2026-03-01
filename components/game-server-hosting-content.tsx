@@ -71,6 +71,45 @@ const allGames: GameData[] = [
 const popularGames = allGames.filter((g) => g.popular)
 const otherGames = allGames.filter((g) => !g.popular)
 
+/* ─── Shared slug mapping function ─── */
+const getGameSlug = (name: string) => {
+  const slugMap: Record<string, string> = {
+    "Minecraft Java": "minecraft",
+    "Minecraft Bedrock": "minecraft-bedrock",
+    "Ark: Survival Evolved": "ark-survival-evolved",
+    "Rust": "rust",
+    "Valheim": "valheim",
+    "Terraria": "terraria",
+    "7 Days to Die": "7-days-to-die",
+    "Unturned": "unturned",
+    "Garry's Mod": "garrys-mod",
+    "Satisfactory": "satisfactory",
+    "Project Zomboid": "project-zomboid",
+    "The Forest": "the-forest",
+    "Sons of the Forest": "sons-of-the-forest",
+    "Enshrouded": "enshrouded",
+    "Palworld": "palworld",
+    "Conan Exiles": "conan-exiles",
+    "V Rising": "v-rising",
+    "DayZ": "dayz",
+    "Space Engineers": "space-engineers",
+    "Don't Starve Together": "dont-starve-together",
+    "Factorio": "factorio",
+    "Squad": "squad",
+    "Icarus": "icarus",
+    "Team Fortress 2": "team-fortress-2",
+    "Euro Truck Simulator 2": "euro-truck-simulator-2",
+    "Mindustry": "mindustry",
+    "FiveM": "fivem",
+    "RageMP": "ragemp",
+  }
+  return slugMap[name] || name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+}
+
+const getGameHref = (game: GameData) => {
+  return game.comingSoon ? undefined : `/game-server-hosting/${getGameSlug(game.name)}`
+}
+
 /* ─── Perks ─── */
 
 const perks = [
@@ -259,42 +298,7 @@ function MobileIcon() {
 /* ─── Game Card component ─── */
 
 function GameCard({ game, index, isVisible }: { game: GameData; index: number; isVisible: boolean }) {
-  // Map game names to slugs for dynamic routing (must match lib/game-data.ts slugs)
-  const getGameSlug = (name: string) => {
-    const slugMap: Record<string, string> = {
-      "Minecraft Java": "minecraft",
-      "Minecraft Bedrock": "minecraft-bedrock",
-      "Ark: Survival Evolved": "ark-survival-evolved",
-      "Rust": "rust",
-      "Valheim": "valheim",
-      "Terraria": "terraria",
-      "7 Days to Die": "7-days-to-die",
-      "Unturned": "unturned",
-      "Garry's Mod": "garrys-mod",
-      "Satisfactory": "satisfactory",
-      "Project Zomboid": "project-zomboid",
-      "The Forest": "the-forest",
-      "Sons of the Forest": "sons-of-the-forest",
-      "Enshrouded": "enshrouded",
-      "Palworld": "palworld",
-      "Conan Exiles": "conan-exiles",
-      "V Rising": "v-rising",
-      "DayZ": "dayz",
-      "Space Engineers": "space-engineers",
-      "Don't Starve Together": "dont-starve-together",
-      "Factorio": "factorio",
-      "Squad": "squad",
-      "Icarus": "icarus",
-      "Team Fortress 2": "team-fortress-2",
-      "Euro Truck Simulator 2": "euro-truck-simulator-2",
-      "Mindustry": "mindustry",
-      "FiveM": "fivem",
-      "RageMP": "ragemp",
-    }
-    return slugMap[name] || name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-  }
-
-  const href = game.comingSoon ? undefined : `/game-server-hosting/${getGameSlug(game.name)}`
+  const href = getGameHref(game)
   return (
     <a
       href={href}
@@ -540,7 +544,7 @@ export function GameServerHostingContent() {
               {(filteredPopularGames.length > 0 ? filteredPopularGames : popularGames).map((game, index) => (
                 <a
                   key={game.name}
-                  href="/proximamente"
+                  href={getGameHref(game)}
                   className="group relative flex flex-col rounded-xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.03]"
                   style={{
                     opacity: popularVisible ? 1 : 0,

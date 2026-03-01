@@ -12,6 +12,7 @@ interface GameSlide {
   cta: string
   bgImage: string
   cardImage: string
+  href?: string
   comingSoon?: boolean
 }
 
@@ -44,6 +45,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI SERVIDOR ASTRONEER",
     bgImage: "/images/hero-astroneer.jpg",
     cardImage: "/images/card-astroneer.jpg",
+    href: "/proximamente",
   },
   {
     id: "minecraft",
@@ -53,6 +55,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI SERVIDOR MINECRAFT",
     bgImage: "/images/hero-minecraft.jpg",
     cardImage: "/images/card-minecraft.jpg",
+    href: "/game-server-hosting/minecraft",
   },
   {
     id: "valheim",
@@ -62,6 +65,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI SERVIDOR VALHEIM",
     bgImage: "/images/hero-valheim.jpg",
     cardImage: "/images/card-valheim.jpg",
+    href: "/game-server-hosting/valheim",
   },
   {
     id: "satisfactory",
@@ -71,6 +75,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI SERVIDOR SATISFACTORY",
     bgImage: "/images/hero-satisfactory.jpg",
     cardImage: "/images/card-satisfactory.jpg",
+    href: "/game-server-hosting/satisfactory",
   },
   {
     id: "terraria",
@@ -80,6 +85,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI SERVIDOR TERRARIA",
     bgImage: "/images/hero-terraria.jpg",
     cardImage: "/images/card-terraria.jpg",
+    href: "/game-server-hosting/terraria",
   },
   {
     id: "hytale",
@@ -89,6 +95,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI SERVIDOR HYTALE",
     bgImage: "/images/hero-hytale.jpg",
     cardImage: "/images/card-hytale.jpg",
+    href: "/proximamente",
   },
 ]
 
@@ -331,7 +338,7 @@ export function HeroSection() {
             {/* Step 4-5: Buttons */}
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href="/proximamente"
+                href={slide.href || "/game-server-hosting"}
                 className="inline-flex items-center justify-center font-bold px-6 py-3 rounded-lg text-sm tracking-wide"
                 style={{
                   backgroundColor: slide.comingSoon ? "#555" : "#f5a623",

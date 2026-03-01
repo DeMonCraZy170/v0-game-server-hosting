@@ -5,12 +5,12 @@ import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
 const footerLinks: Record<string, { label: string; href: string }[]> = {
   "Hosting de Juegos": [
-    { label: "Minecraft Hosting", href: "/proximamente" },
-    { label: "Valheim Hosting", href: "/proximamente" },
-    { label: "Terraria Hosting", href: "/proximamente" },
-    { label: "Satisfactory Hosting", href: "/proximamente" },
-    { label: "Factorio Hosting", href: "/proximamente" },
-    { label: "Astroneer Hosting", href: "/proximamente" },
+    { label: "Minecraft Hosting", href: "/game-server-hosting/minecraft" },
+    { label: "Valheim Hosting", href: "/game-server-hosting/valheim" },
+    { label: "Terraria Hosting", href: "/game-server-hosting/terraria" },
+    { label: "Satisfactory Hosting", href: "/game-server-hosting/satisfactory" },
+    { label: "Factorio Hosting", href: "/game-server-hosting/factorio" },
+    { label: "DayZ Hosting", href: "/game-server-hosting/dayz" },
   ],
   "Cloud Hosting": [
     { label: "VPS KVM", href: "/proximamente" },
