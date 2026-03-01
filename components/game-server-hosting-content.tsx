@@ -321,7 +321,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
 function usePing(intervalMs = 3000) {
   const [ping, setPing] = useState<number | null>(null)
   const [status, setStatus] = useState<"measuring" | "good" | "medium" | "poor">("measuring")
-  const prevLatency = useRef(32)
+  const prevLatency = useRef(105)
 
   const measure = useCallback(async () => {
     try {
@@ -330,17 +330,18 @@ function usePing(intervalMs = 3000) {
       const end = performance.now()
       void (end - start) // consume real fetch time
 
-      // Simulate realistic OVH BHS ping that naturally fluctuates between green/yellow zones
-      // Range: 22-58ms, centered around ~38ms (the green/yellow boundary)
-      const drift = (Math.random() - 0.45) * 20 // slight bias toward higher values
-      const jitter = (Math.random() - 0.5) * 8
+      // Simulate realistic LATAM -> OVH Beauharnois, Canada ping
+      // Average LATAM user sees ~80-140ms, centered around ~110ms
+      // Natural drift + jitter for realistic fluctuation between green/yellow
+      const drift = (Math.random() - 0.5) * 18
+      const jitter = (Math.random() - 0.5) * 10
       const raw = prevLatency.current + drift + jitter
-      const latency = Math.max(22, Math.min(58, Math.round(raw)))
+      const latency = Math.max(78, Math.min(145, Math.round(raw)))
       prevLatency.current = latency
 
       setPing(latency)
-      if (latency < 38) setStatus("good")
-      else if (latency < 80) setStatus("medium")
+      if (latency < 110) setStatus("good")
+      else if (latency < 160) setStatus("medium")
       else setStatus("poor")
     } catch {
       setPing(null)
