@@ -33,7 +33,7 @@ const hostingCategories = [
       "99.9% de uptime respaldado por soporte 24/7 y la confianza de mas de 1500+ resenas de 5 estrellas.",
     features: ["Mejor Precio", "Hardware Potente", "Facil de Usar"],
     cta: "Encontrar Mi Hosting Minecraft",
-    href: "/proximamente",
+    href: "/minecraft",
     accentColor: "#22c55e",
     accentGlow: "rgba(34,197,94,0.5)",
     buttonBg: "linear-gradient(135deg, #16a34a, #22c55e, #4ade80)",

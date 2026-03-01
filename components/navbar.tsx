@@ -8,7 +8,7 @@ import Image from "next/image"
 const minecraftCards = [
   {
     label: "Java Edition",
-    href: "/proximamente",
+    href: "/minecraft",
     image: "/images/dropdown-java.jpg",
     borderColor: "#f59e0b",
     badge: "NUEVA ACTUALIZACION!",
