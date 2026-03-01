@@ -64,7 +64,7 @@ export function Footer() {
               </h4>
               <ul className="flex flex-col gap-2.5">
                 {links.map((link) => {
-                  const isCloudItem = category === "Cloud Hosting" && ["VPS KVM", "Servidor Dedicado", "Hosting Web"].includes(link)
+                  const isCloudItem = category === "Cloud Hosting" && ["VPS KVM", "Servidor Dedicado", "Hosting Web", "Bot de Discord"].includes(link)
                   return (
                     <li key={link}>
                       <a

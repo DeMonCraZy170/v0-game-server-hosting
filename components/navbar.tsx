@@ -76,8 +76,8 @@ const websiteSolutions = [
 ]
 
 const otherHosting = [
-  { label: "Hosting de Bots", href: "#", icon: Bot },
-  { label: "Hosting Combinado", href: "#", icon: Package },
+  { label: "Hosting de Bots", href: "#", icon: Bot, comingSoon: true },
+  { label: "Hosting Combinado", href: "#", icon: Package, comingSoon: true },
 ]
 
 /* ── Resources mega-dropdown data ── */
@@ -547,6 +547,11 @@ export function Navbar() {
                       <span className="text-sm font-medium text-foreground/90 group-hover/other:text-foreground transition-colors">
                         {item.label}
                       </span>
+                      {item.comingSoon && (
+                        <span className="text-[9px] font-bold tracking-wider text-primary bg-primary/15 px-1.5 py-0.5 rounded ml-auto shrink-0">
+                          PROXIMAMENTE
+                        </span>
+                      )}
                     </a>
                   )
                 })}
