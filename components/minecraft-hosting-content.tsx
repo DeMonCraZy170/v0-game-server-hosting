@@ -209,15 +209,17 @@ export function MinecraftHostingContent() {
   /* ── Dynamic ping on hover ── */
   const [hoveredLocation, setHoveredLocation] = useState<string | null>(null)
   const [locationPings, setLocationPings] = useState<Record<string, number | null>>({})
+  const [locationBars, setLocationBars] = useState<Record<string, number>>({})
   const pingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const prevPingRef = useRef<Record<string, number>>({})
 
-  // Realistic simulated ping ranges per location (base ms, jitter)
+  // Ping ranges biased green: values oscillate between good (green) and ok (yellow),
+  // staying mostly in the green zone
   const pingRanges: Record<string, { base: number; jitter: number }> = {
-    "ca-bhs": { base: 105, jitter: 20 },
-    "us-mia": { base: 85, jitter: 18 },
-    "us-dal": { base: 95, jitter: 16 },
-    "br-sao": { base: 55, jitter: 12 },
+    "ca-bhs": { base: 68, jitter: 22 },
+    "us-mia": { base: 52, jitter: 18 },
+    "us-dal": { base: 60, jitter: 20 },
+    "br-sao": { base: 38, jitter: 14 },
   }
 
   const measurePing = useCallback(async (locId: string) => {
@@ -227,15 +229,21 @@ export function MinecraftHostingContent() {
       const end = performance.now()
       void (end - start)
 
-      const range = pingRanges[locId] || { base: 120, jitter: 25 }
+      const range = pingRanges[locId] || { base: 75, jitter: 20 }
       const prev = prevPingRef.current[locId] ?? range.base
-      const drift = (Math.random() - 0.5) * range.jitter
-      const jitter = (Math.random() - 0.5) * 8
+      // Bias drift downward (toward green) 60% of the time
+      const drift = (Math.random() - 0.6) * range.jitter
+      const jitter = (Math.random() - 0.5) * 6
       const raw = prev + drift + jitter
       const latency = Math.max(range.base - range.jitter, Math.min(range.base + range.jitter, Math.round(raw)))
       prevPingRef.current[locId] = latency
 
       setLocationPings((prev) => ({ ...prev, [locId]: latency }))
+
+      // Dynamic signal bars: 2-4, biased toward 3-4 (always looks good)
+      const roll = Math.random()
+      const bars = roll < 0.15 ? 2 : roll < 0.45 ? 3 : 4
+      setLocationBars((prev) => ({ ...prev, [locId]: bars }))
     } catch {
       setLocationPings((prev) => ({ ...prev, [locId]: null }))
     }
@@ -244,7 +252,7 @@ export function MinecraftHostingContent() {
   useEffect(() => {
     if (hoveredLocation) {
       measurePing(hoveredLocation)
-      pingIntervalRef.current = setInterval(() => measurePing(hoveredLocation), 2500)
+      pingIntervalRef.current = setInterval(() => measurePing(hoveredLocation), 2000)
     }
     return () => {
       if (pingIntervalRef.current) {
@@ -470,9 +478,11 @@ export function MinecraftHostingContent() {
                           const isComingSoon = "comingSoon" in loc && loc.comingSoon
                           const isHovered = hoveredLocation === loc.id
                           const currentPing = locationPings[loc.id]
+                          const bars = locationBars[loc.id] ?? 4
+                          // Always green or yellow, biased green
                           const pingColor = currentPing != null
-                            ? currentPing < 80 ? "#22c55e" : currentPing < 130 ? "#f5a623" : "#ef4444"
-                            : "#888"
+                            ? currentPing < 70 ? "#22c55e" : "#f5a623"
+                            : "#22c55e"
                           return (
                             <div key={loc.id} className="relative">
                               <button
@@ -499,7 +509,29 @@ export function MinecraftHostingContent() {
                                 <FlagEmoji code={loc.flag} />
                                 <span className="text-foreground">{loc.name}</span>
                                 {!isComingSoon && (
-                                  <Signal className="w-3.5 h-3.5 transition-colors duration-300" style={{ color: isHovered ? pingColor : isSelected ? "#22c55e" : "rgba(255,255,255,0.3)" }} />
+                                  <svg width="14" height="14" viewBox="0 0 16 16" className="shrink-0">
+                                    {[
+                                      { x: 1, h: 4, y: 12, idx: 1 },
+                                      { x: 5, h: 7, y: 9, idx: 2 },
+                                      { x: 9, h: 10, y: 6, idx: 3 },
+                                      { x: 13, h: 13, y: 3, idx: 4 },
+                                    ].map((bar) => {
+                                      const activeBars = isHovered ? bars : isSelected ? 4 : 3
+                                      const isActive = bar.idx <= activeBars
+                                      return (
+                                        <rect
+                                          key={bar.idx}
+                                          x={bar.x}
+                                          y={bar.y}
+                                          width="2.5"
+                                          height={bar.h}
+                                          rx="0.5"
+                                          fill={isActive ? "#22c55e" : "rgba(255,255,255,0.12)"}
+                                          className="transition-all duration-500"
+                                        />
+                                      )
+                                    })}
+                                  </svg>
                                 )}
                                 {isComingSoon && (
                                   <span className="text-[9px] font-bold tracking-wider px-1.5 py-0.5 rounded uppercase" style={{ background: "rgba(245,166,35,0.15)", color: "#f5a623", border: "1px solid rgba(245,166,35,0.3)" }}>
@@ -518,7 +550,7 @@ export function MinecraftHostingContent() {
                                   style={{ filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.5))" }}
                                 >
                                   <div
-                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap"
+                                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap"
                                     style={{
                                       backgroundColor: "rgba(20,20,20,0.95)",
                                       border: `1px solid ${pingColor}33`,
@@ -532,6 +564,25 @@ export function MinecraftHostingContent() {
                                     <span style={{ color: pingColor }}>
                                       {currentPing != null ? `~${currentPing}ms` : "Midiendo..."}
                                     </span>
+                                    <svg width="12" height="12" viewBox="0 0 16 16" className="shrink-0">
+                                      {[
+                                        { x: 1, h: 4, y: 12, idx: 1 },
+                                        { x: 5, h: 7, y: 9, idx: 2 },
+                                        { x: 9, h: 10, y: 6, idx: 3 },
+                                        { x: 13, h: 13, y: 3, idx: 4 },
+                                      ].map((bar) => (
+                                        <rect
+                                          key={bar.idx}
+                                          x={bar.x}
+                                          y={bar.y}
+                                          width="2.5"
+                                          height={bar.h}
+                                          rx="0.5"
+                                          fill={bar.idx <= bars ? "#22c55e" : "rgba(255,255,255,0.12)"}
+                                          className="transition-all duration-500"
+                                        />
+                                      ))}
+                                    </svg>
                                   </div>
                                   {/* Arrow */}
                                   <div
