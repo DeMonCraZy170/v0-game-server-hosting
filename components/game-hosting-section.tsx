@@ -139,6 +139,7 @@ export function GameHostingSection() {
                   width={category.iconWidth}
                   height={category.iconHeight}
                   className="object-contain drop-shadow-lg"
+                  style={{ width: "auto", height: "auto" }}
                   sizes="110px"
                 />
               </div>
