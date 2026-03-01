@@ -1126,7 +1126,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             </div>
             <div className="shrink-0 hidden lg:block">
               <div className="w-[320px] h-[220px] rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 8px 40px rgba(0,0,0,0.4)" }}>
-                <Image src="/images/minecraft-cover.avif" alt="Tipos de servidores Minecraft" width={320} height={220} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
+                <Image src="/images/minecraft-server-types.png" alt="Tipos de servidores Minecraft" width={320} height={220} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
               </div>
             </div>
           </div>
