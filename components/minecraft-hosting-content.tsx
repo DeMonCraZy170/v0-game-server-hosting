@@ -1279,8 +1279,8 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
   const cycleLabel = cycle === "monthly" ? "mensualmente" : cycle === "quarterly" ? "trimestralmente" : cycle === "semiannually" ? "semestralmente" : "anualmente"
   const [isHovered, setIsHovered] = useState(false)
 
-  const jpgPlanets = ["supernova", "blackhole"]
-  const planetIcon = `/images/planets/${plan.planet}.${jpgPlanets.includes(plan.planet) ? "jpg" : "svg"}`
+  const avifPlanets = ["supernova", "blackhole"]
+  const planetIcon = `/images/planets/${plan.planet}.${avifPlanets.includes(plan.planet) ? "avif" : "svg"}`
 
   return (
     <div
@@ -1305,7 +1305,7 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
       {/* Header with planet icon */}
       <div className="flex items-center justify-between mb-3">
         <p className="text-base font-bold text-foreground">{plan.name}</p>
-        <Image src={planetIcon} alt={plan.name} width={40} height={40} className={`object-contain ${jpgPlanets.includes(plan.planet) ? "rounded-full" : ""}`} />
+        <Image src={planetIcon} alt={plan.name} width={40} height={40} className={`object-contain ${avifPlanets.includes(plan.planet) ? "rounded-full" : ""}`} />
       </div>
 
       {/* Price */}
@@ -1470,8 +1470,8 @@ function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cy
   const locationName = locationRegions.flatMap((r) => r.locations).find((l) => l.id === location)?.name || "OVH Beauharnois, Canada"
   const [isHovered, setIsHovered] = useState(false)
 
-  const jpgPlanets = ["supernova", "blackhole"]
-  const planetIcon = `/images/planets/${plan.planet}.${jpgPlanets.includes(plan.planet) ? "jpg" : "svg"}`
+  const avifPlanets = ["supernova", "blackhole"]
+  const planetIcon = `/images/planets/${plan.planet}.${avifPlanets.includes(plan.planet) ? "avif" : "svg"}`
 
   return (
     <div
@@ -1496,7 +1496,7 @@ function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cy
       {/* Header with planet icon */}
       <div className="flex items-center justify-between mb-4">
         <p className="text-base font-bold text-foreground">{plan.name}</p>
-        <Image src={planetIcon} alt={plan.name} width={40} height={40} className={`object-contain ${jpgPlanets.includes(plan.planet) ? "rounded-full" : ""}`} />
+        <Image src={planetIcon} alt={plan.name} width={40} height={40} className={`object-contain ${avifPlanets.includes(plan.planet) ? "rounded-full" : ""}`} />
       </div>
 
       {/* Price */}
