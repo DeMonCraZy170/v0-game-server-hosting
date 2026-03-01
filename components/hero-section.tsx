@@ -12,6 +12,7 @@ interface GameSlide {
   cta: string
   bgImage: string
   cardImage: string
+  comingSoon?: boolean
 }
 
 const gameSlides: GameSlide[] = [
@@ -23,6 +24,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI SERVIDOR DEDICADO",
     bgImage: "/images/hero-dedicated.jpg",
     cardImage: "/images/card-dedicated.jpg",
+    comingSoon: true,
   },
   {
     id: "discord",
@@ -309,14 +311,31 @@ export function HeroSection() {
               ))}
             </div>
 
+            {/* Coming soon badge for slide */}
+            {slide.comingSoon && (
+              <div className="mb-4" style={staggerStyle(3)}>
+                <span
+                  className="inline-block text-xs font-bold tracking-wider px-3 py-1.5 rounded-md"
+                  style={{
+                    background: "rgba(245,166,35,0.15)",
+                    color: "#f5a623",
+                    border: "1px solid rgba(245,166,35,0.3)",
+                  }}
+                >
+                  PROXIMAMENTE
+                </span>
+              </div>
+            )}
+
             {/* Step 4-5: Buttons */}
             <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href="#"
                 className="inline-flex items-center justify-center font-bold px-6 py-3 rounded-lg text-sm tracking-wide"
                 style={{
-                  backgroundColor: "#f5a623",
-                  color: "#0d0d0d",
+                  backgroundColor: slide.comingSoon ? "#555" : "#f5a623",
+                  color: slide.comingSoon ? "#999" : "#0d0d0d",
+                  pointerEvents: slide.comingSoon ? "none" : "auto",
                   boxShadow: "0 4px 16px rgba(245,166,35,0.2)",
                   ...staggerStyle(4, "left"),
                   transition: `opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1)`,
@@ -447,17 +466,33 @@ export function HeroSection() {
                       >
                         {s.label}
                       </span>
-                      <span
-                        className="text-[11px] font-semibold tracking-widest mt-1"
-                        style={{
-                          color: "#f5a623",
-                          opacity: isActive ? 1 : 0,
-                          transform: isActive ? "translateY(0)" : "translateY(-4px)",
-                          transition: "opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s",
-                        }}
-                      >
-                        HOSTING
-                      </span>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span
+                          className="text-[11px] font-semibold tracking-widest"
+                          style={{
+                            color: "#f5a623",
+                            opacity: isActive ? 1 : 0,
+                            transform: isActive ? "translateY(0)" : "translateY(-4px)",
+                            transition: "opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s",
+                          }}
+                        >
+                          HOSTING
+                        </span>
+                        {s.comingSoon && (
+                          <span
+                            className="text-[8px] font-bold tracking-wider px-1.5 py-0.5 rounded"
+                            style={{
+                              background: "rgba(245,166,35,0.2)",
+                              color: "#f5a623",
+                              opacity: isActive ? 1 : 0,
+                              transform: isActive ? "translateY(0)" : "translateY(-4px)",
+                              transition: "opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s",
+                            }}
+                          >
+                            PROXIMAMENTE
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     {/* Hover highlight for non-active */}

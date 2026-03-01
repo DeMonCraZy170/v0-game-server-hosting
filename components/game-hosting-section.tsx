@@ -47,13 +47,14 @@ const hostingCategories = [
     description:
       "Necesitas un sitio web? Iniciando un proyecto en la nube? Asegurate de obtener el mejor precio.",
     features: ["Flexibilidad Total", "Facil Configuracion", "Proteccion DDoS"],
-    cta: "Obtener Mi Cloud Hosting",
+    cta: "Proximamente",
     href: "#",
     accentColor: "#3b82f6",
     accentGlow: "rgba(59,130,246,0.5)",
     buttonBg: "linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa)",
     dotColor: "#3b82f6",
     dotGlow: "rgba(59,130,246,0.5)",
+    comingSoon: true,
   },
 ]
 
@@ -144,19 +145,35 @@ export function GameHostingSection() {
 
               {/* Card content - with top padding to clear the icon */}
               <div className="relative z-[1] flex flex-col flex-1 pt-12 px-7 pb-7">
-                {/* Title */}
-                <h3
-                  className="text-[22px] font-bold text-foreground leading-tight"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  {category.title}
-                </h3>
-                <p
-                  className="text-[22px] font-bold leading-tight mb-4 text-primary"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  {category.subtitle}
-                </p>
+                {/* Title + Coming Soon Badge */}
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3
+                      className="text-[22px] font-bold text-foreground leading-tight"
+                      style={{ fontFamily: "var(--font-heading)" }}
+                    >
+                      {category.title}
+                    </h3>
+                    <p
+                      className="text-[22px] font-bold leading-tight mb-4 text-primary"
+                      style={{ fontFamily: "var(--font-heading)" }}
+                    >
+                      {category.subtitle}
+                    </p>
+                  </div>
+                  {category.comingSoon && (
+                    <span
+                      className="text-[10px] font-bold tracking-wider px-2 py-1 rounded mt-1 shrink-0"
+                      style={{
+                        background: "rgba(245,166,35,0.15)",
+                        color: "#f5a623",
+                        border: "1px solid rgba(245,166,35,0.3)",
+                      }}
+                    >
+                      PROXIMAMENTE
+                    </span>
+                  )}
+                </div>
 
                 {/* Description */}
                 <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
@@ -183,11 +200,13 @@ export function GameHostingSection() {
                 <div className="flex-1" />
               </div>
 
-              {/* Full-width CTA button - solid teal matching SparkedHost */}
+              {/* Full-width CTA button */}
               <div
-                className="relative z-[1] flex items-center justify-center rounded-b-xl px-6 py-4 text-[15px] font-bold text-white tracking-wide transition-all duration-300 group-hover:brightness-110"
+                className="relative z-[1] flex items-center justify-center rounded-b-xl px-6 py-4 text-[15px] font-bold tracking-wide transition-all duration-300"
                 style={{
-                  background: category.buttonBg,
+                  background: category.comingSoon ? "#333" : category.buttonBg,
+                  color: category.comingSoon ? "#888" : "#fff",
+                  pointerEvents: category.comingSoon ? "none" : "auto",
                 }}
               >
                 {category.cta}

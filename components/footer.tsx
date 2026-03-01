@@ -12,7 +12,7 @@ const footerLinks = {
     "Factorio Hosting",
     "Astroneer Hosting",
   ],
-  "Cloud Hosting": ["VPS KVM", "Servidor Dedicado", "Hosting Web", "Bot de Discord"],
+  "Cloud Hosting": ["VPS KVM", "Servidor Dedicado", "Hosting Web", "Bot de Discord"] as string[],
   Compania: ["Sobre Nosotros", "Contacto", "Afiliados", "Empleo", "Blog"],
   Soporte: ["Base de Conocimiento", "Estado del Servicio", "Abrir un Ticket", "Chat en Vivo"],
 }
@@ -63,16 +63,24 @@ export function Footer() {
                 {category}
               </h4>
               <ul className="flex flex-col gap-2.5">
-                {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
+                {links.map((link) => {
+                  const isCloudItem = category === "Cloud Hosting" && ["VPS KVM", "Servidor Dedicado", "Hosting Web"].includes(link)
+                  return (
+                    <li key={link}>
+                      <a
+                        href="#"
+                        className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2"
+                      >
+                        {link}
+                        {isCloudItem && (
+                          <span className="text-[8px] font-bold tracking-wider text-primary bg-primary/15 px-1 py-0.5 rounded">
+                            PRONTO
+                          </span>
+                        )}
+                      </a>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           ))}

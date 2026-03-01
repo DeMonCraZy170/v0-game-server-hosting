@@ -64,15 +64,15 @@ const gamePopular = [
 
 /* ── Cloud Hosting mega-dropdown data ── */
 const cloudSolutions = [
-  { label: "Servidores Dedicados", href: "#", icon: Server },
-  { label: "VPS Premium", href: "#", icon: Cpu },
-  { label: "VPS Economico", href: "#", icon: HardDrive },
+  { label: "Servidores Dedicados", href: "#", icon: Server, comingSoon: true },
+  { label: "VPS Premium", href: "#", icon: Cpu, comingSoon: true },
+  { label: "VPS Economico", href: "#", icon: HardDrive, comingSoon: true },
 ]
 
 const websiteSolutions = [
-  { label: "Hosting Web", href: "#", icon: Monitor },
-  { label: "Registrar Dominio", href: "#", icon: GlobeLock },
-  { label: "Transferir Dominio", href: "#", icon: ArrowRightLeft },
+  { label: "Hosting Web", href: "#", icon: Monitor, comingSoon: true },
+  { label: "Registrar Dominio", href: "#", icon: GlobeLock, comingSoon: true },
+  { label: "Transferir Dominio", href: "#", icon: ArrowRightLeft, comingSoon: true },
 ]
 
 const otherHosting = [
@@ -208,6 +208,11 @@ export function Navbar() {
                   }`}
                 >
                   {item.label}
+                  {item.label === "Cloud Hosting" && (
+                    <span className="text-[9px] font-bold tracking-wider px-1.5 py-0.5 rounded bg-primary/20 text-primary ml-1">
+                      PRONTO
+                    </span>
+                  )}
                   {item.hasDropdown && (
                     <ChevronDown
                       className={`h-4 w-4 transition-transform duration-200 ${
@@ -468,6 +473,11 @@ export function Navbar() {
                       <span className="text-sm font-medium text-foreground/90 group-hover/cloud:text-foreground transition-colors">
                         {item.label}
                       </span>
+                      {item.comingSoon && (
+                        <span className="text-[9px] font-bold tracking-wider text-primary bg-primary/15 px-1.5 py-0.5 rounded ml-auto shrink-0">
+                          PROXIMAMENTE
+                        </span>
+                      )}
                     </a>
                   )
                 })}
@@ -500,6 +510,11 @@ export function Navbar() {
                       <span className="text-sm font-medium text-foreground/90 group-hover/web:text-foreground transition-colors">
                         {item.label}
                       </span>
+                      {item.comingSoon && (
+                        <span className="text-[9px] font-bold tracking-wider text-primary bg-primary/15 px-1.5 py-0.5 rounded ml-auto shrink-0">
+                          PROXIMAMENTE
+                        </span>
+                      )}
                     </a>
                   )
                 })}
@@ -798,6 +813,11 @@ export function Navbar() {
                         >
                           <cloudItem.icon className="h-3.5 w-3.5" />
                           {cloudItem.label}
+                          {cloudItem.comingSoon && (
+                            <span className="text-[8px] font-bold tracking-wider text-primary bg-primary/15 px-1 py-0.5 rounded">
+                              PRONTO
+                            </span>
+                          )}
                         </a>
                       ))
                     : item.isMega && item.megaType === "resources"
