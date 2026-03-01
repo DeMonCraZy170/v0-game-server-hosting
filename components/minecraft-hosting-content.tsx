@@ -241,11 +241,18 @@ const moddedVanillaPlans: PlanDef[] = [
 ]
 
 const moddedCommunityPlans: PlanDef[] = [
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 32.00, popular: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "mc9" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 48.00, bestSeller: true, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "mc12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "mc13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 80.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "mc14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "mc15" },
+  { name: "Moon", planet: "moon", ram: "4GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 16.00, whmcsId: "mc1" },
+  { name: "Mercury", planet: "mercury", ram: "5GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 20.00, whmcsId: "mc2" },
+  { name: "Mars", planet: "mars", ram: "6GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 24.00, extras: ["1 Splitter Slot"], whmcsId: "mc3" },
+  { name: "Venus", planet: "venus", ram: "7GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 28.00, extras: ["1 Splitter Slot"], whmcsId: "mc4" },
+  { name: "Earth", planet: "earth", ram: "8GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 32.00, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "mc5" },
+  { name: "Neptune", planet: "neptune", ram: "9GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 36.00, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "mc6" },
+  { name: "Saturn", planet: "saturn", ram: "10GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 40.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "mc7" },
+  { name: "Jupiter", planet: "jupiter", ram: "12GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "mc8" },
+  { name: "Sun", planet: "sun", ram: "16GB", cores: "3.5 Core/s", storage: "250GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "mc9" },
+  { name: "Milky Way", planet: "milkyway", ram: "20GB", cores: "3.5 Core/s", storage: "250GB NVMe", basePrice: 75.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "mc10" },
+  { name: "Supernova", planet: "supernova", ram: "24GB", cores: "4 Core/s", storage: "250GB NVMe", basePrice: 90.00, extras: ["Game Vault", "6 Splitter Slots"], whmcsId: "mc11" },
+  { name: "Black Hole", planet: "blackhole", ram: "32GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 110.00, extras: ["Game Vault", "8 Splitter Slots"], whmcsId: "mc12" },
 ]
 
 /* ── Modded-specific server capabilities ── */
@@ -577,7 +584,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
                 <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>AMD</span>
                 <span className="text-sm text-muted-foreground">
                   {"Powered by "}
-                  <span className="font-bold text-foreground">Ryzen 9 7900</span>
+                  <span className="font-bold text-foreground">{selectedType === "community" ? "Ryzen 9 9900X" : "Ryzen 9 7900"}</span>
                   {" o "}
                   <a href="/proximamente" className="text-primary font-semibold hover:underline">equivalente</a>
                 </span>
@@ -1175,6 +1182,7 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
 
 /* ── Modded Plan Card (SparkedHost-style flat card with planet icon) ── */
 const planetEmojis: Record<string, string> = {
+  moon: "\u{1F319}",
   mercury: "\u{1FA90}",
   mars: "\u{1FA90}",
   venus: "\u{1F30D}",
