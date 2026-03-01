@@ -128,7 +128,7 @@ const vanillaPlans: PlanDef[] = [
   { name: "Asteroide", planet: "asteroid", ram: "512MB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 1.30, whmcsId: "1" },
   { name: "Pluton", planet: "pluto", ram: "1GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 2.59, whmcsId: "2" },
   { name: "Triton", planet: "triton", ram: "2GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 5.18, whmcsId: "3" },
-  { name: "Luna", planet: "moon", ram: "3GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 7.77, whmcsId: "4" },
+  { name: "Luna", planet: "moon", ram: "3GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 7.77, whmcsId: "4" },
   { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, popular: true, whmcsId: "5" },
   { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "6" },
   { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "7" },
@@ -139,7 +139,7 @@ const vanillaPlans: PlanDef[] = [
   { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "12" },
   { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "13" },
   { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "15" },
+  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "15" },
 ]
 
 const communityPlans: PlanDef[] = [
@@ -148,7 +148,7 @@ const communityPlans: PlanDef[] = [
   { name: "Sol", planet: "sun", ram: "12GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "c12" },
   { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "c13" },
   { name: "Supernova", planet: "supernova", ram: "20GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 80.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "c14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "c15" },
+  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "c15" },
 ]
 
 /* ── Feature / DDoS / FAQ Data ── */
@@ -477,7 +477,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
         </div>
       </section>
 
-      {/* ─── MULTI-STEP WIZARD ─── */}
+      {/* ─── MULTI-STEP WIZARD ──�� */}
       <section id="wizard" className="py-20 bg-background scroll-mt-28">
         {isModded ? (
           /* ── MODDED: Direct plans layout (no wizard steps) ── */
