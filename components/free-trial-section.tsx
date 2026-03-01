@@ -42,14 +42,14 @@ export function FreeTrialSection() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <a
-                  href="#"
+                  href="/proximamente"
                   className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors text-sm"
                 >
                   Comenzar Sin Riesgo
                   <ArrowRight className="h-4 w-4" />
                 </a>
                 <a
-                  href="#"
+                  href="/proximamente"
                   className="inline-flex items-center justify-center border border-border text-foreground font-semibold px-6 py-3 rounded-lg hover:bg-card transition-colors text-sm"
                 >
                   Productos Soportados

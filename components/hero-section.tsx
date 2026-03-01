@@ -331,7 +331,7 @@ export function HeroSection() {
             {/* Step 4-5: Buttons */}
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href="#"
+                href="/proximamente"
                 className="inline-flex items-center justify-center font-bold px-6 py-3 rounded-lg text-sm tracking-wide"
                 style={{
                   backgroundColor: slide.comingSoon ? "#555" : "#f5a623",

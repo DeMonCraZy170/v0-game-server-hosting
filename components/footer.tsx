@@ -5,29 +5,29 @@ import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
 const footerLinks: Record<string, { label: string; href: string }[]> = {
   "Hosting de Juegos": [
-    { label: "Minecraft Hosting", href: "#" },
-    { label: "Valheim Hosting", href: "#" },
-    { label: "Terraria Hosting", href: "#" },
-    { label: "Satisfactory Hosting", href: "#" },
-    { label: "Factorio Hosting", href: "#" },
-    { label: "Astroneer Hosting", href: "#" },
+    { label: "Minecraft Hosting", href: "/proximamente" },
+    { label: "Valheim Hosting", href: "/proximamente" },
+    { label: "Terraria Hosting", href: "/proximamente" },
+    { label: "Satisfactory Hosting", href: "/proximamente" },
+    { label: "Factorio Hosting", href: "/proximamente" },
+    { label: "Astroneer Hosting", href: "/proximamente" },
   ],
   "Cloud Hosting": [
-    { label: "VPS KVM", href: "#" },
-    { label: "Servidor Dedicado", href: "#" },
-    { label: "Hosting Web", href: "#" },
-    { label: "Bot de Discord", href: "#" },
+    { label: "VPS KVM", href: "/proximamente" },
+    { label: "Servidor Dedicado", href: "/proximamente" },
+    { label: "Hosting Web", href: "/proximamente" },
+    { label: "Bot de Discord", href: "/proximamente" },
   ],
   Compania: [
-    { label: "Sobre Nosotros", href: "#" },
+    { label: "Sobre Nosotros", href: "/proximamente" },
     { label: "Contacto", href: "/contacto" },
-    { label: "Afiliados", href: "#" },
-    { label: "Empleo", href: "#" },
-    { label: "Blog", href: "#" },
+    { label: "Afiliados", href: "/proximamente" },
+    { label: "Empleo", href: "/proximamente" },
+    { label: "Blog", href: "/proximamente" },
   ],
   Soporte: [
-    { label: "Base de Conocimiento", href: "#" },
-    { label: "Estado del Servicio", href: "#" },
+    { label: "Base de Conocimiento", href: "/proximamente" },
+    { label: "Estado del Servicio", href: "/proximamente" },
     { label: "Abrir un Ticket", href: "/contacto" },
     { label: "Chat en Vivo", href: "/contacto" },
   ],
@@ -50,7 +50,7 @@ export function Footer() {
               transform: footerVisible ? "translateY(0)" : "translateY(20px)",
             }}
           >
-            <a href="#" className="flex items-center gap-2 mb-4">
+            <a href="/" className="flex items-center gap-2 mb-4">
               <Zap className="h-7 w-7 text-primary" />
               <span
                 className="text-lg font-bold text-foreground"
@@ -114,13 +114,13 @@ export function Footer() {
             {"2024 ForzaHost. Todos los derechos reservados."}
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/proximamente" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Politica de Privacidad
             </a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/proximamente" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Terminos de Servicio
             </a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/proximamente" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Politica de Reembolso
             </a>
           </div>

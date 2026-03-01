@@ -8,7 +8,7 @@ import Image from "next/image"
 const minecraftCards = [
   {
     label: "Java Edition",
-    href: "#",
+    href: "/proximamente",
     image: "/images/dropdown-java.jpg",
     borderColor: "#f59e0b",
     badge: "NUEVA ACTUALIZACION!",
@@ -16,7 +16,7 @@ const minecraftCards = [
   },
   {
     label: "Bedrock Edition",
-    href: "#",
+    href: "/proximamente",
     image: "/images/dropdown-bedrock.jpg",
     borderColor: "#6b7280",
     badge: "NUEVA ACTUALIZACION!",
@@ -24,7 +24,7 @@ const minecraftCards = [
   },
   {
     label: "Modded Hosting",
-    href: "#",
+    href: "/proximamente",
     image: "/images/dropdown-modded.jpg",
     borderColor: "#ef4444",
     badge: "NUEVA ACTUALIZACION!",
@@ -32,7 +32,7 @@ const minecraftCards = [
   },
   {
     label: "Budget Hosting",
-    href: "#",
+    href: "/proximamente",
     image: "/images/dropdown-budget.jpg",
     borderColor: "#22c55e",
     badge: "NUEVA ACTUALIZACION!",
@@ -42,65 +42,65 @@ const minecraftCards = [
 
 /* ── Game Hosting mega-dropdown data ── */
 const gameNewReleases = [
-  { label: "Palworld", href: "#", icon: Globe, badge: "NUEVO!", badgeColor: "#f5a623" },
-  { label: "Enshrouded", href: "#", icon: Flame, badge: "NUEVO!", badgeColor: "#f5a623" },
-  { label: "Soulmask", href: "#", icon: Skull, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Palworld", href: "/proximamente", icon: Globe, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Enshrouded", href: "/proximamente", icon: Flame, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Soulmask", href: "/proximamente", icon: Skull, badge: "NUEVO!", badgeColor: "#f5a623" },
 ]
 
 const gamePopular = [
-  { label: "Rust", href: "#", icon: Shield, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
-  { label: "Valheim", href: "#", icon: Sword },
-  { label: "Unturned", href: "#", icon: Bug },
-  { label: "Terraria", href: "#", icon: Pickaxe, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
-  { label: "DayZ", href: "#", icon: Crosshair },
-  { label: "Project Zomboid", href: "#", icon: Skull },
-  { label: "Garry's Mod", href: "#", icon: Gamepad2 },
-  { label: "7 Days to Die", href: "#", icon: Swords },
-  { label: "Ark: Survival", href: "#", icon: Mountain },
-  { label: "Satisfactory", href: "#", icon: Factory },
-  { label: "Astroneer", href: "#", icon: Rocket },
-  { label: "Factorio", href: "#", icon: Compass },
+  { label: "Rust", href: "/proximamente", icon: Shield, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
+  { label: "Valheim", href: "/proximamente", icon: Sword },
+  { label: "Unturned", href: "/proximamente", icon: Bug },
+  { label: "Terraria", href: "/proximamente", icon: Pickaxe, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
+  { label: "DayZ", href: "/proximamente", icon: Crosshair },
+  { label: "Project Zomboid", href: "/proximamente", icon: Skull },
+  { label: "Garry's Mod", href: "/proximamente", icon: Gamepad2 },
+  { label: "7 Days to Die", href: "/proximamente", icon: Swords },
+  { label: "Ark: Survival", href: "/proximamente", icon: Mountain },
+  { label: "Satisfactory", href: "/proximamente", icon: Factory },
+  { label: "Astroneer", href: "/proximamente", icon: Rocket },
+  { label: "Factorio", href: "/proximamente", icon: Compass },
 ]
 
 /* ── Cloud Hosting mega-dropdown data ── */
 const cloudSolutions = [
-  { label: "Servidores Dedicados", href: "#", icon: Server, comingSoon: true },
-  { label: "VPS Premium", href: "#", icon: Cpu, comingSoon: true },
-  { label: "VPS Economico", href: "#", icon: HardDrive, comingSoon: true },
+  { label: "Servidores Dedicados", href: "/proximamente", icon: Server, comingSoon: true },
+  { label: "VPS Premium", href: "/proximamente", icon: Cpu, comingSoon: true },
+  { label: "VPS Economico", href: "/proximamente", icon: HardDrive, comingSoon: true },
 ]
 
 const websiteSolutions = [
-  { label: "Hosting Web", href: "#", icon: Monitor, comingSoon: true },
-  { label: "Registrar Dominio", href: "#", icon: GlobeLock, comingSoon: true },
-  { label: "Transferir Dominio", href: "#", icon: ArrowRightLeft, comingSoon: true },
+  { label: "Hosting Web", href: "/proximamente", icon: Monitor, comingSoon: true },
+  { label: "Registrar Dominio", href: "/proximamente", icon: GlobeLock, comingSoon: true },
+  { label: "Transferir Dominio", href: "/proximamente", icon: ArrowRightLeft, comingSoon: true },
 ]
 
 const otherHosting = [
-  { label: "Hosting de Bots", href: "#", icon: Bot, comingSoon: true },
-  { label: "Hosting Combinado", href: "#", icon: Package, comingSoon: true },
+  { label: "Hosting de Bots", href: "/proximamente", icon: Bot, comingSoon: true },
+  { label: "Hosting Combinado", href: "/proximamente", icon: Package, comingSoon: true },
 ]
 
 /* ── Resources mega-dropdown data ── */
 const resourcesAssistance = [
   { label: "Contactanos", href: "/contacto", icon: MessageCircle },
-  { label: "Estado del Servicio", href: "#", icon: Activity },
+  { label: "Estado del Servicio", href: "/proximamente", icon: Activity },
 ]
 
 const resourcesInfo = [
-  { label: "Proteccion DDoS", href: "#", icon: ShieldCheck },
-  { label: "Hardware y Ubicaciones", href: "#", icon: Building },
+  { label: "Proteccion DDoS", href: "/proximamente", icon: ShieldCheck },
+  { label: "Hardware y Ubicaciones", href: "/proximamente", icon: Building },
 ]
 
 /* ── More mega-dropdown data ── */
 const moreCompany = [
-  { label: "Sobre Nosotros", href: "#", icon: Users },
-  { label: "Empleos y Carreras", href: "#", icon: Briefcase },
-  { label: "Nuestra Marca", href: "#", icon: Palette },
+  { label: "Sobre Nosotros", href: "/proximamente", icon: Users },
+  { label: "Empleos y Carreras", href: "/proximamente", icon: Briefcase },
+  { label: "Nuestra Marca", href: "/proximamente", icon: Palette },
 ]
 
 const morePrograms = [
-  { label: "Programa de Afiliados", href: "#", icon: Gift },
-  { label: "Programa de Socios", href: "#", icon: Handshake },
+  { label: "Programa de Afiliados", href: "/proximamente", icon: Gift },
+  { label: "Programa de Socios", href: "/proximamente", icon: Handshake },
 ]
 
 const moreSupport = [
@@ -183,7 +183,7 @@ export function Navbar() {
       >
         <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2">
             <Zap className="h-9 w-9 text-primary" />
             <span
               className="text-2xl font-extrabold tracking-tight text-foreground"
@@ -228,7 +228,7 @@ export function Navbar() {
                     {item.items?.map((subItem) => (
                       <a
                         key={subItem}
-                        href="#"
+                        href="/proximamente"
                         className="block px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
                       >
                         {subItem}
@@ -421,7 +421,7 @@ export function Navbar() {
           {/* View all games link */}
           <div className="mt-5 pt-4 border-t border-border/40 flex justify-center">
             <a
-              href="#"
+              href="/proximamente"
               className="group/all flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors"
             >
               Ver todos los juegos
@@ -850,7 +850,7 @@ export function Navbar() {
                     : item.items?.map((subItem) => (
                         <a
                           key={subItem}
-                          href="#"
+                          href="/proximamente"
                           className="text-sm text-muted-foreground hover:text-foreground"
                         >
                           {subItem}

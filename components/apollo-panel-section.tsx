@@ -70,14 +70,14 @@ export function ApolloPanelSection() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
               <a
-                href="#"
+                href="/proximamente"
                 className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 py-2.5 rounded-lg hover:bg-primary/90 transition-colors text-sm"
               >
                 Vista Previa del Panel
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
-                href="#"
+                href="/proximamente"
                 className="inline-flex items-center gap-2 border border-border text-foreground font-semibold px-5 py-2.5 rounded-lg hover:bg-card transition-colors text-sm"
               >
                 Demo del Panel
