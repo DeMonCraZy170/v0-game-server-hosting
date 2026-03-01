@@ -441,10 +441,10 @@ export function GameServerHostingContent() {
             <Image
               src="/images/hero_icon.avif"
               alt="Game Server Hosting"
-              width={80}
-              height={80}
+              width={140}
+              height={140}
               className="object-contain"
-              style={{ width: 80, height: "auto" }}
+              style={{ width: 140, height: "auto" }}
               priority
             />
           </div>
