@@ -51,52 +51,92 @@ const ddosFeatures = [
 
 /* ─── Locations ─── */
 
-const regions = [
+interface LocationWithPing {
+  name: string
+  flag: string
+  active: boolean
+  ping?: number // ms
+  signal: "excellent" | "good" | "moderate"
+}
+
+const regions: { region: string; locations: LocationWithPing[] }[] = [
   {
     region: "Norte America",
     locations: [
-      { name: "OVH Beauharnois, Canada", flag: "CA", active: true },
-      { name: "Miami, Florida", flag: "US", active: false },
-      { name: "Dallas, Texas", flag: "US", active: false },
-      { name: "Los Angeles, California", flag: "US", active: false },
+      { name: "Miami, Florida", flag: "US", active: true, ping: 45, signal: "excellent" },
+      { name: "Dallas, Texas", flag: "US", active: false, ping: 62, signal: "excellent" },
+      { name: "Los Angeles, California", flag: "US", active: false, ping: 78, signal: "good" },
+      { name: "OVH Beauharnois, Canada", flag: "CA", active: false, ping: 85, signal: "good" },
+    ],
+  },
+  {
+    region: "Latinoamerica",
+    locations: [
+      { name: "Sao Paulo, Brasil", flag: "BR", active: true, ping: 28, signal: "excellent" },
+      { name: "Buenos Aires, Argentina", flag: "AR", active: false, ping: 35, signal: "excellent" },
+      { name: "Santiago, Chile", flag: "CL", active: false, ping: 42, signal: "excellent" },
+      { name: "Ciudad de Mexico, Mexico", flag: "MX", active: false, ping: 55, signal: "good" },
+      { name: "Lima, Peru", flag: "PE", active: false, ping: 48, signal: "good" },
+      { name: "Bogota, Colombia", flag: "CO", active: false, ping: 52, signal: "good" },
     ],
   },
   {
     region: "Europa",
     locations: [
-      { name: "Paris, Francia", flag: "FR", active: false },
-      { name: "Helsinki, Finlandia", flag: "FI", active: false },
-      { name: "Viena, Austria", flag: "AT", active: false },
+      { name: "Paris, Francia", flag: "FR", active: false, ping: 120, signal: "moderate" },
+      { name: "Helsinki, Finlandia", flag: "FI", active: false, ping: 145, signal: "moderate" },
+      { name: "Viena, Austria", flag: "AT", active: false, ping: 135, signal: "moderate" },
     ],
   },
   {
-    region: "Asia",
+    region: "Asia & Oceania",
     locations: [
-      { name: "Singapur, Asia", flag: "SG", active: false },
-      { name: "Mumbai, India", flag: "IN", active: false },
+      { name: "Singapur, Asia", flag: "SG", active: false, ping: 280, signal: "moderate" },
+      { name: "Sydney, Australia", flag: "AU", active: false, ping: 250, signal: "moderate" },
     ],
-  },
-  {
-    region: "Oceania",
-    locations: [{ name: "Sydney, Australia", flag: "AU", active: false }],
   },
 ]
 
-const locationDots = [
-  { name: "OVH Beauharnois, Canada", x: 27, y: 28, active: true },
-  { name: "Miami, Florida", x: 24, y: 40, active: false },
-  { name: "Dallas, Texas", x: 20, y: 36, active: false },
-  { name: "Los Angeles, California", x: 14, y: 35, active: false },
-  { name: "Paris, Francia", x: 48, y: 27, active: false },
-  { name: "Helsinki, Finlandia", x: 54, y: 19, active: false },
-  { name: "Viena, Austria", x: 51, y: 27, active: false },
-  { name: "Singapur, Asia", x: 76, y: 52, active: false },
-  { name: "Mumbai, India", x: 70, y: 42, active: false },
-  { name: "Sydney, Australia", x: 86, y: 72, active: false },
+interface LocationDot {
+  name: string
+  x: number
+  y: number
+  active: boolean
+  ping?: number
+  signal: "excellent" | "good" | "moderate"
+}
+
+const locationDots: LocationDot[] = [
+  // North America
+  { name: "Miami, Florida", x: 24, y: 38, active: true, ping: 45, signal: "excellent" },
+  { name: "Dallas, Texas", x: 20, y: 35, active: false, ping: 62, signal: "excellent" },
+  { name: "Los Angeles, California", x: 14, y: 34, active: false, ping: 78, signal: "good" },
+  { name: "OVH Beauharnois, Canada", x: 27, y: 26, active: false, ping: 85, signal: "good" },
+  // Latin America
+  { name: "Ciudad de Mexico, Mexico", x: 18, y: 43, active: false, ping: 55, signal: "good" },
+  { name: "Bogota, Colombia", x: 22, y: 52, active: false, ping: 52, signal: "good" },
+  { name: "Lima, Peru", x: 21, y: 60, active: false, ping: 48, signal: "good" },
+  { name: "Sao Paulo, Brasil", x: 28, y: 62, active: true, ping: 28, signal: "excellent" },
+  { name: "Buenos Aires, Argentina", x: 26, y: 70, active: false, ping: 35, signal: "excellent" },
+  { name: "Santiago, Chile", x: 23, y: 68, active: false, ping: 42, signal: "excellent" },
+  // Europe
+  { name: "Paris, Francia", x: 48, y: 27, active: false, ping: 120, signal: "moderate" },
+  { name: "Helsinki, Finlandia", x: 54, y: 19, active: false, ping: 145, signal: "moderate" },
+  { name: "Viena, Austria", x: 51, y: 27, active: false, ping: 135, signal: "moderate" },
+  // Asia & Oceania
+  { name: "Singapur, Asia", x: 76, y: 52, active: false, ping: 280, signal: "moderate" },
+  { name: "Sydney, Australia", x: 86, y: 72, active: false, ping: 250, signal: "moderate" },
 ]
 
 const flagEmoji: Record<string, string> = {
   CA: "🇨🇦", US: "🇺🇸", FR: "🇫🇷", FI: "🇫🇮", AT: "🇦🇹", SG: "🇸🇬", IN: "🇮🇳", AU: "🇦🇺",
+  BR: "🇧🇷", AR: "🇦🇷", CL: "🇨🇱", MX: "🇲🇽", PE: "🇵🇪", CO: "🇨🇴",
+}
+
+const signalColor = {
+  excellent: "#22c55e", // green
+  good: "#eab308", // yellow
+  moderate: "#f97316", // orange
 }
 
 /* ─── Component ─── */
@@ -605,7 +645,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
             </p>
           </div>
 
-          {/* World map */}
+          {/* LATAM Map with real-time ping indicators */}
           <div
             className="relative w-full aspect-[2/1] mb-10 rounded-xl overflow-hidden transition-all duration-700"
             style={{
@@ -616,54 +656,95 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
               transitionDelay: "200ms",
             }}
           >
-            {/* Dot grid world map */}
-            <svg viewBox="0 0 100 50" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
-              {/* Simplified dot-based world map */}
-              {Array.from({ length: 50 }, (_, row) =>
-                Array.from({ length: 100 }, (_, col) => {
-                  const isLand =
-                    (col > 15 && col < 30 && row > 10 && row < 45) ||
-                    (col > 42 && col < 58 && row > 8 && row < 38) ||
-                    (col > 55 && col < 75 && row > 12 && row < 45) ||
-                    (col > 75 && col < 95 && row > 25 && row < 45) ||
-                    (col > 60 && col < 80 && row > 5 && row < 20)
-                  if (!isLand || Math.random() > 0.35) return null
-                  return (
+            {/* LATAM Map background image */}
+            <Image
+              src="/images/latam-map.avif"
+              alt="Mapa de servidores en Latinoamerica"
+              fill
+              className="object-cover opacity-60"
+              sizes="(max-width: 768px) 100vw, 1200px"
+            />
+            
+            {/* Location dots with ping indicators */}
+            <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
+              {locationDots.map((dot) => {
+                const color = signalColor[dot.signal]
+                const isHighlighted = dot.active || hoveredLocation === dot.name
+                return (
+                  <g key={dot.name}>
+                    {/* Pulse animation for active/hovered locations */}
+                    {isHighlighted && (
+                      <circle cx={dot.x} cy={dot.y} r={2.5} fill={color} opacity={0.3}>
+                        <animate attributeName="r" values="2.5;4;2.5" dur="1.5s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.5s" repeatCount="indefinite" />
+                      </circle>
+                    )}
+                    {/* Outer ring showing signal strength */}
                     <circle
-                      key={`${row}-${col}`}
-                      cx={col}
-                      cy={row}
-                      r={0.25}
-                      fill="rgba(255,255,255,0.12)"
+                      cx={dot.x}
+                      cy={dot.y}
+                      r={1.2}
+                      fill="none"
+                      stroke={color}
+                      strokeWidth={0.3}
+                      opacity={isHighlighted ? 1 : 0.6}
                     />
-                  )
-                })
-              )}
-              {/* Location dots */}
-              {locationDots.map((dot) => (
-                <g key={dot.name}>
-                  {dot.active && (
-                    <circle cx={dot.x} cy={dot.y} r={1.5} fill="rgba(245,166,35,0.2)">
-                      <animate attributeName="r" values="1.5;2.5;1.5" dur="2s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite" />
-                    </circle>
-                  )}
-                  <circle
-                    cx={dot.x}
-                    cy={dot.y}
-                    r={0.6}
-                    fill={dot.active || hoveredLocation === dot.name ? "#f5a623" : "rgba(255,255,255,0.4)"}
-                    className="transition-all duration-300"
-                    style={{ cursor: "pointer" }}
-                    onMouseEnter={() => setHoveredLocation(dot.name)}
-                    onMouseLeave={() => setHoveredLocation(null)}
-                  />
-                </g>
-              ))}
+                    {/* Inner dot */}
+                    <circle
+                      cx={dot.x}
+                      cy={dot.y}
+                      r={0.7}
+                      fill={color}
+                      className="transition-all duration-300 cursor-pointer"
+                      onMouseEnter={() => setHoveredLocation(dot.name)}
+                      onMouseLeave={() => setHoveredLocation(null)}
+                    />
+                    {/* Ping label on hover */}
+                    {hoveredLocation === dot.name && dot.ping && (
+                      <g>
+                        <rect
+                          x={dot.x + 2}
+                          y={dot.y - 4}
+                          width={12}
+                          height={5}
+                          rx={1}
+                          fill="rgba(13,13,13,0.9)"
+                        />
+                        <text
+                          x={dot.x + 8}
+                          y={dot.y - 0.8}
+                          textAnchor="middle"
+                          fill={color}
+                          fontSize={2.5}
+                          fontWeight="bold"
+                        >
+                          {dot.ping}ms
+                        </text>
+                      </g>
+                    )}
+                  </g>
+                )
+              })}
             </svg>
+            
+            {/* Signal legend */}
+            <div className="absolute bottom-3 right-3 flex items-center gap-4 px-3 py-2 rounded-lg" style={{ background: "rgba(13,13,13,0.85)" }}>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full" style={{ background: signalColor.excellent }} />
+                <span className="text-[10px] text-foreground/80">Excelente</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full" style={{ background: signalColor.good }} />
+                <span className="text-[10px] text-foreground/80">Bueno</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full" style={{ background: signalColor.moderate }} />
+                <span className="text-[10px] text-foreground/80">Moderado</span>
+              </div>
+            </div>
           </div>
 
-          {/* Region cards */}
+          {/* Region cards with ping indicators */}
           <div
             className="grid grid-cols-2 md:grid-cols-4 gap-4"
             style={{
@@ -676,21 +757,37 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
               <div key={r.region} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <p className="text-sm font-bold text-foreground mb-3">{r.region}</p>
                 <ul className="flex flex-col gap-2">
-                  {r.locations.map((loc) => (
-                    <li
-                      key={loc.name}
-                      className="flex items-center gap-2 text-xs transition-all duration-200 rounded-md px-2 py-1.5"
-                      style={{
-                        background: loc.active ? "rgba(245,166,35,0.12)" : "transparent",
-                        color: loc.active ? "#f5a623" : "rgba(255,255,255,0.6)",
-                      }}
-                      onMouseEnter={() => setHoveredLocation(loc.name)}
-                      onMouseLeave={() => setHoveredLocation(null)}
-                    >
-                      <span>{flagEmoji[loc.flag] ?? ""}</span>
-                      <span className="truncate">{loc.name}</span>
-                    </li>
-                  ))}
+                  {r.locations.map((loc) => {
+                    const color = signalColor[loc.signal]
+                    return (
+                      <li
+                        key={loc.name}
+                        className="flex items-center gap-2 text-xs transition-all duration-200 rounded-md px-2 py-1.5 cursor-pointer hover:bg-white/5"
+                        style={{
+                          background: loc.active ? "rgba(34,197,94,0.12)" : "transparent",
+                        }}
+                        onMouseEnter={() => setHoveredLocation(loc.name)}
+                        onMouseLeave={() => setHoveredLocation(null)}
+                      >
+                        <span>{flagEmoji[loc.flag] ?? ""}</span>
+                        <span className="truncate flex-1" style={{ color: loc.active ? "#22c55e" : "rgba(255,255,255,0.6)" }}>
+                          {loc.name.split(",")[0]}
+                        </span>
+                        {/* Ping indicator */}
+                        <span className="flex items-center gap-1 shrink-0">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full"
+                            style={{ background: color }}
+                          />
+                          {loc.ping && (
+                            <span className="text-[10px] font-medium" style={{ color }}>
+                              {loc.ping}ms
+                            </span>
+                          )}
+                        </span>
+                      </li>
+                    )
+                  })}
                 </ul>
               </div>
             ))}
