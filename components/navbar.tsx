@@ -93,14 +93,14 @@ const resourcesInfo = [
 
 /* ── More mega-dropdown data ── */
 const moreCompany = [
-  { label: "Sobre Nosotros", href: "/proximamente", icon: Users },
-  { label: "Empleos y Carreras", href: "/proximamente", icon: Briefcase },
-  { label: "Nuestra Marca", href: "/proximamente", icon: Palette },
+  { label: "Sobre Nosotros", href: "/proximamente", icon: Users, comingSoon: true },
+  { label: "Empleos y Carreras", href: "/proximamente", icon: Briefcase, comingSoon: true },
+  { label: "Nuestra Marca", href: "/proximamente", icon: Palette, comingSoon: true },
 ]
 
 const morePrograms = [
-  { label: "Programa de Afiliados", href: "/proximamente", icon: Gift },
-  { label: "Programa de Socios", href: "/proximamente", icon: Handshake },
+  { label: "Programa de Afiliados", href: "/proximamente", icon: Gift, comingSoon: true },
+  { label: "Programa de Socios", href: "/proximamente", icon: Handshake, comingSoon: true },
 ]
 
 const moreSupport = [
@@ -686,6 +686,11 @@ export function Navbar() {
                       <span className="text-sm font-medium text-foreground/90 group-hover/more:text-foreground transition-colors">
                         {item.label}
                       </span>
+                      {item.comingSoon && (
+                        <span className="text-[9px] font-bold tracking-wider text-primary bg-primary/15 px-1.5 py-0.5 rounded ml-auto shrink-0">
+                          PROXIMAMENTE
+                        </span>
+                      )}
                     </a>
                   )
                 })}
@@ -718,6 +723,11 @@ export function Navbar() {
                       <span className="text-sm font-medium text-foreground/90 group-hover/prog:text-foreground transition-colors">
                         {item.label}
                       </span>
+                      {item.comingSoon && (
+                        <span className="text-[9px] font-bold tracking-wider text-primary bg-primary/15 px-1.5 py-0.5 rounded ml-auto shrink-0">
+                          PROXIMAMENTE
+                        </span>
+                      )}
                     </a>
                   )
                 })}
@@ -845,6 +855,11 @@ export function Navbar() {
                         >
                           <moreItem.icon className="h-3.5 w-3.5" />
                           {moreItem.label}
+                          {moreItem.comingSoon && (
+                            <span className="text-[8px] font-bold tracking-wider text-primary bg-primary/15 px-1.5 py-0.5 rounded ml-auto shrink-0">
+                              PROXIMAMENTE
+                            </span>
+                          )}
                         </a>
                       ))
                     : item.items?.map((subItem) => (
