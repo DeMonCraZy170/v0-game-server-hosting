@@ -225,11 +225,47 @@ const bedrockCommunityPlans: PlanDef[] = [
   { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "bc15" },
 ]
 
+/* ── Modded-specific plans (higher RAM recommendations for modpacks) ── */
+const moddedVanillaPlans: PlanDef[] = [
+  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, whmcsId: "m5" },
+  { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "m6" },
+  { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "m7" },
+  { name: "Tierra", planet: "earth", ram: "7GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 18.13, extras: ["1 Splitter Slot"], whmcsId: "m8" },
+  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 20.72, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m9" },
+  { name: "Saturno", planet: "saturn", ram: "9GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 23.31, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m10" },
+  { name: "Jupiter", planet: "jupiter", ram: "10GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 25.90, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m11" },
+  { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "m12" },
+  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "m13" },
+  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "m14" },
+  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "m15" },
+]
+
+const moddedCommunityPlans: PlanDef[] = [
+  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 32.00, popular: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "mc9" },
+  { name: "Sol", planet: "sun", ram: "12GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 48.00, bestSeller: true, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "mc12" },
+  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "mc13" },
+  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 80.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "mc14" },
+  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "mc15" },
+]
+
+/* ── Modded-specific server capabilities ── */
+const moddedServerCapabilities = ["Soporte Forge", "Soporte Fabric", "Soporte NeoForge", "Soporte Modpacks", "Instalador de Mods", "Soporte de Plugins"]
+
+/* ── Modded-specific FAQ ── */
+const moddedFaqItems = [
+  { q: "Por que ForzaHost es el mejor hosting para Minecraft Modded?", a: "Ofrecemos hardware de ultima generacion optimizado para modpacks pesados. Ryzen 9 7900 o equivalente, DDR5 RAM y almacenamiento NVMe para que tus mods carguen rapido y sin lag." },
+  { q: "Puedo instalar cualquier modpack como RLCraft o Pixelmon?", a: "Si, soportamos todos los modpacks populares incluyendo RLCraft, Pixelmon, All The Mods, Better Minecraft, Vault Hunters, Create y muchos mas. La instalacion es con un solo clic." },
+  { q: "Cuanta RAM necesito para un servidor Modded?", a: "Depende del modpack. Para modpacks ligeros (menos de 50 mods) recomendamos minimo 4GB. Para modpacks medianos como Better Minecraft, 6-8GB. Para modpacks pesados como RLCraft o ATM, 8-12GB o mas." },
+  { q: "Que tan rapido responde el soporte cuando tengo un problema?", a: "Nuestro equipo de soporte especializado en mods responde en promedio en menos de 5 minutos. Estamos disponibles 24/7 a traves de chat en vivo y tickets." },
+  { q: "Puedo cambiar de modpack despues de crear mi servidor?", a: "Si, puedes cambiar de modpack en cualquier momento desde nuestro panel de control. El proceso es simple y rapido, solo selecciona el nuevo modpack y nosotros nos encargamos del resto." },
+]
+
 /* ── Main Component ── */
-export function MinecraftHostingContent({ variant = "java" }: { variant?: "java" | "bedrock" }) {
+export function MinecraftHostingContent({ variant = "java" }: { variant?: "java" | "bedrock" | "modded" }) {
   const isBedrock = variant === "bedrock"
+  const isModded = variant === "modded"
   const [currentStep, setCurrentStep] = useState(1)
-  const [selectedType, setSelectedType] = useState("vanilla")
+  const [selectedType, setSelectedType] = useState(isModded ? "modded" : "vanilla")
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly")
@@ -298,18 +334,22 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
   const [ddosRef, ddosVisible] = useScrollReveal({ threshold: 0.1 })
   const [faqRef, faqVisible] = useScrollReveal({ threshold: 0.1 })
 
-  const activeFaqItems = isBedrock
-    ? faqItems.map((item) =>
-        item.q.includes("versiones")
-          ? { ...item, a: "Soportamos todas las versiones de Minecraft Bedrock Edition, incluyendo Windows 10/11, consolas (Xbox, PlayStation, Nintendo Switch) y dispositivos moviles (iOS, Android)." }
-          : item
-      )
-    : faqItems
+  const activeFaqItems = isModded
+    ? moddedFaqItems
+    : isBedrock
+      ? faqItems.map((item) =>
+          item.q.includes("versiones")
+            ? { ...item, a: "Soportamos todas las versiones de Minecraft Bedrock Edition, incluyendo Windows 10/11, consolas (Xbox, PlayStation, Nintendo Switch) y dispositivos moviles (iOS, Android)." }
+            : item
+        )
+      : faqItems
 
   const stepPercent = currentStep === 1 ? 25 : currentStep === 2 ? 50 : 75
-  const plans = isBedrock
-    ? (selectedType === "community" ? bedrockCommunityPlans : bedrockVanillaPlans)
-    : (selectedType === "community" ? communityPlans : vanillaPlans)
+  const plans = isModded
+    ? (selectedType === "community" ? moddedCommunityPlans : moddedVanillaPlans)
+    : isBedrock
+      ? (selectedType === "community" ? bedrockCommunityPlans : bedrockVanillaPlans)
+      : (selectedType === "community" ? communityPlans : vanillaPlans)
   const popularPlans = plans.filter((p) => p.popular || p.bestSeller)
   const allOtherPlans = plans.filter((p) => !p.popular && !p.bestSeller)
 
@@ -347,16 +387,39 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4">
+          {/* Breadcrumbs for Modded */}
+          {isModded && (
+            <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground transition-all duration-700 ease-out" style={{ opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)" }}>
+              <a href="/" className="hover:text-foreground transition-colors">Inicio</a>
+              <span className="text-muted-foreground/50">{">"}</span>
+              <a href="/minecraft" className="hover:text-foreground transition-colors">Minecraft Server Hosting</a>
+              <span className="text-muted-foreground/50">{">"}</span>
+              <span className="text-primary font-medium">Modded Minecraft Server Hosting</span>
+            </div>
+          )}
+
           <div ref={heroRef} className="flex flex-col md:flex-row items-start gap-10 transition-all duration-700 ease-out" style={{ opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(30px)" }}>
             <div className="shrink-0 hidden md:block">
               <div className="w-[200px] h-[240px] rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}>
-                <Image src="/images/icon-minecraft.avif" alt="Minecraft" width={200} height={240} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
+                <Image src={isModded ? "/images/icon-minecraft-modded.jpg" : "/images/icon-minecraft.avif"} alt={isModded ? "Minecraft Modded" : "Minecraft"} width={200} height={240} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
               </div>
+              {isModded && (
+                <a href="/" className="flex items-center gap-1.5 mt-3 text-sm text-primary font-medium hover:underline">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  Ver Sitio Web
+                </a>
+              )}
             </div>
 
             <div className="flex-1 max-w-2xl">
+              {isModded && (
+                <a href="/minecraft" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
+                  <ArrowLeft className="w-4 h-4" />
+                  Seleccionar un juego diferente
+                </a>
+              )}
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                {isBedrock ? "Minecraft Bedrock" : "Minecraft"}
+                {isModded ? "Modded Minecraft" : isBedrock ? "Minecraft Bedrock" : "Minecraft"}
                 <br />
                 <span className="text-primary">Server Hosting</span>
               </h1>
@@ -369,20 +432,27 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
                 <span className="text-muted-foreground/50">{"/"}</span>
                 <div className="flex items-center gap-2">
                   <Zap className="w-4 h-4 text-primary" />
-                  <span className="font-semibold text-foreground">Despliegue Instantaneo</span>
+                  <span className="font-semibold text-foreground">{isModded ? "Disponible en 8 Ubicaciones" : "Despliegue Instantaneo"}</span>
                 </div>
               </div>
 
               <p className="mt-5 text-muted-foreground leading-relaxed text-lg max-w-xl">
-                {isBedrock
-                  ? "Inicia tu servidor de Minecraft Bedrock con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Tienes una comunidad? Tenemos el servidor para ti."
-                  : "Inicia tu servidor de Minecraft con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Usas muchos mods? Tienes una comunidad? Tenemos el servidor para ti."}
+                {isModded
+                  ? "Quieres ejecutar un servidor de Minecraft Modded sin complicaciones? Despliega al instante modpacks populares como RLCraft o Pixelmon, con acceso completo a archivos, proteccion DDoS y soporte experto 24/7."
+                  : isBedrock
+                    ? "Inicia tu servidor de Minecraft Bedrock con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Tienes una comunidad? Tenemos el servidor para ti."
+                    : "Inicia tu servidor de Minecraft con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Usas muchos mods? Tienes una comunidad? Tenemos el servidor para ti."}
               </p>
 
-              <a href="#wizard" className="inline-flex items-center gap-2 mt-8 px-7 py-3.5 rounded-lg text-base font-bold transition-all duration-200 hover:scale-105" style={{ background: "linear-gradient(135deg, #16a34a, #22c55e, #4ade80)", color: "#fff", boxShadow: "0 4px 20px rgba(34,197,94,0.3)" }}>
-                Empezar Ahora
-                <ArrowRight className="w-4 h-4" />
-              </a>
+              <div className="flex flex-col sm:flex-row gap-3 mt-8">
+                <a href="#wizard" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg text-base font-bold transition-all duration-200 hover:scale-105" style={{ background: "linear-gradient(135deg, #16a34a, #22c55e, #4ade80)", color: "#fff", boxShadow: "0 4px 20px rgba(34,197,94,0.3)" }}>
+                  {isModded ? "Prueba Gratis por 1 Dia" : "Empezar Ahora"}
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+              {isModded && (
+                <p className="mt-2 text-xs text-muted-foreground/60">Sin riesgo, cancela cuando quieras.</p>
+              )}
             </div>
           </div>
 
@@ -390,9 +460,11 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
           <div className="mt-12 px-5 py-3 rounded-lg flex items-center gap-3 text-sm transition-all duration-700" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)", transitionDelay: "200ms" }}>
             <Zap className="w-4 h-4 text-primary shrink-0" />
             <span className="text-foreground font-medium">
-              {isBedrock
-                ? "Todos los planes de Minecraft Bedrock Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""
-                : "Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""}
+              {isModded
+                ? "Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.11 \"Mounts Of Mayhem\""
+                : isBedrock
+                  ? "Todos los planes de Minecraft Bedrock Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""
+                  : "Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""}
             </span>
           </div>
         </div>
@@ -446,7 +518,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               <div className="animate-in fade-in slide-in-from-right-4 duration-300">
                 <div className="px-8 pb-2">
                   <h2 className="text-2xl md:text-3xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                    Que tipo de servidor Minecraft quieres iniciar?
+                    {isModded ? "Que tipo de servidor Modded quieres iniciar?" : "Que tipo de servidor Minecraft quieres iniciar?"}
                   </h2>
                 </div>
 
@@ -655,11 +727,11 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               <div className="animate-in fade-in slide-in-from-right-4 duration-300">
                 <div className="px-8 pb-4">
                   <h2 className="text-2xl md:text-3xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                    Que tan poderoso quieres tu servidor de Minecraft?
+                    {isModded ? "Que tan poderoso quieres tu servidor Modded?" : "Que tan poderoso quieres tu servidor de Minecraft?"}
                   </h2>
                   <p className="text-muted-foreground text-sm mt-2">
                     {"No sabes cuanta RAM necesitas? "}
-                    <a href="/proximamente" className="text-primary font-semibold hover:underline">Consulta nuestra Guia de RAM</a>
+                    <a href="/proximamente" className="text-primary font-semibold hover:underline">{isModded ? "Consulta nuestra Guia de RAM para Modpacks" : "Consulta nuestra Guia de RAM"}</a>
                     {" para mas info."}
                   </p>
                 </div>
@@ -732,15 +804,17 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
           <div ref={typesRef} className="flex flex-col md:flex-row items-center gap-12 transition-all duration-700 ease-out" style={{ opacity: typesVisible ? 1 : 0, transform: typesVisible ? "translateY(0)" : "translateY(30px)" }}>
             <div className="flex-1">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                Que Tipos De Servidores Minecraft Puedes Ejecutar?
+                {isModded ? "Que Modpacks Puedes Ejecutar?" : "Que Tipos De Servidores Minecraft Puedes Ejecutar?"}
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-8 max-w-lg">
-                {isBedrock
-                  ? "Puedes ejecutar muchos tipos de servidores de Minecraft Bedrock dependiendo de la experiencia que busques. Ofrecemos soporte completo para Bedrock vanilla, con compatibilidad multiplataforma en Windows, consolas y moviles."
-                  : "Puedes ejecutar muchos tipos de servidores de Minecraft dependiendo de la experiencia que busques. Ofrecemos soporte completo para Minecraft Java vanilla, asi como para servidores Bedrock. Buscas una experiencia con mods? Tenemos soporte completo para Forge, Fabric, Spigot y Sponge."}
+                {isModded
+                  ? "Ejecuta servidores de Minecraft Modded con los modpacks mas populares. Ofrecemos soporte completo para Forge, Fabric, NeoForge y mas. Instala modpacks como RLCraft, Pixelmon, All The Mods o crea tu propia configuracion personalizada."
+                  : isBedrock
+                    ? "Puedes ejecutar muchos tipos de servidores de Minecraft Bedrock dependiendo de la experiencia que busques. Ofrecemos soporte completo para Bedrock vanilla, con compatibilidad multiplataforma en Windows, consolas y moviles."
+                    : "Puedes ejecutar muchos tipos de servidores de Minecraft dependiendo de la experiencia que busques. Ofrecemos soporte completo para Minecraft Java vanilla, asi como para servidores Bedrock. Buscas una experiencia con mods? Tenemos soporte completo para Forge, Fabric, Spigot y Sponge."}
               </p>
               <div className="flex flex-wrap gap-3">
-                {serverCapabilities.map((cap) => (
+                {(isModded ? moddedServerCapabilities : serverCapabilities).map((cap) => (
                   <span key={cap} className="flex items-center gap-2 text-sm font-medium text-foreground">
                     <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(34,197,94,0.2)" }}>
                       <Check className="w-3 h-3 text-[#22c55e]" />
@@ -763,9 +837,9 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
       <section className="py-20 bg-background">
         <div className="mx-auto max-w-5xl px-4">
           <div ref={featuresRef} className="text-center mb-14 transition-all duration-700 ease-out" style={{ opacity: featuresVisible ? 1 : 0, transform: featuresVisible ? "translateY(0)" : "translateY(30px)" }}>
-            <p className="text-sm font-bold tracking-widest text-primary uppercase mb-3">Caracteristicas Exclusivas De Minecraft</p>
+            <p className="text-sm font-bold tracking-widest text-primary uppercase mb-3">{isModded ? "Caracteristicas Exclusivas De Modded" : "Caracteristicas Exclusivas De Minecraft"}</p>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-              Todo lo que necesitas para iniciar un servidor de Minecraft.
+              {isModded ? "Todo lo que necesitas para tu servidor Modded." : "Todo lo que necesitas para iniciar un servidor de Minecraft."}
             </h2>
           </div>
 

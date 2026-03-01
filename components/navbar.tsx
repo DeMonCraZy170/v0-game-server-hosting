@@ -24,7 +24,7 @@ const minecraftCards = [
   },
   {
     label: "Modded Hosting",
-    href: "/proximamente",
+    href: "/minecraft/modded",
     image: "/images/dropdown-modded.jpg",
     borderColor: "#ef4444",
     badge: "NUEVA ACTUALIZACION!",
