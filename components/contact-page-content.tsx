@@ -6,6 +6,7 @@ import { AnnouncementBar } from "@/components/announcement-bar"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
+// Contact methods configuration
 const contactMethods = [
   {
     icon: Ticket,
@@ -67,7 +68,6 @@ export function ContactPageContent() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {contactMethods.map((method) => {
             const Icon = method.icon
-            const Tag = method.external ? "a" : "a"
             return (
               <div
                 key={method.title}
@@ -89,7 +89,7 @@ export function ContactPageContent() {
                   </p>
 
                   {/* CTA Button */}
-                  <Tag
+                  <a
                     href={method.href}
                     target={method.external ? "_blank" : undefined}
                     rel={method.external ? "noopener noreferrer" : undefined}
@@ -100,7 +100,7 @@ export function ContactPageContent() {
                     }}
                   >
                     {method.cta}
-                  </Tag>
+                  </a>
                 </div>
 
                 {/* Decorative bottom section */}
