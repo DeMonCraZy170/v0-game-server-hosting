@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 import {
   Cpu,
@@ -316,10 +316,42 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
 
 /* ─── Main component ─── */
 
+/* ─── Ping measurement hook ─── */
+
+function usePing(intervalMs = 10000) {
+  const [ping, setPing] = useState<number | null>(null)
+  const [status, setStatus] = useState<"measuring" | "good" | "medium" | "poor">("measuring")
+
+  const measure = useCallback(async () => {
+    try {
+      const start = performance.now()
+      await fetch("/api/ping", { cache: "no-store" })
+      const end = performance.now()
+      const latency = Math.round(end - start)
+      setPing(latency)
+      if (latency < 80) setStatus("good")
+      else if (latency < 150) setStatus("medium")
+      else setStatus("poor")
+    } catch {
+      setPing(null)
+      setStatus("measuring")
+    }
+  }, [])
+
+  useEffect(() => {
+    measure()
+    const id = setInterval(measure, intervalMs)
+    return () => clearInterval(id)
+  }, [measure, intervalMs])
+
+  return { ping, status }
+}
+
 export function GameServerHostingContent() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [hoveredDot, setHoveredDot] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
+  const { ping, status: pingStatus } = usePing(10000)
 
   // Scroll reveal refs
   const [heroRef, heroVisible] = useScrollReveal()
@@ -666,22 +698,64 @@ export function GameServerHostingContent() {
                   />
                   {hoveredDot === dot.name && (
                     <div
-                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap z-20"
+                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2.5 rounded-lg text-xs font-medium whitespace-nowrap z-20"
                       style={{
                         backgroundColor: "rgba(26,26,26,0.95)",
-                        border: "1px solid rgba(255,255,255,0.1)",
+                        border: `1px solid ${dot.active ? "rgba(245,166,35,0.3)" : "rgba(255,255,255,0.1)"}`,
+                        backdropFilter: "blur(8px)",
                       }}
                     >
                       <div className="flex items-center gap-2">
-                        <FlagEmoji code={locationDots.find((d) => d.name === dot.name)?.active ? "CA" : ""} />
+                        <FlagEmoji code={regions.flatMap(r => r.locations).find(l => l.name === dot.name)?.flag || ""} />
                         <p className="text-foreground font-bold">{dot.name}</p>
                       </div>
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <Signal className="w-3 h-3" style={{ color: dot.active ? "#22c55e" : "#f5a623" }} />
-                        <span style={{ color: dot.active ? "#22c55e" : "#f5a623" }}>
-                          {dot.active ? "Buena conexion" : "Proximamente"}
-                        </span>
-                      </div>
+                      {dot.active ? (
+                        <div className="flex items-center gap-1.5 mt-1.5">
+                          <span
+                            className="w-2 h-2 rounded-full shrink-0"
+                            style={{
+                              backgroundColor:
+                                pingStatus === "good" ? "#22c55e" : pingStatus === "medium" ? "#f5a623" : "#ef4444",
+                              boxShadow: `0 0 6px ${
+                                pingStatus === "good"
+                                  ? "rgba(34,197,94,0.5)"
+                                  : pingStatus === "medium"
+                                    ? "rgba(245,166,35,0.5)"
+                                    : "rgba(239,68,68,0.5)"
+                              }`,
+                            }}
+                          />
+                          <span
+                            className="font-bold"
+                            style={{
+                              color:
+                                pingStatus === "good" ? "#22c55e" : pingStatus === "medium" ? "#f5a623" : "#ef4444",
+                            }}
+                          >
+                            {ping !== null ? `${ping}ms` : "Midiendo..."}
+                          </span>
+                          <Signal
+                            className="w-3 h-3"
+                            style={{
+                              color:
+                                pingStatus === "good" ? "#22c55e" : pingStatus === "medium" ? "#f5a623" : "#ef4444",
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="mt-1.5">
+                          <span
+                            className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded uppercase"
+                            style={{
+                              background: "rgba(245,166,35,0.15)",
+                              color: "#f5a623",
+                              border: "1px solid rgba(245,166,35,0.3)",
+                            }}
+                          >
+                            PROXIMAMENTE
+                          </span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -719,12 +793,67 @@ export function GameServerHostingContent() {
                       <span className={loc.active ? "text-foreground font-medium" : "text-muted-foreground"}>
                         {loc.name}
                       </span>
-                      <div className="ml-auto flex items-center gap-1">
+                      <div className="ml-auto flex items-center gap-1.5">
                         {loc.active ? (
-                          <Signal className="w-3.5 h-3.5 text-primary" />
+                          <div className="flex items-center gap-1.5">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full shrink-0"
+                              style={{
+                                backgroundColor:
+                                  pingStatus === "good"
+                                    ? "#22c55e"
+                                    : pingStatus === "medium"
+                                      ? "#f5a623"
+                                      : pingStatus === "poor"
+                                        ? "#ef4444"
+                                        : "#888",
+                                boxShadow:
+                                  pingStatus === "good"
+                                    ? "0 0 4px rgba(34,197,94,0.5)"
+                                    : pingStatus === "medium"
+                                      ? "0 0 4px rgba(245,166,35,0.5)"
+                                      : "none",
+                              }}
+                            />
+                            <span
+                              className="text-[11px] font-bold tabular-nums"
+                              style={{
+                                color:
+                                  pingStatus === "good"
+                                    ? "#22c55e"
+                                    : pingStatus === "medium"
+                                      ? "#f5a623"
+                                      : pingStatus === "poor"
+                                        ? "#ef4444"
+                                        : "#888",
+                              }}
+                            >
+                              {ping !== null ? `${ping}ms` : "..."}
+                            </span>
+                            <Signal
+                              className="w-3 h-3"
+                              style={{
+                                color:
+                                  pingStatus === "good"
+                                    ? "#22c55e"
+                                    : pingStatus === "medium"
+                                      ? "#f5a623"
+                                      : pingStatus === "poor"
+                                        ? "#ef4444"
+                                        : "#888",
+                              }}
+                            />
+                          </div>
                         ) : (
-                          <span className="text-[10px] text-muted-foreground/60 font-medium uppercase">
-                            Pronto
+                          <span
+                            className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded uppercase"
+                            style={{
+                              background: "rgba(245,166,35,0.15)",
+                              color: "#f5a623",
+                              border: "1px solid rgba(245,166,35,0.3)",
+                            }}
+                          >
+                            PROXIMAMENTE
                           </span>
                         )}
                       </div>
