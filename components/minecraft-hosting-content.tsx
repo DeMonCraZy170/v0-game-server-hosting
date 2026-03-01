@@ -266,7 +266,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
   const isModded = variant === "modded"
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedType, setSelectedType] = useState(isModded ? "modded" : "vanilla")
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(isModded ? "ca-bhs" : null)
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly")
   const [openFaq, setOpenFaq] = useState<number | null>(0)
@@ -456,22 +456,150 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             </div>
           </div>
 
-          {/* Version banner */}
-          <div className="mt-12 px-5 py-3 rounded-lg flex items-center gap-3 text-sm transition-all duration-700" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)", transitionDelay: "200ms" }}>
-            <Zap className="w-4 h-4 text-primary shrink-0" />
-            <span className="text-foreground font-medium">
-              {isModded
-                ? "Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.11 \"Mounts Of Mayhem\""
-                : isBedrock
+          {/* Version banner (hidden for modded, shown in plans section instead) */}
+          {!isModded && (
+            <div className="mt-12 px-5 py-3 rounded-lg flex items-center gap-3 text-sm transition-all duration-700" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)", transitionDelay: "200ms" }}>
+              <Zap className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-foreground font-medium">
+                {isBedrock
                   ? "Todos los planes de Minecraft Bedrock Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""
                   : "Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""}
-            </span>
-          </div>
+              </span>
+            </div>
+          )}
         </div>
       </section>
 
       {/* ─── MULTI-STEP WIZARD ─── */}
       <section id="wizard" className="py-20 bg-background scroll-mt-28">
+        {isModded ? (
+          /* ── MODDED: Direct plans layout (no wizard steps) ── */
+          <div className="mx-auto max-w-7xl px-4">
+            <div
+              ref={wizardRef}
+              className="transition-all duration-700 ease-out"
+              style={{ opacity: wizardVisible ? 1 : 0, transform: wizardVisible ? "translateY(0)" : "translateY(30px)" }}
+            >
+              {/* ── Inline filter controls ── */}
+              <div className="flex flex-wrap items-start gap-8 mb-6">
+                {/* Server Tier */}
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
+                    <Server className="w-4 h-4" />
+                    <span>Tipo de Servidor</span>
+                  </div>
+                  <div className="flex gap-2">
+                    {(["vanilla", "community"] as const).map((tier) => (
+                      <button
+                        key={tier}
+                        onClick={() => setSelectedType(tier === "vanilla" ? "modded" : "community")}
+                        className="px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200"
+                        style={{
+                          background: (tier === "vanilla" && selectedType === "modded") || (tier === "community" && selectedType === "community")
+                            ? "rgba(34,197,94,0.15)"
+                            : "rgba(255,255,255,0.03)",
+                          border: (tier === "vanilla" && selectedType === "modded") || (tier === "community" && selectedType === "community")
+                            ? "1px solid rgba(34,197,94,0.4)"
+                            : "1px solid rgba(255,255,255,0.06)",
+                          color: (tier === "vanilla" && selectedType === "modded") || (tier === "community" && selectedType === "community")
+                            ? "#22c55e"
+                            : "rgba(255,255,255,0.5)",
+                        }}
+                      >
+                        {tier === "vanilla" ? "Enterprise" : "Extreme"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Billing Cycle */}
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
+                    <DollarSign className="w-4 h-4" />
+                    <span>Ciclo de Facturacion</span>
+                  </div>
+                  <div className="flex gap-2">
+                    {billingCycles.map((cycle) => (
+                      <button
+                        key={cycle.id}
+                        onClick={() => setBillingCycle(cycle.id)}
+                        className="relative px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200"
+                        style={{
+                          background: billingCycle === cycle.id ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.03)",
+                          border: billingCycle === cycle.id ? "1px solid rgba(34,197,94,0.4)" : "1px solid rgba(255,255,255,0.06)",
+                          color: billingCycle === cycle.id ? "#22c55e" : "rgba(255,255,255,0.5)",
+                        }}
+                      >
+                        {cycle.label}
+                        {cycle.discount > 0 && (
+                          <span className="absolute -top-2 -right-2 px-1 py-0.5 rounded text-[8px] font-bold" style={{ background: "rgba(245,166,35,0.2)", color: "#f5a623", border: "1px solid rgba(245,166,35,0.3)" }}>
+                            {`-${cycle.discount}%`}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
+                    <MapPin className="w-4 h-4" />
+                    <span>Ubicacion</span>
+                  </div>
+                  <div className="relative">
+                    <select
+                      value={selectedLocation || "ca-bhs"}
+                      onChange={(e) => setSelectedLocation(e.target.value)}
+                      className="appearance-none px-4 py-2 pr-8 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer"
+                      style={{
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(255,255,255,0.06)",
+                        color: "rgba(255,255,255,0.7)",
+                        outline: "none",
+                      }}
+                    >
+                      {locationRegions.flatMap((r) =>
+                        r.locations.map((loc) => (
+                          <option key={loc.id} value={loc.id} disabled={"comingSoon" in loc && !!loc.comingSoon}>
+                            {loc.name}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none" />
+                  </div>
+                </div>
+              </div>
+
+              {/* AMD Badge */}
+              <div className="flex items-center gap-2 mb-6">
+                <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>AMD</span>
+                <span className="text-sm text-muted-foreground">
+                  {"Powered by "}
+                  <span className="font-bold text-foreground">Ryzen 9 7900</span>
+                  {" o "}
+                  <a href="/proximamente" className="text-primary font-semibold hover:underline">equivalente</a>
+                </span>
+              </div>
+
+              {/* Version banner */}
+              <div className="mb-8 px-5 py-3 rounded-lg flex items-center gap-3 text-sm" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}>
+                <Zap className="w-4 h-4 text-primary shrink-0" />
+                <span className="text-foreground font-medium">
+                  {"Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.11 \"Mounts Of Mayhem\""}
+                </span>
+              </div>
+
+              {/* ── Plan cards in 4-column grid ── */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {plans.map((plan) => (
+                  <ModdedPlanCard key={plan.whmcsId} plan={plan} cycle={billingCycle} location={selectedLocation || "ca-bhs"} onSelect={() => handlePlanSelect(plan)} />
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
         <div className="mx-auto max-w-5xl px-4">
           {/* Navigation buttons above wizard */}
           <div className="flex items-center justify-end gap-3 mb-4">
@@ -796,6 +924,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             )}
           </div>
         </div>
+        )}
       </section>
 
       {/* ─── SERVER TYPES SECTION ─── */}
@@ -1039,6 +1168,96 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
         }}
       >
         {plan.bestSeller ? "Empezar" : "Ordenar Ahora"}
+      </button>
+    </div>
+  )
+}
+
+/* ── Modded Plan Card (SparkedHost-style flat card with planet icon) ── */
+const planetEmojis: Record<string, string> = {
+  mercury: "\u{1FA90}",
+  mars: "\u{1FA90}",
+  venus: "\u{1F30D}",
+  earth: "\u{1F30D}",
+  neptune: "\u{1F30A}",
+  saturn: "\u{1FA90}",
+  jupiter: "\u{1FA90}",
+  sun: "\u{2600}\u{FE0F}",
+  milkyway: "\u{1F30C}",
+  supernova: "\u{1F31F}",
+  blackhole: "\u{26AB}",
+}
+
+function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cycle: BillingCycle; location: string; onSelect: () => void }) {
+  const monthlyPrice = calcMonthlyPrice(plan.basePrice, cycle)
+  const locationName = locationRegions.flatMap((r) => r.locations).find((l) => l.id === location)?.name || "OVH Beauharnois, Canada"
+
+  return (
+    <div
+      className="relative rounded-xl p-5 flex flex-col transition-all duration-200 hover:scale-[1.02]"
+      style={{
+        background: plan.bestSeller ? "rgba(245,166,35,0.04)" : "rgba(255,255,255,0.02)",
+        border: plan.bestSeller ? "2px solid rgba(245,166,35,0.4)" : "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
+      {/* Best seller badge */}
+      {plan.bestSeller && (
+        <div className="absolute -top-3 left-4">
+          <span className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded uppercase" style={{ background: "linear-gradient(135deg, #dc2626, #ef4444)", color: "#fff" }}>
+            MAS VENDIDO
+          </span>
+        </div>
+      )}
+
+      {/* Header with planet icon */}
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-base font-bold text-foreground">{plan.name}</p>
+        <span className="text-2xl">{planetEmojis[plan.planet] || "\u{1FA90}"}</span>
+      </div>
+
+      {/* Price */}
+      <div className="mb-0.5">
+        <span className="text-3xl font-extrabold text-foreground" style={{ fontFamily: "var(--font-heading)" }}>
+          {`$${monthlyPrice.toFixed(2)}`}
+        </span>
+      </div>
+      <p className="text-[11px] text-muted-foreground/60 mb-4">Facturado mensualmente</p>
+
+      {/* Specs */}
+      <ul className="flex flex-col gap-2 mb-5 flex-1">
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+          {plan.cores}
+        </li>
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+          {plan.ram} RAM
+        </li>
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+          {plan.storage}
+        </li>
+        {plan.extras?.map((extra) => (
+          <li key={extra} className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+            {extra}
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA */}
+      <button
+        onClick={onSelect}
+        className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105"
+        style={{
+          background: plan.bestSeller
+            ? "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)"
+            : "rgba(255,255,255,0.06)",
+          color: plan.bestSeller ? "#0d0d0d" : "#f5f5f5",
+          border: plan.bestSeller ? "none" : "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        {`Ordenar en ${locationName.split(",")[0]}`}
       </button>
     </div>
   )
