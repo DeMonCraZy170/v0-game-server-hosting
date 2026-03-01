@@ -2,8 +2,27 @@
 
 import Image from "next/image"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
+import { useRef, useState, useEffect, useCallback } from "react"
 
 const hostingCategories = [
+  {
+    icon: "/images/icon-dayz.jpg",
+    iconWidth: 70,
+    iconHeight: 70,
+    title: "DayZ",
+    subtitle: "Hosting",
+    description:
+      "Servidores DayZ de alto rendimiento con proteccion DDoS y soporte 24/7 para la mejor experiencia de supervivencia.",
+    features: ["Alto Rendimiento", "Proteccion DDoS", "Soporte 24/7"],
+    cta: "Encontrar Mi Hosting DayZ",
+    href: "#",
+    accentColor: "#ef4444",
+    accentGlow: "rgba(239,68,68,0.5)",
+    buttonBg: "linear-gradient(135deg, #dc2626, #ef4444, #f87171)",
+    dotColor: "#ef4444",
+    dotGlow: "rgba(239,68,68,0.5)",
+    hot: true,
+  },
   {
     icon: "/images/icon-minecraft.avif",
     iconWidth: 60,
@@ -39,6 +58,42 @@ const hostingCategories = [
     dotGlow: "rgba(168,85,247,0.5)",
   },
   {
+    icon: "/images/icon-fivem.jpg",
+    iconWidth: 70,
+    iconHeight: 70,
+    title: "FiveM",
+    subtitle: "Hosting",
+    description:
+      "Servidores FiveM personalizados con recursos ilimitados y la mejor latencia para tu comunidad GTA.",
+    features: ["Recursos Ilimitados", "Baja Latencia", "Panel Personalizado"],
+    cta: "Proximamente",
+    href: "#",
+    accentColor: "#f59e0b",
+    accentGlow: "rgba(245,158,11,0.5)",
+    buttonBg: "linear-gradient(135deg, #d97706, #f59e0b, #fbbf24)",
+    dotColor: "#f59e0b",
+    dotGlow: "rgba(245,158,11,0.5)",
+    comingSoon: true,
+  },
+  {
+    icon: "/images/icon-ragemp.jpg",
+    iconWidth: 70,
+    iconHeight: 70,
+    title: "Rage MP",
+    subtitle: "Hosting",
+    description:
+      "Hosting dedicado para servidores Rage MP con rendimiento optimizado y soporte tecnico especializado.",
+    features: ["Rendimiento Optimizado", "Soporte Especializado", "Alta Disponibilidad"],
+    cta: "Proximamente",
+    href: "#",
+    accentColor: "#e11d48",
+    accentGlow: "rgba(225,29,72,0.5)",
+    buttonBg: "linear-gradient(135deg, #be123c, #e11d48, #fb7185)",
+    dotColor: "#e11d48",
+    dotGlow: "rgba(225,29,72,0.5)",
+    comingSoon: true,
+  },
+  {
     icon: "/images/icon-cloud.avif",
     iconWidth: 90,
     iconHeight: 90,
@@ -61,6 +116,35 @@ const hostingCategories = [
 export function GameHostingSection() {
   const [headerRef, headerVisible] = useScrollReveal()
   const [cardsRef, cardsVisible] = useScrollReveal({ threshold: 0.1 })
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current
+    if (!el) return
+    setCanScrollLeft(el.scrollLeft > 10)
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10)
+  }, [])
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    checkScroll()
+    el.addEventListener("scroll", checkScroll, { passive: true })
+    window.addEventListener("resize", checkScroll)
+    return () => {
+      el.removeEventListener("scroll", checkScroll)
+      window.removeEventListener("resize", checkScroll)
+    }
+  }, [checkScroll])
+
+  const scroll = (direction: "left" | "right") => {
+    const el = scrollRef.current
+    if (!el) return
+    const cardWidth = el.querySelector<HTMLElement>("[data-card]")?.offsetWidth ?? 350
+    el.scrollBy({ left: direction === "left" ? -cardWidth - 28 : cardWidth + 28, behavior: "smooth" })
+  }
 
   return (
     <section id="games" className="pt-8 pb-20 bg-background">
@@ -74,33 +158,81 @@ export function GameHostingSection() {
             transform: headerVisible ? "translateY(0)" : "translateY(30px)",
           }}
         >
-          <h2
-            className="text-3xl md:text-4xl font-bold text-foreground mb-4"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            Hacemos hosting de servidores de juegos a precios increibles.
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl">
-            {"Hemos alojado mas de "}
-            <span className="text-primary font-semibold">{"100,000+ servidores"}</span>
-            {" — brindando experiencias de hosting de alto rendimiento a "}
-            <span className="text-primary font-semibold">{"1,000,000s de jugadores"}</span>
-            {" de todo el mundo."}
-          </p>
+          <div className="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <h2
+                className="text-3xl md:text-4xl font-bold text-foreground mb-4"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Hacemos hosting de servidores de juegos a precios increibles.
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl">
+                {"Hemos alojado mas de "}
+                <span className="text-primary font-semibold">{"100,000+ servidores"}</span>
+                {" — brindando experiencias de hosting de alto rendimiento a "}
+                <span className="text-primary font-semibold">{"1,000,000s de jugadores"}</span>
+                {" de todo el mundo."}
+              </p>
+            </div>
+            {/* Navigation arrows */}
+            <div className="hidden md:flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => scroll("left")}
+                disabled={!canScrollLeft}
+                aria-label="Anterior"
+                className="flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200"
+                style={{
+                  background: canScrollLeft ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.03)",
+                  color: canScrollLeft ? "#fff" : "#555",
+                  border: `1px solid ${canScrollLeft ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.05)"}`,
+                  cursor: canScrollLeft ? "pointer" : "default",
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                disabled={!canScrollRight}
+                aria-label="Siguiente"
+                className="flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200"
+                style={{
+                  background: canScrollRight ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.03)",
+                  color: canScrollRight ? "#fff" : "#555",
+                  border: `1px solid ${canScrollRight ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.05)"}`,
+                  cursor: canScrollRight ? "pointer" : "default",
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Hosting cards grid - extra top padding for overflowing icons */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-7">
+        {/* Hosting cards carousel */}
+        <div
+          ref={(node) => {
+            cardsRef(node)
+            if (node) (scrollRef as React.MutableRefObject<HTMLDivElement>).current = node
+          }}
+          className="flex gap-7 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            paddingTop: 36,
+          }}
+        >
           {hostingCategories.map((category, index) => (
             <a
               key={category.title}
-              href={category.href}
-              className="group relative flex flex-col rounded-xl transition-all duration-500 ease-out"
+              href={category.comingSoon ? undefined : category.href}
+              data-card
+              className="group relative flex flex-col rounded-xl transition-all duration-500 ease-out snap-start shrink-0"
               style={{
                 opacity: cardsVisible ? 1 : 0,
                 transform: cardsVisible ? "translateY(0)" : "translateY(40px)",
                 transitionDelay: `${staggerDelay(index, 120)}ms`,
-                marginTop: 36,
+                width: "calc((100% - 56px) / 3)",
+                minWidth: 290,
               }}
             >
               {/* Card border - default subtle, brighter on hover */}
@@ -138,7 +270,7 @@ export function GameHostingSection() {
                   alt={category.title}
                   width={category.iconWidth}
                   height={category.iconHeight}
-                  className="object-contain drop-shadow-lg"
+                  className="object-contain drop-shadow-lg rounded-lg"
                   style={{ width: "auto", height: "auto" }}
                   sizes="110px"
                 />
@@ -146,7 +278,7 @@ export function GameHostingSection() {
 
               {/* Card content - with top padding to clear the icon */}
               <div className="relative z-[1] flex flex-col flex-1 pt-12 px-7 pb-7">
-                {/* Title + Coming Soon Badge */}
+                {/* Title + Badges */}
                 <div className="flex items-start justify-between">
                   <div>
                     <h3
@@ -162,6 +294,19 @@ export function GameHostingSection() {
                       {category.subtitle}
                     </p>
                   </div>
+                  {category.hot && (
+                    <span
+                      className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded mt-1 shrink-0 uppercase"
+                      style={{
+                        background: "rgba(239,68,68,0.15)",
+                        color: "#ef4444",
+                        border: "1px solid rgba(239,68,68,0.3)",
+                        animation: "pulse 2s ease-in-out infinite",
+                      }}
+                    >
+                      HOT
+                    </span>
+                  )}
                   {category.comingSoon && (
                     <span
                       className="text-[10px] font-bold tracking-wider px-2 py-1 rounded mt-1 shrink-0"
@@ -181,7 +326,7 @@ export function GameHostingSection() {
                   {category.description}
                 </p>
 
-                {/* Features with green dots */}
+                {/* Features with colored dots */}
                 <ul className="flex flex-col gap-3 mb-6">
                   {category.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-3 text-sm text-foreground/90">
@@ -216,6 +361,12 @@ export function GameHostingSection() {
           ))}
         </div>
       </div>
+
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   )
 }
