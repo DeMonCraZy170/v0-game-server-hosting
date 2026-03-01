@@ -259,9 +259,45 @@ function MobileIcon() {
 /* ─── Game Card component ─── */
 
 function GameCard({ game, index, isVisible }: { game: GameData; index: number; isVisible: boolean }) {
+  // Map game names to slugs for dynamic routing
+  const getGameSlug = (name: string) => {
+    const slugMap: Record<string, string> = {
+      "Minecraft Java": "minecraft",
+      "Minecraft Bedrock": "minecraft-bedrock",
+      "Ark: Survival Evolved": "ark",
+      "Rust": "rust",
+      "Valheim": "valheim",
+      "Terraria": "terraria",
+      "7 Days to Die": "7daystodie",
+      "Unturned": "unturned",
+      "Garry's Mod": "garrysmod",
+      "Satisfactory": "satisfactory",
+      "Project Zomboid": "projectzomboid",
+      "The Forest": "theforest",
+      "Sons of the Forest": "sonsoftheforest",
+      "Enshrouded": "enshrouded",
+      "Palworld": "palworld",
+      "Conan Exiles": "conanexiles",
+      "V Rising": "vrising",
+      "DayZ": "dayz",
+      "Space Engineers": "spaceengineers",
+      "Don't Starve Together": "dontstarvetogether",
+      "Factorio": "factorio",
+      "Squad": "squad",
+      "Icarus": "icarus",
+      "Team Fortress 2": "tf2",
+      "Euro Truck Simulator 2": "eurotruck",
+      "Mindustry": "mindustry",
+      "FiveM": "fivem",
+      "RageMP": "ragemp",
+    }
+    return slugMap[name] || name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+  }
+
+  const href = game.comingSoon ? undefined : `/game-server-hosting/${getGameSlug(game.name)}`
   return (
     <a
-      href={game.comingSoon ? undefined : "/proximamente"}
+      href={href}
       className="group relative flex flex-col rounded-xl overflow-hidden transition-all duration-600 ease-out"
       style={{
         opacity: isVisible ? 1 : 0,
