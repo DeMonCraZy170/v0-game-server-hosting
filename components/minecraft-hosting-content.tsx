@@ -1376,7 +1376,8 @@ function BudgetPlanCard({ plan, cycle, location, onSelect }: { plan: BudgetPlanD
   const locationName = locationRegions.flatMap((r) => r.locations).find((l) => l.id === location)?.name || "OVH Beauharnois, Canada"
   const [isHovered, setIsHovered] = useState(false)
 
-  const planetIcon = `/images/planets/${plan.planet}.svg`
+  const avifPlanets = ["supernova", "blackhole"]
+  const planetIcon = `/images/planets/${plan.planet}.${avifPlanets.includes(plan.planet) ? "avif" : "svg"}`
 
   return (
     <div
@@ -1401,7 +1402,7 @@ function BudgetPlanCard({ plan, cycle, location, onSelect }: { plan: BudgetPlanD
       {/* Header with planet icon */}
       <div className="flex items-center justify-between mb-4">
         <p className="text-base font-bold text-foreground">{plan.name}</p>
-        <Image src={planetIcon} alt={plan.name} width={40} height={40} className="object-contain" />
+        <Image src={planetIcon} alt={plan.name} width={40} height={40} className={`object-contain ${avifPlanets.includes(plan.planet) ? "rounded-full" : ""}`} />
       </div>
 
       {/* Price */}
