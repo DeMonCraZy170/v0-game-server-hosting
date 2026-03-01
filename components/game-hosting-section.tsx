@@ -211,8 +211,8 @@ export function GameHostingSection() {
         {/* Hosting cards carousel */}
         <div
           ref={(node) => {
-            cardsRef(node)
-            if (node) (scrollRef as React.MutableRefObject<HTMLDivElement>).current = node
+            (cardsRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+            ;(scrollRef as React.MutableRefObject<HTMLDivElement | null>).current = node
           }}
           className="flex gap-7 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
           style={{
