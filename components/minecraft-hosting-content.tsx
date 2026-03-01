@@ -453,7 +453,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
           <div ref={heroRef} className="flex flex-col md:flex-row items-start gap-10 transition-all duration-700 ease-out" style={{ opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(30px)" }}>
             <div className="shrink-0 hidden md:block">
               <div className="w-[200px] h-[240px] rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}>
-                <Image src={isModded ? "/images/icon-minecraft-modded.jpg" : "/images/icon-minecraft.avif"} alt={isBudget ? "Minecraft Budget" : isModded ? "Minecraft Modded" : "Minecraft"} width={200} height={240} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
+                <Image src="/images/minecraft-cover.avif" alt={isBudget ? "Minecraft Budget" : isModded ? "Minecraft Modded" : "Minecraft"} width={200} height={240} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
               </div>
               {(isModded || isBudget) && (
                 <a href="/" className="flex items-center gap-1.5 mt-3 text-sm text-primary font-medium hover:underline">
@@ -1126,7 +1126,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             </div>
             <div className="shrink-0 hidden lg:block">
               <div className="w-[320px] h-[220px] rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 8px 40px rgba(0,0,0,0.4)" }}>
-                <Image src="/images/icon-minecraft.avif" alt="Tipos de servidores Minecraft" width={320} height={220} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
+                <Image src="/images/minecraft-cover.avif" alt="Tipos de servidores Minecraft" width={320} height={220} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
               </div>
             </div>
           </div>
