@@ -197,8 +197,37 @@ function calcMonthlyPrice(base: number, cycle: BillingCycle): number {
   return parseFloat((base * (1 - discount / 100)).toFixed(2))
 }
 
+/* ── Bedrock-specific plans (same planet names, slightly different specs) ── */
+const bedrockVanillaPlans: PlanDef[] = [
+  { name: "Asteroide", planet: "asteroid", ram: "512MB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 1.30, whmcsId: "b1" },
+  { name: "Pluton", planet: "pluto", ram: "1GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 2.59, whmcsId: "b2" },
+  { name: "Triton", planet: "triton", ram: "2GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 5.18, whmcsId: "b3" },
+  { name: "Luna", planet: "moon", ram: "3GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 7.77, whmcsId: "b4" },
+  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, popular: true, whmcsId: "b5" },
+  { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "b6" },
+  { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "b7" },
+  { name: "Tierra", planet: "earth", ram: "7GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 18.13, extras: ["1 Splitter Slot"], whmcsId: "b8" },
+  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 20.72, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b9" },
+  { name: "Saturno", planet: "saturn", ram: "9GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 23.31, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b10" },
+  { name: "Jupiter", planet: "jupiter", ram: "10GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 25.90, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b11" },
+  { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "b12" },
+  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "b13" },
+  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "b14" },
+  { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "b15" },
+]
+
+const bedrockCommunityPlans: PlanDef[] = [
+  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 16.00, popular: true, whmcsId: "bc5" },
+  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 32.00, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "bc9" },
+  { name: "Sol", planet: "sun", ram: "12GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "bc12" },
+  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "bc13" },
+  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 80.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "bc14" },
+  { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "bc15" },
+]
+
 /* ── Main Component ── */
-export function MinecraftHostingContent() {
+export function MinecraftHostingContent({ variant = "java" }: { variant?: "java" | "bedrock" }) {
+  const isBedrock = variant === "bedrock"
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedType, setSelectedType] = useState("vanilla")
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
@@ -269,8 +298,18 @@ export function MinecraftHostingContent() {
   const [ddosRef, ddosVisible] = useScrollReveal({ threshold: 0.1 })
   const [faqRef, faqVisible] = useScrollReveal({ threshold: 0.1 })
 
+  const activeFaqItems = isBedrock
+    ? faqItems.map((item) =>
+        item.q.includes("versiones")
+          ? { ...item, a: "Soportamos todas las versiones de Minecraft Bedrock Edition, incluyendo Windows 10/11, consolas (Xbox, PlayStation, Nintendo Switch) y dispositivos moviles (iOS, Android)." }
+          : item
+      )
+    : faqItems
+
   const stepPercent = currentStep === 1 ? 25 : currentStep === 2 ? 50 : 75
-  const plans = selectedType === "community" ? communityPlans : vanillaPlans
+  const plans = isBedrock
+    ? (selectedType === "community" ? bedrockCommunityPlans : bedrockVanillaPlans)
+    : (selectedType === "community" ? communityPlans : vanillaPlans)
   const popularPlans = plans.filter((p) => p.popular || p.bestSeller)
   const allOtherPlans = plans.filter((p) => !p.popular && !p.bestSeller)
 
@@ -317,7 +356,7 @@ export function MinecraftHostingContent() {
 
             <div className="flex-1 max-w-2xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                Minecraft
+                {isBedrock ? "Minecraft Bedrock" : "Minecraft"}
                 <br />
                 <span className="text-primary">Server Hosting</span>
               </h1>
@@ -335,7 +374,9 @@ export function MinecraftHostingContent() {
               </div>
 
               <p className="mt-5 text-muted-foreground leading-relaxed text-lg max-w-xl">
-                Inicia tu servidor de Minecraft con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Usas muchos mods? Tienes una comunidad? Tenemos el servidor para ti.
+                {isBedrock
+                  ? "Inicia tu servidor de Minecraft Bedrock con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Tienes una comunidad? Tenemos el servidor para ti."
+                  : "Inicia tu servidor de Minecraft con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Usas muchos mods? Tienes una comunidad? Tenemos el servidor para ti."}
               </p>
 
               <a href="#wizard" className="inline-flex items-center gap-2 mt-8 px-7 py-3.5 rounded-lg text-base font-bold transition-all duration-200 hover:scale-105" style={{ background: "linear-gradient(135deg, #16a34a, #22c55e, #4ade80)", color: "#fff", boxShadow: "0 4px 20px rgba(34,197,94,0.3)" }}>
@@ -349,7 +390,9 @@ export function MinecraftHostingContent() {
           <div className="mt-12 px-5 py-3 rounded-lg flex items-center gap-3 text-sm transition-all duration-700" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)", transitionDelay: "200ms" }}>
             <Zap className="w-4 h-4 text-primary shrink-0" />
             <span className="text-foreground font-medium">
-              {"Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""}
+              {isBedrock
+                ? "Todos los planes de Minecraft Bedrock Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""
+                : "Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""}
             </span>
           </div>
         </div>
@@ -692,7 +735,9 @@ export function MinecraftHostingContent() {
                 Que Tipos De Servidores Minecraft Puedes Ejecutar?
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-8 max-w-lg">
-                Puedes ejecutar muchos tipos de servidores de Minecraft dependiendo de la experiencia que busques. Ofrecemos soporte completo para Minecraft Java vanilla, asi como para servidores Bedrock. Buscas una experiencia con mods? Tenemos soporte completo para Forge, Fabric, Spigot y Sponge.
+                {isBedrock
+                  ? "Puedes ejecutar muchos tipos de servidores de Minecraft Bedrock dependiendo de la experiencia que busques. Ofrecemos soporte completo para Bedrock vanilla, con compatibilidad multiplataforma en Windows, consolas y moviles."
+                  : "Puedes ejecutar muchos tipos de servidores de Minecraft dependiendo de la experiencia que busques. Ofrecemos soporte completo para Minecraft Java vanilla, asi como para servidores Bedrock. Buscas una experiencia con mods? Tenemos soporte completo para Forge, Fabric, Spigot y Sponge."}
               </p>
               <div className="flex flex-wrap gap-3">
                 {serverCapabilities.map((cap) => (
@@ -815,7 +860,7 @@ export function MinecraftHostingContent() {
             </div>
 
             <div className="flex flex-col gap-2">
-              {faqItems.map((item, i) => {
+              {activeFaqItems.map((item, i) => {
                 const isOpen = openFaq === i
                 return (
                   <div key={i} className="rounded-xl overflow-hidden transition-all duration-200" style={{ background: isOpen ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)", border: isOpen ? "1px solid rgba(245,166,35,0.2)" : "1px solid rgba(255,255,255,0.06)" }}>

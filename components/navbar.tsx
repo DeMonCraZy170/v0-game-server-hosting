@@ -16,7 +16,7 @@ const minecraftCards = [
   },
   {
     label: "Bedrock Edition",
-    href: "/proximamente",
+    href: "/minecraft/bedrock",
     image: "/images/dropdown-bedrock.jpg",
     borderColor: "#6b7280",
     badge: "NUEVA ACTUALIZACION!",
