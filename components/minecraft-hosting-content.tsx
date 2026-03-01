@@ -183,6 +183,7 @@ const faqItems = [
 ]
 
 const serverCapabilities = ["Soporte Bedrock", "Soporte de Mods", "Soporte de Plugins", "Soporte de Modpacks", "Soporte de Consola", "Soporte Movil"]
+const bedrockServerCapabilities = ["Soporte Vanilla", "Soporte PocketMine", "Soporte Nukkit"]
 
 /* ── Pricing Helpers ── */
 function calcPrice(base: number, cycle: BillingCycle): number {
@@ -1104,17 +1105,17 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
           <div ref={typesRef} className="flex flex-col md:flex-row items-center gap-12 transition-all duration-700 ease-out" style={{ opacity: typesVisible ? 1 : 0, transform: typesVisible ? "translateY(0)" : "translateY(30px)" }}>
             <div className="flex-1">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                {isModded ? "Que Modpacks Puedes Ejecutar?" : "Que Tipos De Servidores Minecraft Puedes Ejecutar?"}
+                {isModded ? "Que Modpacks Puedes Ejecutar?" : isBedrock ? "Que Tipos De Servidores Minecraft Bedrock Puedes Ejecutar?" : "Que Tipos De Servidores Minecraft Puedes Ejecutar?"}
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-8 max-w-lg">
                 {isModded
                   ? "Ejecuta servidores de Minecraft Modded con los modpacks mas populares. Ofrecemos soporte completo para Forge, Fabric, NeoForge y mas. Instala modpacks como RLCraft, Pixelmon, All The Mods o crea tu propia configuracion personalizada."
                   : isBedrock
-                    ? "Puedes ejecutar muchos tipos de servidores de Minecraft Bedrock dependiendo de la experiencia que busques. Ofrecemos soporte completo para Bedrock vanilla, con compatibilidad multiplataforma en Windows, consolas y moviles."
+                    ? "Nuestro hosting de servidores Minecraft Bedrock soporta todos los frameworks principales: Vanilla BDS, PocketMine-MP y Nukkit. Vanilla BDS es el software oficial del servidor, ideal para una experiencia vanilla estable usando add-ons y behavior packs. PocketMine-MP y Nukkit soportan plugins (en PHP y Java, respectivamente), ofreciendo mas personalizacion pero con compatibilidad limitada con algunas funciones vanilla."
                     : "Puedes ejecutar muchos tipos de servidores de Minecraft dependiendo de la experiencia que busques. Ofrecemos soporte completo para Minecraft Java vanilla, asi como para servidores Bedrock. Buscas una experiencia con mods? Tenemos soporte completo para Forge, Fabric, Spigot y Sponge."}
               </p>
               <div className="flex flex-wrap gap-3">
-                {(isModded ? moddedServerCapabilities : serverCapabilities).map((cap) => (
+                {(isModded ? moddedServerCapabilities : isBedrock ? bedrockServerCapabilities : serverCapabilities).map((cap) => (
                   <span key={cap} className="flex items-center gap-2 text-sm font-medium text-foreground">
                     <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(34,197,94,0.2)" }}>
                       <Check className="w-3 h-3 text-[#22c55e]" />
@@ -1126,7 +1127,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             </div>
             <div className="shrink-0 hidden lg:block">
               <div className="w-[320px] h-[220px] rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 8px 40px rgba(0,0,0,0.4)" }}>
-                <Image src="/images/minecraft-server-types.png" alt="Tipos de servidores Minecraft" width={320} height={220} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
+                <Image src={isBedrock ? "/images/bedrock-minecraft-server-hosting.avif" : "/images/minecraft-server-types.png"} alt={isBedrock ? "Minecraft Bedrock Edition" : "Tipos de servidores Minecraft"} width={320} height={220} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
               </div>
             </div>
           </div>
