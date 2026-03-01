@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 import {
   Cpu,
@@ -18,6 +18,9 @@ import {
   ArrowRight,
   MapPin,
   Signal,
+  Search,
+  ChevronRight,
+  Globe,
 } from "lucide-react"
 import { AnnouncementBar } from "@/components/announcement-bar"
 import { Navbar } from "@/components/navbar"
@@ -31,6 +34,8 @@ interface GameData {
   price: string
   comingSoon?: boolean
   popular?: boolean
+  isNew?: boolean
+  isUpdate?: boolean
   platforms?: string[]
 }
 
@@ -40,16 +45,14 @@ const allGames: GameData[] = [
   { name: "Minecraft Bedrock", image: "/images/games/minecraft-bedrock.jpg", price: "$1.05/mo", popular: true, platforms: ["pc", "console", "mobile"] },
   { name: "Rust", image: "/images/games/rust.jpg", price: "$8.00/mo", popular: true, platforms: ["steam"] },
   { name: "Valheim", image: "/images/games/valheim.jpg", price: "$4.80/mo", popular: true, platforms: ["steam"] },
+  { name: "Palworld", image: "/images/games/palworld.jpg", price: "$6.00/mo", popular: true, platforms: ["steam"] },
   { name: "Ark: Survival Evolved", image: "/images/games/ark.jpg", price: "$8.00/mo", platforms: ["steam", "pc"] },
   { name: "Terraria", image: "/images/games/terraria.jpg", price: "$2.50/mo", platforms: ["steam"] },
-  { name: "FiveM", image: "/images/games/fivem.jpg", price: "$12.00/mo", comingSoon: true, platforms: ["steam"] },
-  { name: "RageMP", image: "/images/games/ragemp.jpg", price: "$12.00/mo", comingSoon: true, platforms: ["steam"] },
   { name: "Unturned", image: "/images/games/unturned.jpg", price: "$2.50/mo", platforms: ["steam"] },
   { name: "Garry's Mod", image: "/images/games/garrysmod.jpg", price: "$2.00/mo", platforms: ["steam"] },
   { name: "Satisfactory", image: "/images/games/satisfactory.jpg", price: "$8.00/mo", platforms: ["steam"] },
   { name: "7 Days to Die", image: "/images/games/7daystodie.jpg", price: "$4.50/mo", platforms: ["steam"] },
   { name: "Project Zomboid", image: "/images/games/projectzomboid.jpg", price: "$4.00/mo", platforms: ["steam"] },
-  { name: "Palworld", image: "/images/games/palworld.jpg", price: "$6.00/mo", popular: true, platforms: ["steam"] },
   { name: "The Forest", image: "/images/games/theforest.jpg", price: "$8.80/mo", platforms: ["steam"] },
   { name: "Sons of the Forest", image: "/images/games/sonsoftheforest.jpg", price: "$8.80/mo", platforms: ["steam"] },
   { name: "Enshrouded", image: "/images/games/enshrouded.jpg", price: "$6.00/mo", platforms: ["steam"] },
@@ -63,6 +66,8 @@ const allGames: GameData[] = [
   { name: "Team Fortress 2", image: "/images/games/tf2.jpg", price: "$2.00/mo", platforms: ["steam"] },
   { name: "Euro Truck Simulator 2", image: "/images/games/eurotruck.jpg", price: "$4.40/mo", platforms: ["steam"] },
   { name: "Mindustry", image: "/images/games/mindustry.jpg", price: "$2.00/mo", platforms: ["steam"] },
+  { name: "FiveM", image: "/images/games/fivem.jpg", price: "$12.00/mo", comingSoon: true, platforms: ["steam"] },
+  { name: "RageMP", image: "/images/games/ragemp.jpg", price: "$12.00/mo", comingSoon: true, platforms: ["steam"] },
 ]
 
 const popularGames = allGames.filter((g) => g.popular)
@@ -149,13 +154,9 @@ const regions: RegionData[] = [
   },
   {
     region: "Oceania",
-    locations: [
-      { name: "Sydney, Australia", flag: "AU", active: false },
-    ],
+    locations: [{ name: "Sydney, Australia", flag: "AU", active: false }],
   },
 ]
-
-/* ─── Location dot positions on world map (percentage-based) ─── */
 
 const locationDots = [
   { name: "Beauharnois, Canada", x: 27, y: 28, active: true },
@@ -224,37 +225,71 @@ function FlagEmoji({ code }: { code: string }) {
   return <span className="text-lg">{flags[code] || code}</span>
 }
 
+/* ─── Steam icon SVG ─── */
+function SteamIcon() {
+  return (
+    <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z" />
+    </svg>
+  )
+}
+
+function WindowsIcon() {
+  return (
+    <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
+    </svg>
+  )
+}
+
+function ConsoleIcon() {
+  return (
+    <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M6 9h2v2H6V9zm4 0h2v2h-2V9zm8 0h-2v2h2V9zM5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5zm0 2h14v14H5V5z" />
+    </svg>
+  )
+}
+
+function MobileIcon() {
+  return (
+    <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M7 1a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H7zm0 2h10v14H7V3zm5 15a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" />
+    </svg>
+  )
+}
+
 /* ─── Game Card component ─── */
 
 function GameCard({ game, index, isVisible }: { game: GameData; index: number; isVisible: boolean }) {
   return (
     <a
       href={game.comingSoon ? undefined : "/proximamente"}
-      className="group relative flex flex-col bg-card border border-border rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-600 ease-out"
+      className="group relative flex flex-col rounded-xl overflow-hidden transition-all duration-600 ease-out"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
         transitionDelay: `${staggerDelay(index, 60)}ms`,
         cursor: game.comingSoon ? "default" : "pointer",
+        background: "#1a1a1f",
       }}
     >
       {/* Image */}
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden">
         <Image
           src={game.image}
           alt={game.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
         />
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1f]/90 via-transparent to-transparent" />
       </div>
 
       {/* Info */}
       <div className="p-4 flex flex-col flex-1">
         <h3
-          className="font-bold text-foreground text-sm mb-1"
+          className="font-bold text-foreground text-sm mb-1 truncate"
           style={{ fontFamily: "var(--font-heading)" }}
         >
           {game.name}
@@ -270,26 +305,10 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
 
         {/* Platform icons */}
         <div className="flex items-center gap-2 mt-3">
-          {game.platforms?.includes("steam") && (
-            <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z" />
-            </svg>
-          )}
-          {game.platforms?.includes("pc") && (
-            <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
-            </svg>
-          )}
-          {game.platforms?.includes("console") && (
-            <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6 9h2v2H6V9zm4 0h2v2h-2V9zm8 0h-2v2h2V9zM5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5zm0 2h14v14H5V5z" />
-            </svg>
-          )}
-          {game.platforms?.includes("mobile") && (
-            <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M7 1a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H7zm0 2h10v14H7V3zm5 15a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" />
-            </svg>
-          )}
+          {game.platforms?.includes("steam") && <SteamIcon />}
+          {game.platforms?.includes("pc") && <WindowsIcon />}
+          {game.platforms?.includes("console") && <ConsoleIcon />}
+          {game.platforms?.includes("mobile") && <MobileIcon />}
         </div>
       </div>
     </a>
@@ -301,6 +320,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
 export function GameServerHostingContent() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [hoveredDot, setHoveredDot] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
 
   // Scroll reveal refs
   const [heroRef, heroVisible] = useScrollReveal()
@@ -314,6 +334,20 @@ export function GameServerHostingContent() {
   const [resourcesHeaderRef, resourcesHeaderVisible] = useScrollReveal()
   const [resourcesCardsRef, resourcesCardsVisible] = useScrollReveal({ threshold: 0.1 })
 
+  const filteredOtherGames = useMemo(() => {
+    if (!searchQuery.trim()) return otherGames
+    const q = searchQuery.toLowerCase()
+    return allGames.filter(
+      (g) => g.name.toLowerCase().includes(q) && !g.popular
+    )
+  }, [searchQuery])
+
+  const filteredPopularGames = useMemo(() => {
+    if (!searchQuery.trim()) return popularGames
+    const q = searchQuery.toLowerCase()
+    return popularGames.filter((g) => g.name.toLowerCase().includes(q))
+  }, [searchQuery])
+
   return (
     <main>
       {/* Fixed nav */}
@@ -322,63 +356,165 @@ export function GameServerHostingContent() {
         <Navbar />
       </div>
 
-      {/* Hero */}
-      <section className="pt-32 pb-12 bg-background">
+      {/* ─── Hero Section with games.png background ─── */}
+      <section className="relative pt-28 pb-16 overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/games.png"
+            alt=""
+            fill
+            className="object-cover object-top"
+            priority
+            sizes="100vw"
+          />
+          {/* Dark overlay to match SparkedHost dark theme */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(to bottom, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.95) 60%, #0d0d0d 100%)",
+            }}
+          />
+        </div>
+
         <div
           ref={heroRef}
-          className="mx-auto max-w-7xl px-4 text-center transition-all duration-700 ease-out"
+          className="relative mx-auto max-w-3xl px-4 text-center transition-all duration-700 ease-out"
           style={{
             opacity: heroVisible ? 1 : 0,
             transform: heroVisible ? "translateY(0)" : "translateY(30px)",
           }}
         >
-          <p className="text-primary text-sm font-semibold mb-3 uppercase tracking-wider">
-            Hosting de Servidores de Juegos
+          {/* Breadcrumb */}
+          <nav className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-8">
+            <a href="/" className="hover:text-foreground transition-colors">
+              Inicio
+            </a>
+            <ChevronRight className="h-3.5 w-3.5" />
+            <span className="text-foreground">Game Server Hosting</span>
+          </nav>
+
+          {/* Hero Icon */}
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/images/hero_icon.avif"
+              alt="Game Server Hosting"
+              width={80}
+              height={80}
+              className="object-contain"
+              priority
+            />
+          </div>
+
+          {/* Trust badge */}
+          <p className="text-primary text-sm font-bold mb-3 uppercase tracking-widest">
+            Respaldados por 10,000+ Clientes
           </p>
+
+          {/* Title */}
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 text-balance"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            Todos Nuestros Juegos
+            Affordable Game Server Hosting
           </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            {"Hosting de juegos asequible y de alto rendimiento. Elige tu juego favorito y comienza a jugar en minutos."}
+
+          {/* Subtitle */}
+          <p className="text-muted-foreground text-base md:text-lg max-w-xl mx-auto mb-8 text-pretty">
+            {"Ofrecemos el mejor hosting de servidores de juegos a los precios mas bajos. Busca tu juego favorito para comenzar en 5 minutos o menos!"}
           </p>
+
+          {/* Search bar */}
+          <div className="relative max-w-xl mx-auto">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Cual es tu juego favorito para jugar con tus amigos?"
+              className="w-full bg-card/80 backdrop-blur-sm border border-border rounded-xl px-5 py-4 pr-12 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+            />
+            <Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          </div>
         </div>
       </section>
 
       {/* ─── Popular Games ─── */}
-      <section className="py-12 bg-background">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="py-10 bg-background">
+        <div className="mx-auto max-w-5xl px-4">
           <div
             ref={popularRef}
-            className="mb-8 transition-all duration-700 ease-out"
+            className="relative border-2 border-primary rounded-2xl p-6 md:p-8 transition-all duration-700 ease-out"
             style={{
               opacity: popularVisible ? 1 : 0,
               transform: popularVisible ? "translateY(0)" : "translateY(30px)",
+              boxShadow: "0 0 30px rgba(245,166,35,0.08), 0 0 60px rgba(245,166,35,0.04)",
             }}
           >
-            <h2
-              className="text-2xl md:text-3xl font-bold text-foreground"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              Juegos Populares
-            </h2>
-            <p className="text-muted-foreground mt-1">
-              Los servidores mas solicitados por nuestra comunidad.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {popularGames.map((game, index) => (
-              <GameCard key={game.name} game={game} index={index} isVisible={popularVisible} />
-            ))}
+            {/* Badge on top */}
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+              <span
+                className="inline-block text-xs font-bold uppercase tracking-widest px-5 py-1.5 rounded-full"
+                style={{
+                  background: "#f5a623",
+                  color: "#0d0d0d",
+                }}
+              >
+                Juegos Populares
+              </span>
+            </div>
+
+            {/* Popular games grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-4">
+              {(filteredPopularGames.length > 0 ? filteredPopularGames : popularGames).map((game, index) => (
+                <a
+                  key={game.name}
+                  href="/proximamente"
+                  className="group relative flex flex-col rounded-xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.03]"
+                  style={{
+                    opacity: popularVisible ? 1 : 0,
+                    transform: popularVisible ? "translateY(0)" : "translateY(20px)",
+                    transitionDelay: `${staggerDelay(index, 80)}ms`,
+                    background: "#1a1a1f",
+                  }}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={game.image}
+                      alt={game.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1f]/90 via-transparent to-transparent" />
+                  </div>
+                  <div className="p-3">
+                    <h3
+                      className="font-bold text-foreground text-xs mb-0.5 truncate"
+                      style={{ fontFamily: "var(--font-heading)" }}
+                    >
+                      {game.name}
+                    </h3>
+                    <p className="text-muted-foreground text-[11px]">
+                      {"Desde "}
+                      <span className="text-primary font-bold">{game.price}</span>
+                    </p>
+                    <div className="flex items-center gap-1.5 mt-2">
+                      {game.platforms?.includes("steam") && <SteamIcon />}
+                      {game.platforms?.includes("pc") && <WindowsIcon />}
+                      {game.platforms?.includes("console") && <ConsoleIcon />}
+                      {game.platforms?.includes("mobile") && <MobileIcon />}
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ─── All Games Grid ─── */}
-      <section className="py-12 bg-secondary">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="py-10 bg-background">
+        <div className="mx-auto max-w-5xl px-4">
           <div
             ref={allGamesRef}
             className="mb-8 transition-all duration-700 ease-out"
@@ -387,26 +523,35 @@ export function GameServerHostingContent() {
               transform: allGamesVisible ? "translateY(0)" : "translateY(30px)",
             }}
           >
-            <h2
-              className="text-2xl md:text-3xl font-bold text-foreground"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              Todos los Juegos
-            </h2>
-            <p className="text-muted-foreground mt-1">
-              {"Explora nuestra coleccion completa de servidores de juegos disponibles."}
-            </p>
+            {searchQuery.trim() && (
+              <p className="text-muted-foreground text-sm mb-2">
+                {"Resultados para: "}
+                <span className="text-primary font-medium">{`"${searchQuery}"`}</span>
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {otherGames.map((game, index) => (
+            {(filteredOtherGames.length > 0 ? filteredOtherGames : otherGames).map((game, index) => (
               <GameCard key={game.name} game={game} index={index} isVisible={allGamesVisible} />
             ))}
           </div>
+          {searchQuery.trim() && filteredOtherGames.length === 0 && filteredPopularGames.length === 0 && (
+            <div className="text-center py-16">
+              <Globe className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
+              <p className="text-muted-foreground text-lg">{"No se encontraron juegos para esa busqueda."}</p>
+              <button
+                onClick={() => setSearchQuery("")}
+                className="mt-4 text-primary text-sm font-medium hover:underline"
+              >
+                Ver todos los juegos
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
       {/* ─── Industry Leading Perks ─── */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-secondary">
         <div className="mx-auto max-w-7xl px-4">
           <div
             ref={perksHeaderRef}
@@ -420,10 +565,10 @@ export function GameServerHostingContent() {
               Ventajas Lideres en la Industria
             </p>
             <h2
-              className="text-3xl md:text-4xl font-bold text-foreground"
+              className="text-3xl md:text-4xl font-bold text-foreground text-balance"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Con funciones exclusivas que no encontraras en otro lugar.
+              {"Con funciones exclusivas que no encontraras en otro lugar."}
             </h2>
           </div>
 
@@ -458,7 +603,7 @@ export function GameServerHostingContent() {
       </section>
 
       {/* ─── Locations Section ─── */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-background">
         <div className="mx-auto max-w-7xl px-4">
           <div
             ref={locationsRef}
@@ -489,14 +634,12 @@ export function GameServerHostingContent() {
               transitionDelay: "200ms",
             }}
           >
-            {/* Dotted world map SVG */}
             <div className="relative w-full" style={{ paddingBottom: "50%" }}>
               <svg
                 viewBox="0 0 1000 500"
                 className="absolute inset-0 w-full h-full"
                 fill="none"
               >
-                {/* Simplified world map dots pattern */}
                 {generateWorldMapDots().map((dot, i) => (
                   <circle
                     key={i}
@@ -508,7 +651,6 @@ export function GameServerHostingContent() {
                 ))}
               </svg>
 
-              {/* Location dots overlay */}
               {locationDots.map((dot) => (
                 <div
                   key={dot.name}
@@ -530,7 +672,6 @@ export function GameServerHostingContent() {
                         : "0 0 6px rgba(100,100,100,0.3)",
                     }}
                   />
-                  {/* Tooltip */}
                   {hoveredDot === dot.name && (
                     <div
                       className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap z-20"
@@ -563,10 +704,7 @@ export function GameServerHostingContent() {
             }}
           >
             {regions.map((region) => (
-              <div
-                key={region.region}
-                className="bg-card border border-border rounded-xl p-5"
-              >
+              <div key={region.region} className="bg-card border border-border rounded-xl p-5">
                 <h3
                   className="font-bold text-foreground mb-4"
                   style={{ fontFamily: "var(--font-heading)" }}
@@ -605,10 +743,9 @@ export function GameServerHostingContent() {
       </section>
 
       {/* ─── FAQ ─── */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-secondary">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex flex-col lg:flex-row gap-12">
-            {/* Left */}
             <div
               ref={faqLeftRef}
               className="lg:w-1/3 transition-all duration-700 ease-out"
@@ -637,7 +774,6 @@ export function GameServerHostingContent() {
               </div>
             </div>
 
-            {/* Right */}
             <div ref={faqRightRef} className="lg:w-2/3 flex flex-col gap-3">
               {faqs.map((faq, index) => (
                 <div
@@ -686,7 +822,7 @@ export function GameServerHostingContent() {
       </section>
 
       {/* ─── Resources ─── */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-background">
         <div className="mx-auto max-w-7xl px-4">
           <div
             ref={resourcesHeaderRef}
@@ -756,8 +892,6 @@ export function GameServerHostingContent() {
 
 function generateWorldMapDots() {
   const dots: { x: number; y: number }[] = []
-
-  // North America
   for (let row = 0; row < 12; row++) {
     for (let col = 0; col < 18; col++) {
       const x = 80 + col * 14
@@ -765,8 +899,6 @@ function generateWorldMapDots() {
       if (isInNorthAmerica(x, y)) dots.push({ x, y })
     }
   }
-
-  // South America
   for (let row = 0; row < 16; row++) {
     for (let col = 0; col < 10; col++) {
       const x = 180 + col * 14
@@ -774,8 +906,6 @@ function generateWorldMapDots() {
       if (isInSouthAmerica(x, y)) dots.push({ x, y })
     }
   }
-
-  // Europe
   for (let row = 0; row < 10; row++) {
     for (let col = 0; col < 14; col++) {
       const x = 430 + col * 14
@@ -783,8 +913,6 @@ function generateWorldMapDots() {
       if (isInEurope(x, y)) dots.push({ x, y })
     }
   }
-
-  // Africa
   for (let row = 0; row < 14; row++) {
     for (let col = 0; col < 12; col++) {
       const x = 430 + col * 14
@@ -792,8 +920,6 @@ function generateWorldMapDots() {
       if (isInAfrica(x, y)) dots.push({ x, y })
     }
   }
-
-  // Asia
   for (let row = 0; row < 16; row++) {
     for (let col = 0; col < 22; col++) {
       const x = 580 + col * 14
@@ -801,8 +927,6 @@ function generateWorldMapDots() {
       if (isInAsia(x, y)) dots.push({ x, y })
     }
   }
-
-  // Australia
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 12; col++) {
       const x = 780 + col * 14
@@ -810,7 +934,6 @@ function generateWorldMapDots() {
       if (isInAustralia(x, y)) dots.push({ x, y })
     }
   }
-
   return dots
 }
 
@@ -820,32 +943,32 @@ function isInNorthAmerica(x: number, y: number) {
   if (y > 200 && x < 100) return false
   if (y > 220 && x > 300) return false
   const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return (rand - Math.floor(rand)) > 0.2
+  return rand - Math.floor(rand) > 0.2
 }
 
 function isInSouthAmerica(x: number, y: number) {
   if (x < 180 || x > 320 || y < 250 || y > 470) return false
-  const cx = (x - 250)
-  const cy = (y - 350)
-  if (cx * cx / 4900 + cy * cy / 14400 > 1) return false
+  const cx = x - 250
+  const cy = y - 350
+  if ((cx * cx) / 4900 + (cy * cy) / 14400 > 1) return false
   const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return (rand - Math.floor(rand)) > 0.25
+  return rand - Math.floor(rand) > 0.25
 }
 
 function isInEurope(x: number, y: number) {
   if (x < 430 || x > 620 || y < 60 || y > 200) return false
   if (y > 180 && x > 580) return false
   const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return (rand - Math.floor(rand)) > 0.2
+  return rand - Math.floor(rand) > 0.2
 }
 
 function isInAfrica(x: number, y: number) {
   if (x < 430 || x > 600 || y < 200 || y > 400) return false
-  const cx = (x - 510)
-  const cy = (y - 300)
-  if (cx * cx / 6400 + cy * cy / 10000 > 1) return false
+  const cx = x - 510
+  const cy = y - 300
+  if ((cx * cx) / 6400 + (cy * cy) / 10000 > 1) return false
   const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return (rand - Math.floor(rand)) > 0.25
+  return rand - Math.floor(rand) > 0.25
 }
 
 function isInAsia(x: number, y: number) {
@@ -853,14 +976,14 @@ function isInAsia(x: number, y: number) {
   if (y > 240 && x < 650) return false
   if (y < 80 && x < 650) return false
   const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return (rand - Math.floor(rand)) > 0.2
+  return rand - Math.floor(rand) > 0.2
 }
 
 function isInAustralia(x: number, y: number) {
   if (x < 780 || x > 920 || y < 310 || y > 410) return false
-  const cx = (x - 850)
-  const cy = (y - 360)
-  if (cx * cx / 4900 + cy * cy / 2500 > 1) return false
+  const cx = x - 850
+  const cy = y - 360
+  if ((cx * cx) / 4900 + (cy * cy) / 2500 > 1) return false
   const rand = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
-  return (rand - Math.floor(rand)) > 0.2
+  return rand - Math.floor(rand) > 0.2
 }
