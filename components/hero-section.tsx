@@ -345,7 +345,7 @@ export function HeroSection() {
                 {slide.cta}
               </a>
               <a
-                href="#games"
+                href="/juegos"
                 className="inline-flex items-center justify-center font-semibold px-6 py-3 rounded-lg text-sm gap-2"
                 style={{
                   border: "1px solid #333",

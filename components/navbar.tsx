@@ -421,7 +421,7 @@ export function Navbar() {
           {/* View all games link */}
           <div className="mt-5 pt-4 border-t border-border/40 flex justify-center">
             <a
-              href="/proximamente"
+              href="/juegos"
               className="group/all flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors"
             >
               Ver todos los juegos
