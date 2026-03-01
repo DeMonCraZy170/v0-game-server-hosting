@@ -1134,12 +1134,18 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
       </section>
 
       {/* ─── FEATURES GRID ─── */}
-      <section className="py-20 bg-background">
-        <div className="mx-auto max-w-5xl px-4">
+      <section className="relative py-20 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/minecraft-features-bg.jpg')" }}
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.82) 40%, rgba(13,13,13,0.88) 100%)" }} />
+
+        <div className="relative mx-auto max-w-5xl px-4">
           <div ref={featuresRef} className="text-center mb-14 transition-all duration-700 ease-out" style={{ opacity: featuresVisible ? 1 : 0, transform: featuresVisible ? "translateY(0)" : "translateY(30px)" }}>
-            <p className="text-sm font-bold tracking-widest text-primary uppercase mb-3">{isModded ? "Caracteristicas Exclusivas De Modded" : "Caracteristicas Exclusivas De Minecraft"}</p>
+            <p className="text-sm font-bold tracking-widest text-primary uppercase mb-3">{isModded ? "Caracteristicas Exclusivas De Modded" : isBudget ? "Caracteristicas Exclusivas De Budget" : "Caracteristicas Exclusivas De Minecraft"}</p>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-              {isModded ? "Todo lo que necesitas para tu servidor Modded." : "Todo lo que necesitas para iniciar un servidor de Minecraft."}
+              {isModded ? "Todo lo que necesitas para tu servidor Modded." : isBudget ? "Todo lo que necesitas para iniciar tu servidor Budget de Minecraft." : "Todo lo que necesitas para iniciar un servidor de Minecraft."}
             </h2>
           </div>
 
@@ -1147,7 +1153,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             {features.map((feat, i) => {
               const Icon = feat.icon
               return (
-                <div key={feat.label} className="flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-500" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", transitionDelay: `${staggerDelay(i, 60)}ms`, opacity: featuresVisible ? 1 : 0, transform: featuresVisible ? "translateY(0)" : "translateY(20px)" }}>
+                <div key={feat.label} className="flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-500" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(8px)", transitionDelay: `${staggerDelay(i, 60)}ms`, opacity: featuresVisible ? 1 : 0, transform: featuresVisible ? "translateY(0)" : "translateY(20px)" }}>
                   <span className="flex items-center justify-center w-10 h-10 rounded-lg shrink-0" style={{ background: "rgba(245,166,35,0.1)", border: "1px solid rgba(245,166,35,0.15)" }}>
                     <Icon className="w-5 h-5 text-primary" />
                   </span>
