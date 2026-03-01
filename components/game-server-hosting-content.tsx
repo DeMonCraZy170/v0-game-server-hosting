@@ -410,11 +410,11 @@ export function GameServerHostingContent() {
             priority
             sizes="100vw"
           />
-          {/* Dark overlay to match SparkedHost dark theme */}
+          {/* Dark overlay — lets game art peek through at the top */}
           <div
             className="absolute inset-0"
             style={{
-              background: "linear-gradient(to bottom, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.95) 60%, #0d0d0d 100%)",
+              background: "linear-gradient(to bottom, rgba(13,13,13,0.55) 0%, rgba(13,13,13,0.78) 40%, rgba(13,13,13,0.94) 70%, #0d0d0d 100%)",
             }}
           />
         </div>
