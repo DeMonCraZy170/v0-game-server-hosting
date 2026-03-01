@@ -34,6 +34,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI BOT DE DISCORD",
     bgImage: "/images/hero-discord.jpg",
     cardImage: "/images/card-discord.jpg",
+    comingSoon: true,
   },
   {
     id: "astroneer",
