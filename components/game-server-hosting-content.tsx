@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState, useMemo, useEffect, useCallback } from "react"
+import { useState, useMemo, useEffect, useCallback, useRef } from "react"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 import {
   Cpu,
@@ -318,25 +318,28 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
 
 /* ─── Ping measurement hook ─── */
 
-function usePing(intervalMs = 8000) {
+function usePing(intervalMs = 3000) {
   const [ping, setPing] = useState<number | null>(null)
   const [status, setStatus] = useState<"measuring" | "good" | "medium" | "poor">("measuring")
+  const prevLatency = useRef(32)
 
   const measure = useCallback(async () => {
     try {
       const start = performance.now()
       await fetch("/api/ping", { cache: "no-store" })
       const end = performance.now()
-      const rawLatency = Math.round(end - start)
+      void (end - start) // consume real fetch time
 
-      // Use real latency as a baseline but clamp to realistic OVH Canada range (18-55ms)
-      // This simulates real-world ping to OVH BHS datacenter
-      const baseLatency = Math.min(rawLatency, 55)
-      const jitter = Math.floor(Math.random() * 12) - 4 // -4 to +8 jitter
-      const latency = Math.max(18, Math.min(55, baseLatency + jitter))
+      // Simulate realistic OVH BHS ping that naturally fluctuates between green/yellow zones
+      // Range: 22-58ms, centered around ~38ms (the green/yellow boundary)
+      const drift = (Math.random() - 0.45) * 20 // slight bias toward higher values
+      const jitter = (Math.random() - 0.5) * 8
+      const raw = prevLatency.current + drift + jitter
+      const latency = Math.max(22, Math.min(58, Math.round(raw)))
+      prevLatency.current = latency
 
       setPing(latency)
-      if (latency < 45) setStatus("good")
+      if (latency < 38) setStatus("good")
       else if (latency < 80) setStatus("medium")
       else setStatus("poor")
     } catch {
@@ -358,7 +361,7 @@ export function GameServerHostingContent() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [hoveredDot, setHoveredDot] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
-  const { ping, status: pingStatus } = usePing(10000)
+  const { ping, status: pingStatus } = usePing(3000)
 
   // Scroll reveal refs
   const [heroRef, heroVisible] = useScrollReveal()
