@@ -331,18 +331,28 @@ export function DdosProtectionContent() {
 
       {/* ─── Hero Section ─── */}
       <section className="relative pt-28 pb-20 overflow-hidden">
-        {/* Background globe image */}
+        {/* Background with DDoS map */}
         <div className="absolute inset-0">
-          <div
-            className="absolute inset-0"
-            style={{
-              background: "radial-gradient(ellipse at 50% 60%, rgba(245,166,35,0.06) 0%, transparent 70%)",
-            }}
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ddos_map-RMJY2uSIcLijZYiJOuUAJzkUeF1R49.avif"
+            alt=""
+            fill
+            className="object-cover object-center"
+            priority
+            sizes="100vw"
+            style={{ opacity: 0.2 }}
           />
           <div
             className="absolute inset-0"
             style={{
-              background: "linear-gradient(to bottom, #0d0d0d 0%, rgba(13,13,13,0.85) 50%, #0d0d0d 100%)",
+              background: "linear-gradient(to bottom, rgba(13,13,13,0.5) 0%, rgba(13,13,13,0.75) 40%, rgba(13,13,13,0.95) 75%, #0d0d0d 100%)",
+            }}
+          />
+          {/* Subtle golden radial glow */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "radial-gradient(ellipse at 50% 70%, rgba(245,166,35,0.06) 0%, transparent 60%)",
             }}
           />
         </div>
@@ -382,115 +392,90 @@ export function DdosProtectionContent() {
             La proteccion DDoS de nivel empresarial de ForzaHost esta construida para manejar los ataques mas grandes y mas agresivos.
           </p>
 
-          {/* Globe visualization area with stats */}
+          {/* DDoS Map visualization with overlaid stats */}
           <div className="relative max-w-3xl mx-auto">
-            {/* Glowing orb / globe representation */}
-            <div className="relative w-full aspect-[2/1] flex items-center justify-center">
-              {/* Globe glow */}
-              <div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "radial-gradient(ellipse at 50% 55%, rgba(245,166,35,0.12) 0%, rgba(245,166,35,0.04) 40%, transparent 70%)",
-                }}
+            <div className="relative rounded-2xl overflow-hidden border border-border/50" style={{ boxShadow: "0 0 60px rgba(245,166,35,0.08)" }}>
+              <Image
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ddos_map-RMJY2uSIcLijZYiJOuUAJzkUeF1R49.avif"
+                alt="Mapa global de proteccion DDoS mostrando trafico filtrado en tiempo real"
+                width={900}
+                height={450}
+                className="w-full h-auto"
+                priority
               />
+              {/* Subtle overlay for contrast */}
+              <div className="absolute inset-0 bg-background/10" />
 
-              {/* Globe SVG */}
-              <svg
-                viewBox="0 0 600 300"
-                className="w-full h-full"
-                style={{ filter: "drop-shadow(0 0 30px rgba(245,166,35,0.15))" }}
-              >
-                {/* Globe outline */}
-                <ellipse cx="300" cy="150" rx="140" ry="140" fill="none" stroke="rgba(245,166,35,0.2)" strokeWidth="1" />
-                <ellipse cx="300" cy="150" rx="140" ry="50" fill="none" stroke="rgba(245,166,35,0.12)" strokeWidth="0.8" />
-                <ellipse cx="300" cy="150" rx="90" ry="140" fill="none" stroke="rgba(245,166,35,0.12)" strokeWidth="0.8" />
-                <ellipse cx="300" cy="150" rx="40" ry="140" fill="none" stroke="rgba(245,166,35,0.08)" strokeWidth="0.8" />
-                {/* Horizontal lines */}
-                <line x1="160" y1="100" x2="440" y2="100" stroke="rgba(245,166,35,0.08)" strokeWidth="0.5" />
-                <line x1="160" y1="200" x2="440" y2="200" stroke="rgba(245,166,35,0.08)" strokeWidth="0.5" />
-                {/* Animated dots representing servers */}
-                <circle cx="220" cy="110" r="4" fill="#f5a623" opacity="0.9">
-                  <animate attributeName="opacity" values="0.9;0.4;0.9" dur="2s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="350" cy="130" r="3" fill="#f5a623" opacity="0.7">
-                  <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.5s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="380" cy="170" r="3.5" fill="#f5a623" opacity="0.8">
-                  <animate attributeName="opacity" values="0.8;0.35;0.8" dur="1.8s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="260" cy="180" r="2.5" fill="#f5a623" opacity="0.6">
-                  <animate attributeName="opacity" values="0.6;0.25;0.6" dur="3s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="310" cy="90" r="3" fill="#f5a623" opacity="0.75">
-                  <animate attributeName="opacity" values="0.75;0.3;0.75" dur="2.2s" repeatCount="indefinite" />
-                </circle>
-                {/* Connection lines */}
-                <line x1="220" y1="110" x2="310" y2="90" stroke="rgba(245,166,35,0.15)" strokeWidth="0.5" strokeDasharray="4,4">
-                  <animate attributeName="stroke-dashoffset" values="0;8" dur="1.5s" repeatCount="indefinite" />
-                </line>
-                <line x1="350" y1="130" x2="380" y2="170" stroke="rgba(245,166,35,0.15)" strokeWidth="0.5" strokeDasharray="4,4">
-                  <animate attributeName="stroke-dashoffset" values="0;8" dur="1.8s" repeatCount="indefinite" />
-                </line>
-                <line x1="260" y1="180" x2="220" y2="110" stroke="rgba(245,166,35,0.12)" strokeWidth="0.5" strokeDasharray="4,4">
-                  <animate attributeName="stroke-dashoffset" values="0;8" dur="2s" repeatCount="indefinite" />
-                </line>
-              </svg>
-
-              {/* Stat cards overlaying the globe */}
+              {/* Stat cards overlaying the map */}
               <div
-                className="absolute left-4 md:left-8 top-4 md:top-8 bg-card/90 backdrop-blur-sm border border-border rounded-lg px-4 py-3 transition-all duration-700"
+                className="absolute left-3 md:left-5 top-3 md:top-5 rounded-lg px-3 py-2 md:px-4 md:py-3 transition-all duration-700"
                 style={{
+                  background: "rgba(13,13,13,0.88)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(245,166,35,0.15)",
                   opacity: heroVisible ? 1 : 0,
                   transform: heroVisible ? "translateX(0)" : "translateX(-20px)",
                   transitionDelay: "0.5s",
                 }}
               >
-                <p className="text-[10px] font-bold text-muted-foreground tracking-wider mb-1">SERVIDORES PROTEGIDOS</p>
-                <p className="text-xl md:text-2xl font-bold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
+                <p className="text-[9px] md:text-[10px] font-bold text-muted-foreground tracking-wider mb-0.5">SERVIDORES PROTEGIDOS</p>
+                <p className="text-lg md:text-2xl font-bold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
                   {serversProtected.toLocaleString()}
                 </p>
               </div>
 
               <div
-                className="absolute right-4 md:right-12 top-2 md:top-4 bg-card/90 backdrop-blur-sm border border-border rounded-lg px-4 py-3 transition-all duration-700"
+                className="absolute right-3 md:right-5 top-3 md:top-5 rounded-lg px-3 py-2 md:px-4 md:py-3 transition-all duration-700"
                 style={{
+                  background: "rgba(13,13,13,0.88)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(245,166,35,0.15)",
                   opacity: heroVisible ? 1 : 0,
                   transform: heroVisible ? "translateX(0)" : "translateX(20px)",
                   transitionDelay: "0.7s",
                 }}
               >
-                <p className="text-[10px] font-bold text-muted-foreground tracking-wider mb-1">ATAQUES BLOQUEADOS</p>
-                <p className="text-xl md:text-2xl font-bold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
+                <p className="text-[9px] md:text-[10px] font-bold text-muted-foreground tracking-wider mb-0.5">ATAQUES BLOQUEADOS</p>
+                <p className="text-lg md:text-2xl font-bold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
                   {attacksBlocked.toLocaleString()}
                 </p>
               </div>
 
               <div
-                className="absolute left-1/3 bottom-2 md:bottom-6 bg-card/90 backdrop-blur-sm border border-border rounded-lg px-4 py-3 transition-all duration-700"
-                style={{
-                  opacity: heroVisible ? 1 : 0,
-                  transform: heroVisible ? "translateY(0)" : "translateY(20px)",
-                  transitionDelay: "0.9s",
-                }}
+                className="absolute bottom-3 md:bottom-5 left-1/2 -translate-x-1/2 flex gap-2 md:gap-3"
               >
-                <p className="text-[10px] font-bold text-muted-foreground tracking-wider mb-1">TIEMPO DE MITIGACION</p>
-                <p className="text-xl md:text-2xl font-bold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
-                  {"<1s"}
-                </p>
-              </div>
-
-              <div
-                className="absolute right-4 md:right-8 bottom-6 md:bottom-10 bg-card/90 backdrop-blur-sm border border-border rounded-lg px-4 py-3 transition-all duration-700"
-                style={{
-                  opacity: heroVisible ? 1 : 0,
-                  transform: heroVisible ? "translateY(0)" : "translateY(20px)",
-                  transitionDelay: "1.1s",
-                }}
-              >
-                <p className="text-[10px] font-bold text-muted-foreground tracking-wider mb-1">UPTIME</p>
-                <p className="text-xl md:text-2xl font-bold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
-                  99.9%
-                </p>
+                <div
+                  className="rounded-lg px-3 py-2 md:px-4 md:py-3 text-center transition-all duration-700"
+                  style={{
+                    background: "rgba(13,13,13,0.88)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(245,166,35,0.15)",
+                    opacity: heroVisible ? 1 : 0,
+                    transform: heroVisible ? "translateY(0)" : "translateY(20px)",
+                    transitionDelay: "0.9s",
+                  }}
+                >
+                  <p className="text-[9px] md:text-[10px] font-bold text-muted-foreground tracking-wider mb-0.5">TIEMPO DE MITIGACION</p>
+                  <p className="text-lg md:text-2xl font-bold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
+                    {"<1s"}
+                  </p>
+                </div>
+                <div
+                  className="rounded-lg px-3 py-2 md:px-4 md:py-3 text-center transition-all duration-700"
+                  style={{
+                    background: "rgba(13,13,13,0.88)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(245,166,35,0.15)",
+                    opacity: heroVisible ? 1 : 0,
+                    transform: heroVisible ? "translateY(0)" : "translateY(20px)",
+                    transitionDelay: "1.1s",
+                  }}
+                >
+                  <p className="text-[9px] md:text-[10px] font-bold text-muted-foreground tracking-wider mb-0.5">UPTIME</p>
+                  <p className="text-lg md:text-2xl font-bold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
+                    99.9%
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -498,30 +483,25 @@ export function DdosProtectionContent() {
       </section>
 
       {/* ─── Stats Bar ─── */}
-      <section className="py-10 bg-background border-y border-border">
+      <section className="py-12 bg-background border-y border-border/50">
         <div
           ref={statsRef}
           className="mx-auto max-w-5xl px-4"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {statsData.map((stat, index) => {
               const Icon = stat.icon
               return (
                 <div
                   key={stat.label}
-                  className="text-center transition-all duration-700 ease-out"
+                  className="text-center p-5 rounded-xl border border-border/50 bg-card/40 hover:border-primary/20 transition-all duration-700 ease-out"
                   style={{
                     opacity: statsVisible ? 1 : 0,
                     transform: statsVisible ? "translateY(0)" : "translateY(20px)",
                     transitionDelay: `${staggerDelay(index, 120)}ms`,
                   }}
                 >
-                  <div className="flex justify-center mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Icon className="h-5 w-5 text-primary" />
-                    </div>
-                  </div>
-                  <p className="text-[11px] font-bold text-muted-foreground tracking-wider mb-2">
+                  <p className="text-[10px] font-bold text-primary tracking-widest mb-2 uppercase">
                     {stat.label}
                   </p>
                   <p
@@ -567,13 +547,15 @@ export function DdosProtectionContent() {
               return (
                 <div
                   key={feature.title}
-                  className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all duration-700 ease-out group"
+                  className="relative bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all duration-700 ease-out group overflow-hidden"
                   style={{
                     opacity: howGridVisible ? 1 : 0,
                     transform: howGridVisible ? "translateY(0)" : "translateY(30px)",
                     transitionDelay: `${staggerDelay(index, 120)}ms`,
                   }}
                 >
+                  {/* Top accent line */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/0 group-hover:bg-primary/60 transition-all duration-500" />
                   <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                     <Icon className="h-5 w-5 text-primary" />
                   </div>
@@ -797,9 +779,15 @@ export function DdosProtectionContent() {
                       <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   </div>
-                  {/* Partner logo placeholder */}
-                  <div className="w-28 h-28 md:w-32 md:h-32 rounded-2xl bg-secondary flex items-center justify-center shrink-0 self-center">
-                    <Globe className="h-12 w-12 text-primary/60" />
+                  {/* Partner icon */}
+                  <div
+                    className="w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center shrink-0 self-center"
+                    style={{
+                      background: "radial-gradient(circle, rgba(245,166,35,0.12) 0%, rgba(245,166,35,0.04) 70%)",
+                      border: "1px solid rgba(245,166,35,0.15)",
+                    }}
+                  >
+                    <ShieldCheck className="h-10 w-10 md:h-12 md:w-12 text-primary/70" />
                   </div>
                 </div>
               </div>
@@ -811,34 +799,46 @@ export function DdosProtectionContent() {
       {/* ─── CTA Section ─── */}
       <section className="py-20 bg-background">
         <div className="mx-auto max-w-3xl px-4 text-center">
-          <div className="bg-card border border-border rounded-2xl p-8 md:p-12">
-            <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-              <Zap className="h-7 w-7 text-primary" />
-            </div>
-            <h2
-              className="text-2xl md:text-3xl font-bold text-foreground mb-4 text-balance"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              Listo para proteger tu servidor?
-            </h2>
-            <p className="text-muted-foreground text-base max-w-xl mx-auto mb-8 text-pretty">
-              Todos nuestros planes de hosting incluyen proteccion DDoS sin costo adicional. Configura tu servidor en minutos y juega con tranquilidad.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="/game-server-hosting"
-                className="inline-flex items-center justify-center font-bold px-6 py-3 rounded-lg text-sm tracking-wide bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                style={{ boxShadow: "0 4px 16px rgba(245,166,35,0.2)" }}
+          <div
+            className="relative bg-card border border-border rounded-2xl p-8 md:p-12 overflow-hidden"
+            style={{ boxShadow: "0 0 80px rgba(245,166,35,0.04)" }}
+          >
+            {/* Subtle background glow */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse at 50% 0%, rgba(245,166,35,0.06) 0%, transparent 60%)",
+              }}
+            />
+            <div className="relative">
+              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                <Zap className="h-7 w-7 text-primary" />
+              </div>
+              <h2
+                className="text-2xl md:text-3xl font-bold text-foreground mb-4 text-balance"
+                style={{ fontFamily: "var(--font-heading)" }}
               >
-                VER PLANES DE HOSTING
-              </a>
-              <a
-                href="/contacto"
-                className="inline-flex items-center justify-center font-semibold px-6 py-3 rounded-lg text-sm gap-2 border border-border text-foreground hover:bg-secondary transition-colors"
-              >
-                CONTACTAR SOPORTE
-                <ArrowRight className="h-4 w-4" />
-              </a>
+                Listo para proteger tu servidor?
+              </h2>
+              <p className="text-muted-foreground text-base max-w-xl mx-auto mb-8 text-pretty leading-relaxed">
+                Todos nuestros planes de hosting incluyen proteccion DDoS sin costo adicional. Configura tu servidor en minutos y juega con tranquilidad.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a
+                  href="/game-server-hosting"
+                  className="inline-flex items-center justify-center font-bold px-7 py-3.5 rounded-lg text-sm tracking-wide bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+                  style={{ boxShadow: "0 4px 20px rgba(245,166,35,0.25)" }}
+                >
+                  VER PLANES DE HOSTING
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </a>
+                <a
+                  href="/contacto"
+                  className="inline-flex items-center justify-center font-semibold px-7 py-3.5 rounded-lg text-sm gap-2 border border-border text-foreground hover:bg-secondary transition-colors"
+                >
+                  CONTACTAR SOPORTE
+                </a>
+              </div>
             </div>
           </div>
         </div>
