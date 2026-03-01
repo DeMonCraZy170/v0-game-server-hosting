@@ -1189,7 +1189,11 @@ const planetEmojis: Record<string, string> = {
 }
 
 function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cycle: BillingCycle; location: string; onSelect: () => void }) {
-  const monthlyPrice = calcMonthlyPrice(plan.basePrice, cycle)
+  const totalPrice = calcPrice(plan.basePrice, cycle)
+  const multiplier = cycle === "monthly" ? 1 : cycle === "quarterly" ? 3 : cycle === "semiannually" ? 6 : 12
+  const originalTotal = parseFloat((plan.basePrice * multiplier).toFixed(2))
+  const isDiscounted = cycle !== "monthly"
+  const cycleLabel = billingCycles.find((c) => c.id === cycle)?.label.toLowerCase() || "mensualmente"
   const locationName = locationRegions.flatMap((r) => r.locations).find((l) => l.id === location)?.name || "OVH Beauharnois, Canada"
 
   return (
@@ -1216,12 +1220,17 @@ function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cy
       </div>
 
       {/* Price */}
-      <div className="mb-0.5">
+      <div className="mb-0.5 flex items-baseline gap-2">
         <span className="text-3xl font-extrabold text-foreground" style={{ fontFamily: "var(--font-heading)" }}>
-          {`$${monthlyPrice.toFixed(2)}`}
+          {`$${totalPrice.toFixed(2)}`}
         </span>
+        {isDiscounted && (
+          <span className="text-sm text-muted-foreground/40 line-through">
+            {`$${originalTotal.toFixed(2)}`}
+          </span>
+        )}
       </div>
-      <p className="text-[11px] text-muted-foreground/60 mb-4">Facturado mensualmente</p>
+      <p className="text-[11px] text-muted-foreground/60 mb-4">{`Facturado ${cycleLabel === "mensual" ? "mensualmente" : cycleLabel === "trimestral" ? "trimestralmente" : cycleLabel === "semestral" ? "semestralmente" : "anualmente"}`}</p>
 
       {/* Specs */}
       <ul className="flex flex-col gap-2 mb-5 flex-1">
