@@ -1,5 +1,3 @@
-import { AnnouncementBar } from "@/components/announcement-bar"
-import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { GameHostingSection } from "@/components/game-hosting-section"
 import { ReviewsSection } from "@/components/reviews-section"
@@ -14,10 +12,6 @@ import { Footer } from "@/components/footer"
 export default function Home() {
   return (
     <main>
-      <div className="fixed top-0 left-0 right-0 z-50">
-        <AnnouncementBar />
-        <Navbar />
-      </div>
       <HeroSection />
       <GameHostingSection />
       <ReviewsSection />

@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { TawkChat } from '@/components/tawk-chat'
+import { AnnouncementBar } from '@/components/announcement-bar'
+import { Navbar } from '@/components/navbar'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -24,6 +26,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+        <div className="fixed top-0 left-0 right-0 z-50">
+          <AnnouncementBar />
+          <Navbar />
+        </div>
         {children}
         <TawkChat />
         <Analytics />

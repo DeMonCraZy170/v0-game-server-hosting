@@ -2,8 +2,7 @@
 
 import { Ticket, MessageSquare } from "lucide-react"
 import Link from "next/link"
-import { AnnouncementBar } from "@/components/announcement-bar"
-import { Navbar } from "@/components/navbar"
+
 import { Footer } from "@/components/footer"
 
 // Contact methods configuration
@@ -33,12 +32,6 @@ const contactMethods = [
 export function ContactPageContent() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Shared Navbar */}
-      <div className="fixed top-0 left-0 right-0 z-50">
-        <AnnouncementBar />
-        <Navbar />
-      </div>
-
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 pt-32">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">

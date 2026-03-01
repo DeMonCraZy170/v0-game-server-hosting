@@ -2,19 +2,12 @@
 
 import { Zap, ArrowLeft, Clock, Rocket, Bell } from "lucide-react"
 import Link from "next/link"
-import { AnnouncementBar } from "@/components/announcement-bar"
-import { Navbar } from "@/components/navbar"
+
 import { Footer } from "@/components/footer"
 
 export function ComingSoonContent() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Shared Navbar */}
-      <div className="fixed top-0 left-0 right-0 z-50">
-        <AnnouncementBar />
-        <Navbar />
-      </div>
-
       {/* Main content */}
       <main className="flex-1 flex items-center justify-center pt-32 pb-20 px-4">
         <div className="text-center max-w-2xl mx-auto">

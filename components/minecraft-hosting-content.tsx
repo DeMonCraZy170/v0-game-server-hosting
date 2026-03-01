@@ -27,8 +27,7 @@ import {
   Signal,
   MapPin,
 } from "lucide-react"
-import { AnnouncementBar } from "@/components/announcement-bar"
-import { Navbar } from "@/components/navbar"
+
 import { Footer } from "@/components/footer"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
@@ -425,12 +424,6 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navbar */}
-      <div className="fixed top-0 left-0 right-0 z-50">
-        <AnnouncementBar />
-        <Navbar />
-      </div>
-
       {/* ─── HERO ─── */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0">
