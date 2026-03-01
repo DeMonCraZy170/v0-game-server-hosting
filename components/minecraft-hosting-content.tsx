@@ -267,13 +267,56 @@ const moddedFaqItems = [
   { q: "Puedo cambiar de modpack despues de crear mi servidor?", a: "Si, puedes cambiar de modpack en cualquier momento desde nuestro panel de control. El proceso es simple y rapido, solo selecciona el nuevo modpack y nosotros nos encargamos del resto." },
 ]
 
+/* ── Budget-specific plan type ── */
+interface BudgetPlanDef {
+  name: string
+  planet: string
+  ram: string
+  cores: string
+  storage: string
+  basePrice: number
+  ports: number
+  databases: number
+  bestSeller?: boolean
+  whmcsId: string
+}
+
+const budgetPlans: BudgetPlanDef[] = [
+  { name: "Asteroide", planet: "asteroid", ram: "1GB", cores: "1 Core/s", storage: "10GB SSD", basePrice: 1.00, ports: 2, databases: 1, whmcsId: "b1" },
+  { name: "Pluton", planet: "pluto", ram: "2GB", cores: "2 Core/s", storage: "10GB SSD", basePrice: 2.00, ports: 2, databases: 2, whmcsId: "b2" },
+  { name: "Triton", planet: "triton", ram: "3GB", cores: "2 Core/s", storage: "15GB SSD", basePrice: 3.00, ports: 3, databases: 3, whmcsId: "b3" },
+  { name: "Luna", planet: "moon", ram: "4GB", cores: "2 Core/s", storage: "15GB SSD", basePrice: 4.00, ports: 5, databases: 5, whmcsId: "b4" },
+  { name: "Mercurio", planet: "mercury", ram: "5GB", cores: "2 Core/s", storage: "20GB SSD", basePrice: 5.00, ports: 5, databases: 5, whmcsId: "b5" },
+  { name: "Marte", planet: "mars", ram: "6GB", cores: "2 Core/s", storage: "20GB SSD", basePrice: 6.00, ports: 5, databases: 5, whmcsId: "b6" },
+  { name: "Venus", planet: "venus", ram: "7GB", cores: "2 Core/s", storage: "25GB SSD", basePrice: 7.00, ports: 5, databases: 5, whmcsId: "b7" },
+  { name: "Tierra", planet: "earth", ram: "8GB", cores: "2.5 Core/s", storage: "30GB SSD", basePrice: 8.00, ports: 10, databases: 7, whmcsId: "b8" },
+  { name: "Neptuno", planet: "neptune", ram: "10GB", cores: "2.5 Core/s", storage: "40GB SSD", basePrice: 10.00, ports: 10, databases: 7, whmcsId: "b9" },
+  { name: "Saturno", planet: "saturn", ram: "12GB", cores: "3 Core/s", storage: "50GB SSD", basePrice: 12.00, ports: 10, databases: 7, bestSeller: true, whmcsId: "b10" },
+  { name: "Jupiter", planet: "jupiter", ram: "16GB", cores: "4 Core/s", storage: "60GB SSD", basePrice: 16.00, ports: 10, databases: 7, whmcsId: "b11" },
+  { name: "Sol", planet: "sun", ram: "18GB", cores: "5 Core/s", storage: "150GB SSD", basePrice: 18.00, ports: 10, databases: 7, whmcsId: "b12" },
+  { name: "Via Lactea", planet: "milkyway", ram: "22GB", cores: "5 Core/s", storage: "100GB SSD", basePrice: 22.00, ports: 10, databases: 10, whmcsId: "b13" },
+]
+
+/* ── Budget-specific FAQ ── */
+const budgetFaqItems = [
+  { q: "Por que elegir un plan Budget en lugar de un plan Enterprise?", a: "Los planes Budget son ideales si buscas un servidor economico para jugar con amigos. Usan almacenamiento SSD y ofrecen recursos suficientes para servidores pequenos y medianos a una fraccion del costo de los planes premium." },
+  { q: "Que tipo de almacenamiento usan los planes Budget?", a: "Los planes Budget utilizan almacenamiento SSD de alta velocidad. Aunque no es NVMe como en los planes Enterprise, el SSD ofrece un rendimiento solido y confiable para la mayoria de servidores de Minecraft." },
+  { q: "Puedo instalar mods en un plan Budget?", a: "Si, puedes instalar mods y plugins en los planes Budget. Sin embargo, para modpacks pesados como RLCraft o All The Mods, recomendamos un plan con al menos 6GB de RAM para un rendimiento optimo." },
+  { q: "Cuantos jugadores pueden conectarse a un plan Budget?", a: "Depende del plan y los mods instalados. Un plan de 1GB soporta hasta 5 jugadores en vanilla, mientras que un plan de 8GB o mas puede manejar 30+ jugadores facilmente." },
+  { q: "Puedo escalar mi plan Budget mas adelante?", a: "Si, puedes actualizar tu plan en cualquier momento sin perder tus datos. Simplemente selecciona un plan superior desde tu panel de control y la diferencia se prorratea automaticamente." },
+]
+
+/* ── Budget-specific server capabilities ── */
+const budgetServerCapabilities = ["Almacenamiento SSD", "Panel de Control", "Proteccion DDoS Basica", "Soporte 24/7", "Backups Manuales", "Instalador de Mods"]
+
 /* ── Main Component ── */
-export function MinecraftHostingContent({ variant = "java" }: { variant?: "java" | "bedrock" | "modded" }) {
+export function MinecraftHostingContent({ variant = "java" }: { variant?: "java" | "bedrock" | "modded" | "budget" }) {
   const isBedrock = variant === "bedrock"
   const isModded = variant === "modded"
+  const isBudget = variant === "budget"
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedType, setSelectedType] = useState(isModded ? "modded" : "vanilla")
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(isModded ? "ca-bhs" : null)
+  const [selectedLocation, setSelectedLocation] = useState<string | null>((isModded || isBudget) ? "ca-bhs" : null)
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly")
   const [openFaq, setOpenFaq] = useState<number | null>(0)
@@ -341,15 +384,17 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
   const [ddosRef, ddosVisible] = useScrollReveal({ threshold: 0.1 })
   const [faqRef, faqVisible] = useScrollReveal({ threshold: 0.1 })
 
-  const activeFaqItems = isModded
-    ? moddedFaqItems
-    : isBedrock
-      ? faqItems.map((item) =>
-          item.q.includes("versiones")
-            ? { ...item, a: "Soportamos todas las versiones de Minecraft Bedrock Edition, incluyendo Windows 10/11, consolas (Xbox, PlayStation, Nintendo Switch) y dispositivos moviles (iOS, Android)." }
-            : item
-        )
-      : faqItems
+  const activeFaqItems = isBudget
+    ? budgetFaqItems
+    : isModded
+      ? moddedFaqItems
+      : isBedrock
+        ? faqItems.map((item) =>
+            item.q.includes("versiones")
+              ? { ...item, a: "Soportamos todas las versiones de Minecraft Bedrock Edition, incluyendo Windows 10/11, consolas (Xbox, PlayStation, Nintendo Switch) y dispositivos moviles (iOS, Android)." }
+              : item
+          )
+        : faqItems
 
   const stepPercent = currentStep === 1 ? 25 : currentStep === 2 ? 50 : 75
   const plans = isModded
@@ -394,23 +439,23 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4">
-          {/* Breadcrumbs for Modded */}
-          {isModded && (
+          {/* Breadcrumbs for Modded/Budget */}
+          {(isModded || isBudget) && (
             <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground transition-all duration-700 ease-out" style={{ opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)" }}>
               <a href="/" className="hover:text-foreground transition-colors">Inicio</a>
               <span className="text-muted-foreground/50">{">"}</span>
               <a href="/minecraft" className="hover:text-foreground transition-colors">Minecraft Server Hosting</a>
               <span className="text-muted-foreground/50">{">"}</span>
-              <span className="text-primary font-medium">Modded Minecraft Server Hosting</span>
+              <span className="text-primary font-medium">{isBudget ? "Budget Minecraft Server Hosting" : "Modded Minecraft Server Hosting"}</span>
             </div>
           )}
 
           <div ref={heroRef} className="flex flex-col md:flex-row items-start gap-10 transition-all duration-700 ease-out" style={{ opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(30px)" }}>
             <div className="shrink-0 hidden md:block">
               <div className="w-[200px] h-[240px] rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}>
-                <Image src={isModded ? "/images/icon-minecraft-modded.jpg" : "/images/icon-minecraft.avif"} alt={isModded ? "Minecraft Modded" : "Minecraft"} width={200} height={240} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
+                <Image src={isModded ? "/images/icon-minecraft-modded.jpg" : "/images/icon-minecraft.avif"} alt={isBudget ? "Minecraft Budget" : isModded ? "Minecraft Modded" : "Minecraft"} width={200} height={240} className="object-cover w-full h-full" style={{ width: "100%", height: "100%" }} />
               </div>
-              {isModded && (
+              {(isModded || isBudget) && (
                 <a href="/" className="flex items-center gap-1.5 mt-3 text-sm text-primary font-medium hover:underline">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                   Ver Sitio Web
@@ -419,14 +464,14 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             </div>
 
             <div className="flex-1 max-w-2xl">
-              {isModded && (
+              {(isModded || isBudget) && (
                 <a href="/minecraft" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
                   <ArrowLeft className="w-4 h-4" />
                   Seleccionar un juego diferente
                 </a>
               )}
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                {isModded ? "Modded Minecraft" : isBedrock ? "Minecraft Bedrock" : "Minecraft"}
+                {isBudget ? "Budget Minecraft" : isModded ? "Modded Minecraft" : isBedrock ? "Minecraft Bedrock" : "Minecraft"}
                 <br />
                 <span className="text-primary">Server Hosting</span>
               </h1>
@@ -439,32 +484,34 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
                 <span className="text-muted-foreground/50">{"/"}</span>
                 <div className="flex items-center gap-2">
                   <Zap className="w-4 h-4 text-primary" />
-                  <span className="font-semibold text-foreground">{isModded ? "Disponible en 8 Ubicaciones" : "Despliegue Instantaneo"}</span>
+                  <span className="font-semibold text-foreground">{(isModded || isBudget) ? "Disponible en 6 Ubicaciones" : "Despliegue Instantaneo"}</span>
                 </div>
               </div>
 
               <p className="mt-5 text-muted-foreground leading-relaxed text-lg max-w-xl">
-                {isModded
-                  ? "Quieres ejecutar un servidor de Minecraft Modded sin complicaciones? Despliega al instante modpacks populares como RLCraft o Pixelmon, con acceso completo a archivos, proteccion DDoS y soporte experto 24/7."
-                  : isBedrock
-                    ? "Inicia tu servidor de Minecraft Bedrock con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Tienes una comunidad? Tenemos el servidor para ti."
-                    : "Inicia tu servidor de Minecraft con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Usas muchos mods? Tienes una comunidad? Tenemos el servidor para ti."}
+                {isBudget
+                  ? "Inicia tu servidor de Minecraft con el hardware mas rapido, con gran rendimiento comprobado, desde tan solo $1 al mes. Nuestros planes son perfectos para iniciar un servidor de Minecraft con un presupuesto ajustado."
+                  : isModded
+                    ? "Quieres ejecutar un servidor de Minecraft Modded sin complicaciones? Despliega al instante modpacks populares como RLCraft o Pixelmon, con acceso completo a archivos, proteccion DDoS y soporte experto 24/7."
+                    : isBedrock
+                      ? "Inicia tu servidor de Minecraft Bedrock con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Tienes una comunidad? Tenemos el servidor para ti."
+                      : "Inicia tu servidor de Minecraft con el hardware mas rapido, a precios mas bajos que en cualquier otro lugar. Juegas con amigos? Usas muchos mods? Tienes una comunidad? Tenemos el servidor para ti."}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 mt-8">
                 <a href="#wizard" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg text-base font-bold transition-all duration-200 hover:scale-105" style={{ background: "linear-gradient(135deg, #16a34a, #22c55e, #4ade80)", color: "#fff", boxShadow: "0 4px 20px rgba(34,197,94,0.3)" }}>
-                  {isModded ? "Prueba Gratis por 1 Dia" : "Empezar Ahora"}
+                  {(isModded || isBudget) ? "Prueba Gratis por 1 Dia" : "Empezar Ahora"}
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
-              {isModded && (
+              {(isModded || isBudget) && (
                 <p className="mt-2 text-xs text-muted-foreground/60">Sin riesgo, cancela cuando quieras.</p>
               )}
             </div>
           </div>
 
-          {/* Version banner (hidden for modded, shown in plans section instead) */}
-          {!isModded && (
+          {/* Version banner (hidden for modded/budget, shown in plans section instead) */}
+          {!isModded && !isBudget && (
             <div className="mt-12 px-5 py-3 rounded-lg flex items-center gap-3 text-sm transition-all duration-700" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)", transitionDelay: "200ms" }}>
               <Zap className="w-4 h-4 text-primary shrink-0" />
               <span className="text-foreground font-medium">
@@ -477,9 +524,126 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
         </div>
       </section>
 
-      {/* ─── MULTI-STEP WIZARD ──��� */}
+      {/* ─── MULTI-STEP WIZARD ─── */}
       <section id="wizard" className="py-20 bg-background scroll-mt-28">
-        {isModded ? (
+        {isBudget ? (
+          /* ── BUDGET: Direct plans layout (no wizard, single tier) ── */
+          <div className="mx-auto max-w-7xl px-4">
+            <div
+              ref={wizardRef}
+              className="transition-all duration-700 ease-out"
+              style={{ opacity: wizardVisible ? 1 : 0, transform: wizardVisible ? "translateY(0)" : "translateY(30px)" }}
+            >
+              {/* ── Inline filter controls ── */}
+              <div className="flex flex-wrap items-start gap-8 mb-6">
+                {/* Server Tier - single "Budget" */}
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
+                    <Server className="w-4 h-4" />
+                    <span>Tipo de Servidor</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      className="px-4 py-2 rounded-lg text-xs font-bold"
+                      style={{
+                        background: "rgba(34,197,94,0.15)",
+                        border: "1px solid rgba(34,197,94,0.4)",
+                        color: "#22c55e",
+                      }}
+                    >
+                      Budget
+                    </button>
+                  </div>
+                </div>
+
+                {/* Billing Cycle */}
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
+                    <DollarSign className="w-4 h-4" />
+                    <span>Ciclo de Facturacion</span>
+                  </div>
+                  <div className="flex gap-2">
+                    {billingCycles.map((cycle) => (
+                      <button
+                        key={cycle.id}
+                        onClick={() => setBillingCycle(cycle.id)}
+                        className="relative px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200"
+                        style={{
+                          background: billingCycle === cycle.id ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.03)",
+                          border: billingCycle === cycle.id ? "1px solid rgba(34,197,94,0.4)" : "1px solid rgba(255,255,255,0.06)",
+                          color: billingCycle === cycle.id ? "#22c55e" : "rgba(255,255,255,0.5)",
+                        }}
+                      >
+                        {cycle.label}
+                        {cycle.discount > 0 && (
+                          <span className="absolute -top-2 -right-2 px-1 py-0.5 rounded text-[8px] font-bold" style={{ background: "rgba(245,166,35,0.2)", color: "#f5a623", border: "1px solid rgba(245,166,35,0.3)" }}>
+                            {`-${cycle.discount}%`}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
+                    <MapPin className="w-4 h-4" />
+                    <span>Ubicacion</span>
+                  </div>
+                  <div className="relative">
+                    <select
+                      value={selectedLocation || "ca-bhs"}
+                      onChange={(e) => setSelectedLocation(e.target.value)}
+                      className="appearance-none px-4 py-2 pr-8 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer"
+                      style={{
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(255,255,255,0.06)",
+                        color: "rgba(255,255,255,0.7)",
+                        outline: "none",
+                      }}
+                    >
+                      {locationRegions.flatMap((r) =>
+                        r.locations.map((loc) => (
+                          <option key={loc.id} value={loc.id} disabled={"comingSoon" in loc && !!loc.comingSoon}>
+                            {loc.name}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none" />
+                  </div>
+                </div>
+              </div>
+
+              {/* AMD Badge */}
+              <div className="flex items-center gap-2 mb-6">
+                <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>AMD</span>
+                <span className="text-sm text-muted-foreground">
+                  {"Powered by "}
+                  <span className="font-bold text-foreground">Ryzen 9 7900</span>
+                  {" o "}
+                  <a href="/proximamente" className="text-primary font-semibold hover:underline">equivalente</a>
+                </span>
+              </div>
+
+              {/* Version banner */}
+              <div className="mb-8 px-5 py-3 rounded-lg flex items-center gap-3 text-sm" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}>
+                <Zap className="w-4 h-4 text-primary shrink-0" />
+                <span className="text-foreground font-medium">
+                  {"Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.11 \"Mounts Of Mayhem\""}
+                </span>
+              </div>
+
+              {/* ── Budget Plan cards in 4-column grid ── */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {budgetPlans.map((plan) => (
+                  <BudgetPlanCard key={plan.whmcsId} plan={plan} cycle={billingCycle} location={selectedLocation || "ca-bhs"} onSelect={() => handlePlanSelect(plan as unknown as PlanDef)} />
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : isModded ? (
           /* ── MODDED: Direct plans layout (no wizard steps) ── */
           <div className="mx-auto max-w-7xl px-4">
             <div
