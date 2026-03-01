@@ -32,7 +32,7 @@ const minecraftCards = [
   },
   {
     label: "Budget Hosting",
-    href: "/proximamente",
+    href: "/minecraft/budget",
     image: "/images/dropdown-budget.jpg",
     borderColor: "#22c55e",
     badge: "NUEVA ACTUALIZACION!",
