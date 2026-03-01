@@ -862,7 +862,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
 
                 <div className="px-8 pb-6 text-sm text-muted-foreground">
                   {"Buscas una opcion mas economica? Revisa nuestro "}
-                  <a href="/proximamente" className="text-primary font-semibold hover:underline">Budget Minecraft Server Hosting</a>.
+                  <a href="/minecraft/budget" className="text-primary font-semibold hover:underline">Budget Minecraft Server Hosting</a>.
                 </div>
               </div>
             )}
@@ -1346,6 +1346,109 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
         }}
       >
         {plan.bestSeller ? "Empezar" : "Ordenar Ahora"}
+      </button>
+    </div>
+  )
+}
+
+/* ── Budget Plan Card (SparkedHost-style flat card with planet icon, ports & databases) ── */
+function BudgetPlanCard({ plan, cycle, location, onSelect }: { plan: BudgetPlanDef; cycle: BillingCycle; location: string; onSelect: () => void }) {
+  const totalPrice = calcPrice(plan.basePrice, cycle)
+  const multiplier = cycle === "monthly" ? 1 : cycle === "quarterly" ? 3 : cycle === "semiannually" ? 6 : 12
+  const originalTotal = parseFloat((plan.basePrice * multiplier).toFixed(2))
+  const isDiscounted = cycle !== "monthly"
+  const cycleLabel = billingCycles.find((c) => c.id === cycle)?.label.toLowerCase() || "mensualmente"
+  const locationName = locationRegions.flatMap((r) => r.locations).find((l) => l.id === location)?.name || "OVH Beauharnois, Canada"
+
+  const budgetPlanetEmojis: Record<string, string> = {
+    asteroid: "\u{2604}\u{FE0F}",
+    pluto: "\u{1FA90}",
+    triton: "\u{1F30A}",
+    moon: "\u{1F319}",
+    mercury: "\u{1FA90}",
+    mars: "\u{1FA90}",
+    venus: "\u{1F30D}",
+    earth: "\u{1F30D}",
+    neptune: "\u{1F30A}",
+    saturn: "\u{1FA90}",
+    jupiter: "\u{1FA90}",
+    sun: "\u{2600}\u{FE0F}",
+    milkyway: "\u{1F30C}",
+  }
+
+  return (
+    <div
+      className="relative rounded-xl p-5 flex flex-col transition-all duration-200 hover:scale-[1.02]"
+      style={{
+        background: plan.bestSeller ? "rgba(245,166,35,0.04)" : "rgba(255,255,255,0.02)",
+        border: plan.bestSeller ? "2px solid rgba(245,166,35,0.4)" : "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
+      {/* Best seller badge */}
+      {plan.bestSeller && (
+        <div className="absolute -top-3 left-4">
+          <span className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded uppercase" style={{ background: "linear-gradient(135deg, #dc2626, #ef4444)", color: "#fff" }}>
+            MAS VENDIDO
+          </span>
+        </div>
+      )}
+
+      {/* Header with planet icon */}
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-base font-bold text-foreground">{plan.name}</p>
+        <span className="text-2xl">{budgetPlanetEmojis[plan.planet] || "\u{1FA90}"}</span>
+      </div>
+
+      {/* Price */}
+      <div className="mb-0.5 flex items-baseline gap-2">
+        <span className="text-3xl font-extrabold text-foreground" style={{ fontFamily: "var(--font-heading)" }}>
+          {`$${totalPrice.toFixed(2)}`}
+        </span>
+        {isDiscounted && (
+          <span className="text-sm text-muted-foreground/40 line-through">
+            {`$${originalTotal.toFixed(2)}`}
+          </span>
+        )}
+      </div>
+      <p className="text-[11px] text-muted-foreground/60 mb-4">{`Facturado ${cycleLabel === "mensual" ? "mensualmente" : cycleLabel === "trimestral" ? "trimestralmente" : cycleLabel === "semestral" ? "semestralmente" : "anualmente"}`}</p>
+
+      {/* Specs */}
+      <ul className="flex flex-col gap-2 mb-5 flex-1">
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#3b82f6" }} />
+          {plan.cores}
+        </li>
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#3b82f6" }} />
+          {`${plan.ram} RAM`}
+        </li>
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+          {`${plan.storage} Almacenamiento`}
+        </li>
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+          {`${plan.ports} Puertos`}
+        </li>
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+          {`${plan.databases} Bases de Datos`}
+        </li>
+      </ul>
+
+      {/* CTA */}
+      <button
+        onClick={onSelect}
+        className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105"
+        style={{
+          background: plan.bestSeller
+            ? "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)"
+            : "rgba(255,255,255,0.06)",
+          color: plan.bestSeller ? "#0d0d0d" : "#f5f5f5",
+          border: plan.bestSeller ? "none" : "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        {`Ordenar en ${locationName.replace("OVH ", "")}`}
       </button>
     </div>
   )
