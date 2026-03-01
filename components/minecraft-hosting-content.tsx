@@ -1277,13 +1277,20 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
   const originalTotal = parseFloat((plan.basePrice * multiplier).toFixed(2))
   const isDiscounted = cycle !== "monthly"
   const cycleLabel = cycle === "monthly" ? "mensualmente" : cycle === "quarterly" ? "trimestralmente" : cycle === "semiannually" ? "semestralmente" : "anualmente"
+  const [isHovered, setIsHovered] = useState(false)
+
+  const jpgPlanets = ["supernova", "blackhole"]
+  const planetIcon = `/images/planets/${plan.planet}.${jpgPlanets.includes(plan.planet) ? "jpg" : "svg"}`
 
   return (
     <div
-      className="relative rounded-xl p-5 flex flex-col transition-all duration-200 hover:scale-[1.02]"
+      className="relative rounded-xl p-5 flex flex-col transition-all duration-300"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
-        background: highlight ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
-        border: highlight ? "2px solid rgba(245,166,35,0.4)" : "1px solid rgba(255,255,255,0.06)",
+        background: isHovered ? "rgba(245,166,35,0.06)" : highlight || plan.bestSeller ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
+        border: isHovered ? "2px solid rgba(245,166,35,0.7)" : highlight || plan.bestSeller ? "2px solid rgba(245,166,35,0.4)" : "2px solid rgba(255,255,255,0.06)",
+        transform: isHovered ? "scale(1.02)" : "scale(1)",
       }}
     >
       {/* Best seller badge */}
@@ -1295,9 +1302,10 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
         </div>
       )}
 
-      {/* Header */}
+      {/* Header with planet icon */}
       <div className="flex items-center justify-between mb-3">
         <p className="text-base font-bold text-foreground">{plan.name}</p>
+        <Image src={planetIcon} alt={plan.name} width={40} height={40} className={`object-contain ${jpgPlanets.includes(plan.planet) ? "rounded-full" : ""}`} />
       </div>
 
       {/* Price */}
@@ -1340,15 +1348,16 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
       {/* CTA */}
       <button
         onClick={onSelect}
-        className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105"
+        className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-300"
         style={{
-          background: plan.bestSeller
+          background: isHovered || plan.bestSeller
             ? "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)"
             : highlight
               ? "rgba(34,197,94,0.15)"
               : "rgba(255,255,255,0.06)",
-          color: plan.bestSeller ? "#0d0d0d" : highlight ? "#22c55e" : "#f5f5f5",
-          border: plan.bestSeller ? "none" : highlight ? "1px solid rgba(34,197,94,0.3)" : "1px solid rgba(255,255,255,0.1)",
+          color: isHovered || plan.bestSeller ? "#0d0d0d" : highlight ? "#22c55e" : "#f5f5f5",
+          border: isHovered || plan.bestSeller ? "none" : highlight ? "1px solid rgba(34,197,94,0.3)" : "1px solid rgba(255,255,255,0.1)",
+          transform: isHovered ? "scale(1.03)" : "scale(1)",
         }}
       >
         {plan.bestSeller ? "Empezar" : "Ordenar Ahora"}
