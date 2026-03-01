@@ -1,6 +1,6 @@
 "use client"
 
-import { Ticket, MessageSquare, Headphones } from "lucide-react"
+import { Ticket, MessageSquare } from "lucide-react"
 import Link from "next/link"
 import { AnnouncementBar } from "@/components/announcement-bar"
 import { Navbar } from "@/components/navbar"
@@ -26,15 +26,7 @@ const contactMethods = [
     disabled: false,
     external: true,
   },
-  {
-    icon: Headphones,
-    title: "CHAT EN VIVO",
-    description:
-      "Para preguntas de pre-venta y problemas tecnicos menores que necesitan ser resueltos rapidamente.",
-    cta: "Iniciar Chat en Vivo",
-    href: "#",
-    disabled: false,
-  },
+
 ]
 
 export function ContactPageContent() {
@@ -71,8 +63,8 @@ export function ContactPageContent() {
       </div>
 
       {/* Contact Cards */}
-      <div className="mx-auto max-w-5xl px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="mx-auto max-w-4xl px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {contactMethods.map((method) => {
             const Icon = method.icon
             const Tag = method.external ? "a" : "a"
