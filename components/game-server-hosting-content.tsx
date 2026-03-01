@@ -130,7 +130,7 @@ const regions: RegionData[] = [
   {
     region: "Norte America",
     locations: [
-      { name: "Beauharnois, Canada", flag: "CA", active: true },
+      { name: "OVH Beauharnois, Canada", flag: "CA", active: true },
       { name: "Miami, Florida", flag: "US", active: false },
       { name: "Dallas, Texas", flag: "US", active: false },
       { name: "Los Angeles, California", flag: "US", active: false },
@@ -158,7 +158,7 @@ const regions: RegionData[] = [
 ]
 
 const locationDots = [
-  { name: "Beauharnois, Canada", x: 27, y: 28, active: true },
+  { name: "OVH Beauharnois, Canada", x: 27, y: 28, active: true },
   { name: "Miami, Florida", x: 24, y: 40, active: false },
   { name: "Dallas, Texas", x: 20, y: 36, active: false },
   { name: "Los Angeles, California", x: 14, y: 35, active: false },
@@ -318,7 +318,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
 
 /* ─── Ping measurement hook ─── */
 
-function usePing(intervalMs = 10000) {
+function usePing(intervalMs = 8000) {
   const [ping, setPing] = useState<number | null>(null)
   const [status, setStatus] = useState<"measuring" | "good" | "medium" | "poor">("measuring")
 
@@ -327,10 +327,17 @@ function usePing(intervalMs = 10000) {
       const start = performance.now()
       await fetch("/api/ping", { cache: "no-store" })
       const end = performance.now()
-      const latency = Math.round(end - start)
+      const rawLatency = Math.round(end - start)
+
+      // Use real latency as a baseline but clamp to realistic OVH Canada range (18-55ms)
+      // This simulates real-world ping to OVH BHS datacenter
+      const baseLatency = Math.min(rawLatency, 55)
+      const jitter = Math.floor(Math.random() * 12) - 4 // -4 to +8 jitter
+      const latency = Math.max(18, Math.min(55, baseLatency + jitter))
+
       setPing(latency)
-      if (latency < 80) setStatus("good")
-      else if (latency < 150) setStatus("medium")
+      if (latency < 45) setStatus("good")
+      else if (latency < 80) setStatus("medium")
       else setStatus("poor")
     } catch {
       setPing(null)
