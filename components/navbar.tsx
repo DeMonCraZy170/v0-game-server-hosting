@@ -87,7 +87,7 @@ const resourcesAssistance = [
 ]
 
 const resourcesInfo = [
-  { label: "Proteccion DDoS", href: "/proximamente", icon: ShieldCheck },
+  { label: "Proteccion DDoS", href: "/ddos-protection", icon: ShieldCheck },
   { label: "Hardware y Ubicaciones", href: "/proximamente", icon: Building },
 ]
 
