@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { ChevronDown, Menu, X, Zap, HelpCircle, BookOpen, ArrowRight, Gamepad2, Sword, TreePine, Pickaxe, Flame, Bug, Shield, Rocket, Globe, Mountain, Skull, Factory, Compass, Crosshair, Swords, Server, Cpu, HardDrive, Monitor, GlobeLock, ArrowRightLeft, Bot, Package } from "lucide-react"
+import { ChevronDown, Menu, X, Zap, HelpCircle, BookOpen, ArrowRight, Gamepad2, Sword, TreePine, Pickaxe, Flame, Bug, Shield, Rocket, Globe, Mountain, Skull, Factory, Compass, Crosshair, Swords, Server, Cpu, HardDrive, Monitor, GlobeLock, ArrowRightLeft, Bot, Package, MessageCircle, Activity, ShieldCheck, Building } from "lucide-react"
 import Image from "next/image"
 
 /* ── Minecraft Hosting mega-dropdown cards ── */
@@ -80,6 +80,17 @@ const otherHosting = [
   { label: "Hosting Combinado", href: "#", icon: Package },
 ]
 
+/* ── Resources mega-dropdown data ── */
+const resourcesAssistance = [
+  { label: "Contactanos", href: "#", icon: MessageCircle },
+  { label: "Estado del Servicio", href: "#", icon: Activity },
+]
+
+const resourcesInfo = [
+  { label: "Proteccion DDoS", href: "#", icon: ShieldCheck },
+  { label: "Hardware y Ubicaciones", href: "#", icon: Building },
+]
+
 /* ── Standard dropdown items ── */
 const navItems = [
   {
@@ -106,9 +117,9 @@ const navItems = [
   {
     label: "Recursos",
     hasDropdown: true,
-    isMega: false,
-    megaType: undefined,
-    items: ["Base de Conocimiento", "Blog", "Estado del Servicio"],
+    isMega: true,
+    megaType: "resources" as const,
+    items: [],
   },
   {
     label: "Mas",
@@ -149,7 +160,7 @@ export function Navbar() {
     <>
       <nav
         className={`transition-all duration-300 ${
-          scrolled || openDropdown === "Hosting Minecraft" || openDropdown === "Hosting de Juegos" || openDropdown === "Cloud Hosting"
+          scrolled || openDropdown === "Hosting Minecraft" || openDropdown === "Hosting de Juegos" || openDropdown === "Cloud Hosting" || openDropdown === "Recursos"
             ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-black/20"
             : "bg-transparent"
         }`}
@@ -514,6 +525,89 @@ export function Navbar() {
         </div>
       </div>
 
+      {/* ── Resources Mega Dropdown ── */}
+      <div
+        className={`hidden lg:block overflow-hidden transition-all duration-300 ease-in-out ${
+          openDropdown === "Recursos"
+            ? "max-h-[250px] opacity-100"
+            : "max-h-0 opacity-0 pointer-events-none"
+        }`}
+        style={{
+          background: scrolled
+            ? "rgba(13,13,13,0.97)"
+            : "linear-gradient(to bottom, rgba(13,13,13,0.95), rgba(13,13,13,0.85))",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}
+        onMouseEnter={() => handleMouseEnter("Recursos")}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="mx-auto max-w-7xl px-4 py-6">
+          <div className="flex gap-10">
+            {/* Assistance column */}
+            <div className="flex-1">
+              <h4
+                className="text-sm font-bold text-foreground mb-4 tracking-wide"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Asistencia
+              </h4>
+              <div className="flex flex-col gap-1">
+                {resourcesAssistance.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="group/res flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-secondary/60 transition-colors"
+                    >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-md bg-secondary text-muted-foreground group-hover/res:text-primary transition-colors">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="text-sm font-medium text-foreground/90 group-hover/res:text-foreground transition-colors">
+                        {item.label}
+                      </span>
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="w-px bg-border/50 self-stretch" />
+
+            {/* Information column */}
+            <div className="flex-1">
+              <h4
+                className="text-sm font-bold text-foreground mb-4 tracking-wide"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Informacion
+              </h4>
+              <div className="flex flex-col gap-1">
+                {resourcesInfo.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="group/info flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-secondary/60 transition-colors"
+                    >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-md bg-secondary text-muted-foreground group-hover/info:text-primary transition-colors">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="text-sm font-medium text-foreground/90 group-hover/info:text-foreground transition-colors">
+                        {item.label}
+                      </span>
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="lg:hidden border-t border-border bg-background px-4 py-4">
@@ -573,6 +667,17 @@ export function Navbar() {
                         >
                           <cloudItem.icon className="h-3.5 w-3.5" />
                           {cloudItem.label}
+                        </a>
+                      ))
+                    : item.isMega && item.megaType === "resources"
+                    ? [...resourcesAssistance, ...resourcesInfo].map((resItem) => (
+                        <a
+                          key={resItem.label}
+                          href={resItem.href}
+                          className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-2"
+                        >
+                          <resItem.icon className="h-3.5 w-3.5" />
+                          {resItem.label}
                         </a>
                       ))
                     : item.items?.map((subItem) => (
