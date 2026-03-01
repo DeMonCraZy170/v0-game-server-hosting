@@ -477,7 +477,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
         </div>
       </section>
 
-      {/* ─── MULTI-STEP WIZARD ──�� */}
+      {/* ─── MULTI-STEP WIZARD ──��� */}
       <section id="wizard" className="py-20 bg-background scroll-mt-28">
         {isModded ? (
           /* ── MODDED: Direct plans layout (no wizard steps) ── */
@@ -1102,9 +1102,11 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
 
 /* ── Plan Card Component ── */
 function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: BillingCycle; onSelect: () => void; highlight?: boolean }) {
-  const monthlyPrice = calcMonthlyPrice(plan.basePrice, cycle)
   const totalPrice = calcPrice(plan.basePrice, cycle)
-  const cycleInfo = billingCycles.find((c) => c.id === cycle)!
+  const multiplier = cycle === "monthly" ? 1 : cycle === "quarterly" ? 3 : cycle === "semiannually" ? 6 : 12
+  const originalTotal = parseFloat((plan.basePrice * multiplier).toFixed(2))
+  const isDiscounted = cycle !== "monthly"
+  const cycleLabel = cycle === "monthly" ? "mensualmente" : cycle === "quarterly" ? "trimestralmente" : cycle === "semiannually" ? "semestralmente" : "anualmente"
 
   return (
     <div
@@ -1129,13 +1131,18 @@ function PlanCard({ plan, cycle, onSelect, highlight }: { plan: PlanDef; cycle: 
       </div>
 
       {/* Price */}
-      <div className="mb-1">
+      <div className="mb-1 flex items-baseline gap-2">
         <span className="text-2xl font-extrabold text-primary" style={{ fontFamily: "var(--font-heading)" }}>
-          {`$${monthlyPrice.toFixed(2)}`}
+          {`$${totalPrice.toFixed(2)}`}
         </span>
+        {isDiscounted && (
+          <span className="text-sm text-muted-foreground/40 line-through">
+            {`$${originalTotal.toFixed(2)}`}
+          </span>
+        )}
       </div>
       <p className="text-[11px] text-muted-foreground/60 mb-4">
-        {cycle === "monthly" ? "Facturado mensualmente" : `$${totalPrice.toFixed(2)} ${cycleInfo.suffix}`}
+        {`Facturado ${cycleLabel}`}
       </p>
 
       {/* Specs */}
