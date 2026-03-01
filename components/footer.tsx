@@ -3,18 +3,34 @@
 import { Zap } from "lucide-react"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
-const footerLinks = {
+const footerLinks: Record<string, { label: string; href: string }[]> = {
   "Hosting de Juegos": [
-    "Minecraft Hosting",
-    "Valheim Hosting",
-    "Terraria Hosting",
-    "Satisfactory Hosting",
-    "Factorio Hosting",
-    "Astroneer Hosting",
+    { label: "Minecraft Hosting", href: "#" },
+    { label: "Valheim Hosting", href: "#" },
+    { label: "Terraria Hosting", href: "#" },
+    { label: "Satisfactory Hosting", href: "#" },
+    { label: "Factorio Hosting", href: "#" },
+    { label: "Astroneer Hosting", href: "#" },
   ],
-  "Cloud Hosting": ["VPS KVM", "Servidor Dedicado", "Hosting Web", "Bot de Discord"] as string[],
-  Compania: ["Sobre Nosotros", "Contacto", "Afiliados", "Empleo", "Blog"],
-  Soporte: ["Base de Conocimiento", "Estado del Servicio", "Abrir un Ticket", "Chat en Vivo"],
+  "Cloud Hosting": [
+    { label: "VPS KVM", href: "#" },
+    { label: "Servidor Dedicado", href: "#" },
+    { label: "Hosting Web", href: "#" },
+    { label: "Bot de Discord", href: "#" },
+  ],
+  Compania: [
+    { label: "Sobre Nosotros", href: "#" },
+    { label: "Contacto", href: "/contacto" },
+    { label: "Afiliados", href: "#" },
+    { label: "Empleo", href: "#" },
+    { label: "Blog", href: "#" },
+  ],
+  Soporte: [
+    { label: "Base de Conocimiento", href: "#" },
+    { label: "Estado del Servicio", href: "#" },
+    { label: "Abrir un Ticket", href: "/contacto" },
+    { label: "Chat en Vivo", href: "/contacto" },
+  ],
 }
 
 const linkGroups = Object.entries(footerLinks)
@@ -64,14 +80,14 @@ export function Footer() {
               </h4>
               <ul className="flex flex-col gap-2.5">
                 {links.map((link) => {
-                  const isCloudItem = category === "Cloud Hosting" && ["VPS KVM", "Servidor Dedicado", "Hosting Web", "Bot de Discord"].includes(link)
+                  const isCloudItem = category === "Cloud Hosting" && ["VPS KVM", "Servidor Dedicado", "Hosting Web", "Bot de Discord"].includes(link.label)
                   return (
-                    <li key={link}>
+                    <li key={link.label}>
                       <a
-                        href="#"
+                        href={link.href}
                         className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2"
                       >
-                        {link}
+                        {link.label}
                         {isCloudItem && (
                           <span className="text-[8px] font-bold tracking-wider text-primary bg-primary/15 px-1 py-0.5 rounded">
                             PRONTO

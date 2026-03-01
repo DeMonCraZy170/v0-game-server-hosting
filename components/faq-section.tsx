@@ -58,7 +58,7 @@ export function FAQSection() {
             </h2>
             <p className="text-muted-foreground mb-6">{"No encuentras lo que buscas?"}</p>
             <a
-              href="#"
+              href="/contacto"
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 py-2.5 rounded-lg hover:bg-primary/90 transition-colors text-sm"
             >
               <MessageCircle className="h-4 w-4" />

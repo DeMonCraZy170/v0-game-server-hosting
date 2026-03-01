@@ -51,7 +51,7 @@ export function ResourcesSection() {
           </h2>
           <p className="text-muted-foreground max-w-2xl">
             {"Revisa nuestros 500+ articulos de base de conocimiento y publicaciones de blog. Tambien puedes "}
-            <a href="#" className="text-primary hover:underline">
+            <a href="/contacto" className="text-primary hover:underline">
               contactar a nuestro equipo de soporte
             </a>
             {" para asistencia adicional."}

@@ -82,7 +82,7 @@ const otherHosting = [
 
 /* ── Resources mega-dropdown data ── */
 const resourcesAssistance = [
-  { label: "Contactanos", href: "#", icon: MessageCircle },
+  { label: "Contactanos", href: "/contacto", icon: MessageCircle },
   { label: "Estado del Servicio", href: "#", icon: Activity },
 ]
 
@@ -104,7 +104,7 @@ const morePrograms = [
 ]
 
 const moreSupport = [
-  { label: "Contactanos", href: "#", icon: HeadphonesIcon },
+  { label: "Contactanos", href: "/contacto", icon: HeadphonesIcon },
 ]
 
 /* ── Standard dropdown items ── */
