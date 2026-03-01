@@ -1365,29 +1365,19 @@ function BudgetPlanCard({ plan, cycle, location, onSelect }: { plan: BudgetPlanD
   const isDiscounted = cycle !== "monthly"
   const cycleLabel = billingCycles.find((c) => c.id === cycle)?.label.toLowerCase() || "mensualmente"
   const locationName = locationRegions.flatMap((r) => r.locations).find((l) => l.id === location)?.name || "OVH Beauharnois, Canada"
+  const [isHovered, setIsHovered] = useState(false)
 
-  const budgetPlanetEmojis: Record<string, string> = {
-    asteroid: "\u{2604}\u{FE0F}",
-    pluto: "\u{1FA90}",
-    triton: "\u{1F30A}",
-    moon: "\u{1F319}",
-    mercury: "\u{1FA90}",
-    mars: "\u{1FA90}",
-    venus: "\u{1F30D}",
-    earth: "\u{1F30D}",
-    neptune: "\u{1F30A}",
-    saturn: "\u{1FA90}",
-    jupiter: "\u{1FA90}",
-    sun: "\u{2600}\u{FE0F}",
-    milkyway: "\u{1F30C}",
-  }
+  const planetIcon = `/images/planets/${plan.planet}.svg`
 
   return (
     <div
-      className="relative rounded-xl p-5 flex flex-col transition-all duration-200 hover:scale-[1.02]"
+      className="relative rounded-xl p-5 flex flex-col transition-all duration-300"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
-        background: plan.bestSeller ? "rgba(245,166,35,0.04)" : "rgba(255,255,255,0.02)",
-        border: plan.bestSeller ? "2px solid rgba(245,166,35,0.4)" : "1px solid rgba(255,255,255,0.08)",
+        background: isHovered ? "rgba(245,166,35,0.06)" : plan.bestSeller ? "rgba(245,166,35,0.04)" : "rgba(255,255,255,0.02)",
+        border: isHovered ? "2px solid rgba(245,166,35,0.7)" : plan.bestSeller ? "2px solid rgba(245,166,35,0.4)" : "2px solid rgba(255,255,255,0.08)",
+        transform: isHovered ? "scale(1.02)" : "scale(1)",
       }}
     >
       {/* Best seller badge */}
@@ -1402,7 +1392,7 @@ function BudgetPlanCard({ plan, cycle, location, onSelect }: { plan: BudgetPlanD
       {/* Header with planet icon */}
       <div className="flex items-center justify-between mb-4">
         <p className="text-base font-bold text-foreground">{plan.name}</p>
-        <span className="text-2xl">{budgetPlanetEmojis[plan.planet] || "\u{1FA90}"}</span>
+        <Image src={planetIcon} alt={plan.name} width={40} height={40} className="object-contain" />
       </div>
 
       {/* Price */}
@@ -1445,13 +1435,14 @@ function BudgetPlanCard({ plan, cycle, location, onSelect }: { plan: BudgetPlanD
       {/* CTA */}
       <button
         onClick={onSelect}
-        className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105"
+        className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-300"
         style={{
-          background: plan.bestSeller
+          background: isHovered || plan.bestSeller
             ? "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)"
             : "rgba(255,255,255,0.06)",
-          color: plan.bestSeller ? "#0d0d0d" : "#f5f5f5",
-          border: plan.bestSeller ? "none" : "1px solid rgba(255,255,255,0.1)",
+          color: isHovered || plan.bestSeller ? "#0d0d0d" : "#f5f5f5",
+          border: isHovered || plan.bestSeller ? "none" : "1px solid rgba(255,255,255,0.1)",
+          transform: isHovered ? "scale(1.03)" : "scale(1)",
         }}
       >
         {`Ordenar en ${locationName.replace("OVH ", "")}`}
@@ -1461,21 +1452,6 @@ function BudgetPlanCard({ plan, cycle, location, onSelect }: { plan: BudgetPlanD
 }
 
 /* ── Modded Plan Card (SparkedHost-style flat card with planet icon) ── */
-const planetEmojis: Record<string, string> = {
-  moon: "\u{1F319}",
-  mercury: "\u{1FA90}",
-  mars: "\u{1FA90}",
-  venus: "\u{1F30D}",
-  earth: "\u{1F30D}",
-  neptune: "\u{1F30A}",
-  saturn: "\u{1FA90}",
-  jupiter: "\u{1FA90}",
-  sun: "\u{2600}\u{FE0F}",
-  milkyway: "\u{1F30C}",
-  supernova: "\u{1F31F}",
-  blackhole: "\u{26AB}",
-}
-
 function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cycle: BillingCycle; location: string; onSelect: () => void }) {
   const totalPrice = calcPrice(plan.basePrice, cycle)
   const multiplier = cycle === "monthly" ? 1 : cycle === "quarterly" ? 3 : cycle === "semiannually" ? 6 : 12
@@ -1483,13 +1459,20 @@ function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cy
   const isDiscounted = cycle !== "monthly"
   const cycleLabel = billingCycles.find((c) => c.id === cycle)?.label.toLowerCase() || "mensualmente"
   const locationName = locationRegions.flatMap((r) => r.locations).find((l) => l.id === location)?.name || "OVH Beauharnois, Canada"
+  const [isHovered, setIsHovered] = useState(false)
+
+  const jpgPlanets = ["supernova", "blackhole"]
+  const planetIcon = `/images/planets/${plan.planet}.${jpgPlanets.includes(plan.planet) ? "jpg" : "svg"}`
 
   return (
     <div
-      className="relative rounded-xl p-5 flex flex-col transition-all duration-200 hover:scale-[1.02]"
+      className="relative rounded-xl p-5 flex flex-col transition-all duration-300"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
-        background: plan.bestSeller ? "rgba(245,166,35,0.04)" : "rgba(255,255,255,0.02)",
-        border: plan.bestSeller ? "2px solid rgba(245,166,35,0.4)" : "1px solid rgba(255,255,255,0.08)",
+        background: isHovered ? "rgba(245,166,35,0.06)" : plan.bestSeller ? "rgba(245,166,35,0.04)" : "rgba(255,255,255,0.02)",
+        border: isHovered ? "2px solid rgba(245,166,35,0.7)" : plan.bestSeller ? "2px solid rgba(245,166,35,0.4)" : "2px solid rgba(255,255,255,0.08)",
+        transform: isHovered ? "scale(1.02)" : "scale(1)",
       }}
     >
       {/* Best seller badge */}
@@ -1504,7 +1487,7 @@ function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cy
       {/* Header with planet icon */}
       <div className="flex items-center justify-between mb-4">
         <p className="text-base font-bold text-foreground">{plan.name}</p>
-        <span className="text-2xl">{planetEmojis[plan.planet] || "\u{1FA90}"}</span>
+        <Image src={planetIcon} alt={plan.name} width={40} height={40} className={`object-contain ${jpgPlanets.includes(plan.planet) ? "rounded-full" : ""}`} />
       </div>
 
       {/* Price */}
@@ -1545,13 +1528,14 @@ function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cy
       {/* CTA */}
       <button
         onClick={onSelect}
-        className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105"
+        className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-300"
         style={{
-          background: plan.bestSeller
+          background: isHovered || plan.bestSeller
             ? "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)"
             : "rgba(255,255,255,0.06)",
-          color: plan.bestSeller ? "#0d0d0d" : "#f5f5f5",
-          border: plan.bestSeller ? "none" : "1px solid rgba(255,255,255,0.1)",
+          color: isHovered || plan.bestSeller ? "#0d0d0d" : "#f5f5f5",
+          border: isHovered || plan.bestSeller ? "none" : "1px solid rgba(255,255,255,0.1)",
+          transform: isHovered ? "scale(1.03)" : "scale(1)",
         }}
       >
         {`Ordenar en ${locationName.replace("OVH ", "")}`}
