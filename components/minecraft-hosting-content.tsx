@@ -787,8 +787,11 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
 
       {/* ─── DDOS PROTECTION ─── */}
       <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(13,13,13,1) 0%, rgba(20,20,30,1) 50%, rgba(13,13,13,1) 100%)" }} />
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-10" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(245,166,35,0.15) 30px, rgba(245,166,35,0.15) 31px)" }} />
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/ddos-protection-bg.png')" }}
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.75) 50%, rgba(13,13,13,0.4) 100%)" }} />
 
         <div className="relative mx-auto max-w-7xl px-4">
           <div ref={ddosRef} className="transition-all duration-700 ease-out" style={{ opacity: ddosVisible ? 1 : 0, transform: ddosVisible ? "translateY(0)" : "translateY(30px)" }}>
