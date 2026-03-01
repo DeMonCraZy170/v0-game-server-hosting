@@ -1213,7 +1213,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               </div>
             </div>
 
-            <a href="/proximamente" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105" style={{ background: "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)", color: "#0d0d0d" }}>
+            <a href="/ddos-protection" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105" style={{ background: "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)", color: "#0d0d0d" }}>
               Saber Mas
             </a>
           </div>
