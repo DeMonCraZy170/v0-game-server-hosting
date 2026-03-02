@@ -551,37 +551,41 @@ export function GameServerHostingContent() {
 
       {/* ─── Popular Games - SparkedHost exact style ─── */}
       <section className="py-10 bg-background">
-        <div className="mx-auto max-w-5xl px-4">
-          <div
-            ref={popularRef}
-            className="relative rounded-xl p-5 md:p-6 transition-all duration-700 ease-out overflow-hidden"
-            style={{
-              opacity: popularVisible ? 1 : 0,
-              transform: popularVisible ? "translateY(0)" : "translateY(30px)",
-              border: "2px solid #f5a623",
-            }}
-          >
-            {/* Inner warm/brownish gradient background like SparkedHost */}
-            <div 
-              className="absolute inset-0" 
-              style={{ 
-                background: "linear-gradient(180deg, rgba(35,30,20,0.97) 0%, rgba(25,22,18,0.99) 50%, rgba(18,16,14,1) 100%)",
-                zIndex: 0,
-              }} 
-            />
-            
-            {/* Badge on top - centered pill */}
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20">
+        <div className="mx-auto max-w-5xl px-4 pt-4">
+          {/* Outer wrapper to allow badge overflow */}
+          <div className="relative">
+            {/* Badge on top - positioned outside the container */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-30">
               <span
-                className="inline-block text-[11px] font-bold uppercase tracking-[0.15em] px-5 py-1.5 rounded-full"
+                className="inline-block text-[11px] font-bold uppercase tracking-[0.15em] px-6 py-2 rounded-full whitespace-nowrap"
                 style={{
-                  background: "#f5a623",
-                  color: "#0d0d0d",
+                  background: "#0d0d0d",
+                  color: "#f5a623",
+                  border: "2px solid #f5a623",
                 }}
               >
                 POPULAR GAMES
               </span>
             </div>
+            
+            {/* Main container */}
+            <div
+              ref={popularRef}
+              className="relative rounded-xl p-5 md:p-6 transition-all duration-700 ease-out"
+              style={{
+                opacity: popularVisible ? 1 : 0,
+                transform: popularVisible ? "translateY(0)" : "translateY(30px)",
+                border: "2px solid #f5a623",
+              }}
+            >
+              {/* Inner warm/brownish gradient background like SparkedHost */}
+              <div 
+                className="absolute inset-0 rounded-xl overflow-hidden" 
+                style={{ 
+                  background: "linear-gradient(180deg, rgba(35,30,20,0.97) 0%, rgba(25,22,18,0.99) 50%, rgba(18,16,14,1) 100%)",
+                  zIndex: 0,
+                }} 
+              />
 
             {/* Popular games grid - 4 large cards with green hover border */}
             <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-3">
@@ -641,6 +645,7 @@ export function GameServerHostingContent() {
                   </div>
                 </a>
               ))}
+            </div>
             </div>
           </div>
         </div>
