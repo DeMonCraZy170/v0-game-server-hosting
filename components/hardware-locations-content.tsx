@@ -15,7 +15,6 @@ import {
   Key,
   Droplets,
 } from "lucide-react"
-import { Navbar } from "./navbar"
 import { Footer } from "./footer"
 
 // Hardware node data
@@ -114,10 +113,7 @@ export function HardwareLocationsContent() {
   })
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      {/* Navbar - outside hero to prevent duplication */}
-      <Navbar />
-      
+    <main className="min-h-screen bg-background text-foreground pt-28">
       {/* Hero background section */}
       <div className="relative">
         {/* Background image container */}
