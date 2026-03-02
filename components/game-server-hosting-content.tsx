@@ -315,25 +315,36 @@ function MobileIcon() {
   )
 }
 
-/* ─── Game Card component - SparkedHost exact style with hover underline ─── */
+/* ─── Game Card component - SparkedHost exact style with hover border ─── */
 
 function GameCard({ game, index, isVisible }: { game: GameData; index: number; isVisible: boolean }) {
   const href = getGameHref(game)
   return (
     <a
       href={href}
-      className="group relative rounded-xl overflow-hidden transition-transform duration-200 ease-out hover:-translate-y-1.5"
+      className="group relative rounded-xl transition-all duration-200 ease-out hover:-translate-y-1.5"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
         transitionDelay: `${staggerDelay(index, 50)}ms`,
         cursor: game.comingSoon ? "default" : "pointer",
         boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        // Red left border for NEW! cards
-        borderLeft: game.isNew ? "3px solid #ef4444" : "1px solid rgba(255,255,255,0.1)",
       }}
     >
+      {/* Border wrapper - yellowish border on hover */}
+      <div 
+        className="absolute inset-0 rounded-xl transition-all duration-200 ease-out"
+        style={{ 
+          border: game.isNew ? "2px solid #ef4444" : "1px solid rgba(255,255,255,0.1)",
+        }}
+      />
+      <div 
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-out"
+        style={{ 
+          border: "2px solid #f5a623",
+        }}
+      />
+      
       {/* NEW! or UPDATE! badge */}
       {(game.isNew || game.isUpdate) && (
         <div className="absolute top-2 left-2 z-10">
@@ -351,7 +362,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
       )}
       
       {/* Full card image with overlay - NO scale on hover */}
-      <div className="relative aspect-[4/5]">
+      <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
         <Image
           src={game.image}
           alt={game.name}
@@ -388,12 +399,6 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
           </div>
         </div>
       </div>
-      
-      {/* Yellowish underline hover effect */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-[3px] transition-all duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100"
-        style={{ background: "linear-gradient(90deg, #f5a623 0%, #d4a853 100%)" }}
-      />
     </a>
   )
 }
@@ -593,23 +598,32 @@ export function GameServerHostingContent() {
               </span>
             </div>
 
-            {/* Popular games grid - 4 large cards with green hover underline */}
+            {/* Popular games grid - 4 large cards with green hover border */}
             <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-3">
               {(filteredPopularGames.length > 0 ? filteredPopularGames : popularGames).slice(0, 4).map((game, index) => (
                 <a
                   key={game.name}
                   href={getGameHref(game)}
-                  className="group relative rounded-lg overflow-hidden transition-transform duration-200 ease-out hover:-translate-y-1.5"
+                  className="group relative rounded-lg transition-all duration-200 ease-out hover:-translate-y-1.5"
                   style={{
                     opacity: popularVisible ? 1 : 0,
                     transform: popularVisible ? "translateY(0)" : "translateY(20px)",
                     transitionDelay: `${staggerDelay(index, 100)}ms`,
-                    border: "1px solid rgba(255,255,255,0.12)",
                     boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                   }}
                 >
+                  {/* Border wrapper - green border on hover */}
+                  <div 
+                    className="absolute inset-0 rounded-lg transition-all duration-200 ease-out"
+                    style={{ border: "1px solid rgba(255,255,255,0.12)" }}
+                  />
+                  <div 
+                    className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-out"
+                    style={{ border: "2px solid #22c55e" }}
+                  />
+                  
                   {/* Full image with text overlay - NO scale on hover */}
-                  <div className="relative aspect-[4/5]">
+                  <div className="relative aspect-[4/5] rounded-lg overflow-hidden">
                     <Image
                       src={game.image}
                       alt={game.name}
@@ -640,12 +654,6 @@ export function GameServerHostingContent() {
                       </div>
                     </div>
                   </div>
-                  
-                  {/* Bright green underline hover effect */}
-                  <div 
-                    className="absolute bottom-0 left-0 right-0 h-[3px] transition-all duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100"
-                    style={{ background: "linear-gradient(90deg, #22c55e 0%, #4ade80 100%)" }}
-                  />
                 </a>
               ))}
             </div>
