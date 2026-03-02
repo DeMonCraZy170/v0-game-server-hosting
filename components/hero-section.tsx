@@ -48,6 +48,16 @@ const gameSlides: GameSlide[] = [
     href: "/game-server-hosting/dayz",
   },
   {
+    id: "minecraft",
+    title: "Encuentra Tu\nHosting Minecraft",
+    label: "MINECRAFT",
+    badges: ["Bedrock & Java", "Configuracion Instantanea", "Mejor Precio", "Soporte 24/7"],
+    cta: "INICIAR MI SERVIDOR MINECRAFT",
+    bgImage: "/images/hero-minecraft.jpg",
+    cardImage: "/images/card-minecraft.jpg",
+    href: "/minecraft",
+  },
+  {
     id: "rust",
     title: "Hosting de Servidores\nRust",
     label: "RUST",
@@ -76,16 +86,6 @@ const gameSlides: GameSlide[] = [
     bgImage: "/images/hero-astroneer.jpg",
     cardImage: "/images/card-astroneer.jpg",
     href: "/proximamente",
-  },
-  {
-    id: "minecraft",
-    title: "Encuentra Tu\nHosting Minecraft",
-    label: "MINECRAFT",
-    badges: ["Bedrock & Java", "Configuracion Instantanea", "Mejor Precio", "Soporte 24/7"],
-    cta: "INICIAR MI SERVIDOR MINECRAFT",
-    bgImage: "/images/hero-minecraft.jpg",
-    cardImage: "/images/card-minecraft.jpg",
-    href: "/minecraft",
   },
   {
     id: "valheim",
