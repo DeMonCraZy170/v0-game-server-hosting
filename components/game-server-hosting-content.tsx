@@ -604,14 +604,14 @@ export function GameServerHostingContent() {
                     boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                   }}
                 >
-                  {/* Border wrapper - green border on hover */}
+                  {/* Border wrapper - yellow/gold border on hover */}
                   <div 
                     className="absolute inset-0 rounded-lg transition-all duration-200 ease-out"
                     style={{ border: "1px solid rgba(255,255,255,0.12)" }}
                   />
                   <div 
                     className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-out"
-                    style={{ border: "2px solid #22c55e" }}
+                    style={{ border: "2px solid #f5a623" }}
                   />
                   
                   {/* Full image with text overlay - NO scale on hover */}
