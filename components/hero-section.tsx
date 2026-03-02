@@ -14,6 +14,7 @@ interface GameSlide {
   cardImage: string
   href?: string
   comingSoon?: boolean
+  viewAllText?: string
 }
 
 const gameSlides: GameSlide[] = [
@@ -26,6 +27,7 @@ const gameSlides: GameSlide[] = [
     bgImage: "/images/hero-dedicated.jpg",
     cardImage: "/images/card-dedicated.jpg",
     comingSoon: true,
+    viewAllText: "VER TODAS LAS OPCIONES",
   },
   {
     id: "discord",
@@ -36,6 +38,7 @@ const gameSlides: GameSlide[] = [
     bgImage: "/images/hero-discord.jpg",
     cardImage: "/images/card-discord.jpg",
     comingSoon: true,
+    viewAllText: "VER TODAS LAS OPCIONES",
   },
   {
     id: "dayz",
@@ -391,7 +394,7 @@ export function HeroSection() {
                   transition: `opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1)`,
                 }}
               >
-                VER TODOS LOS JUEGOS
+                {slide.viewAllText || "VER TODOS LOS JUEGOS"}
                 <ArrowRight className="h-4 w-4" />
               </a>
             </div>
