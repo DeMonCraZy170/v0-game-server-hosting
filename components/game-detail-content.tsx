@@ -550,7 +550,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
 
                 <a
                   href={game.comingSoon ? undefined : "#"}
-                  className="flex items-center justify-center mx-4 mb-4 px-6 py-3.5 text-sm font-bold tracking-wide rounded-lg transition-all duration-300 group-hover:brightness-110 group-hover:translate-y-[-1px]"
+                  className="flex items-center justify-center mx-4 mb-4 px-4 py-3.5 text-sm font-bold tracking-wide rounded-lg transition-all duration-300 group-hover:brightness-110 group-hover:translate-y-[-1px] whitespace-nowrap"
                   style={{
                     background: plan.bestSeller
                       ? "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)"
