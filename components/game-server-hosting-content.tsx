@@ -613,7 +613,16 @@ export function GameServerHostingContent() {
 
             {/* Popular games grid - 4 large cards with green hover border */}
             <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-3">
-              {(filteredPopularGames.length > 0 ? filteredPopularGames : popularGames).slice(0, 4).map((game, index) => (
+              {(filteredPopularGames.length > 0 ? filteredPopularGames : popularGames).slice(0, 4).map((game, index) => {
+                // Determine underline color based on tags
+                const getPopularUnderlineColor = () => {
+                  if (game.isNew) return "#ef4444" // Red for NEW
+                  if (game.isUpdate) return "#3b82f6" // Blue for UPDATE
+                  return "#eab308" // Yellow for no tags
+                }
+                const popularUnderlineColor = getPopularUnderlineColor()
+                
+                return (
                 <a
                   key={game.name}
                   href={getGameHref(game)}
@@ -641,6 +650,15 @@ export function GameServerHostingContent() {
                     style={{ 
                       border: "2px solid #22c55e",
                       boxShadow: "0 0 15px rgba(34,197,94,0.3), inset 0 0 15px rgba(34,197,94,0.05)",
+                    }}
+                  />
+                  
+                  {/* Bottom underline indicator - Yellow for no tags, Red for NEW, Blue for UPDATE */}
+                  <div 
+                    className="absolute bottom-0 left-2 right-2 h-1 rounded-full z-20 transition-all duration-200 group-hover:h-1.5"
+                    style={{ 
+                      backgroundColor: popularUnderlineColor,
+                      boxShadow: `0 0 10px ${popularUnderlineColor}80, 0 0 20px ${popularUnderlineColor}40`,
                     }}
                   />
                   
@@ -693,7 +711,7 @@ export function GameServerHostingContent() {
                     </div>
                   </div>
                 </a>
-              ))}
+              )})}
             </div>
             </div>
           </div>
