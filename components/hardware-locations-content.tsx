@@ -157,9 +157,9 @@ export function HardwareLocationsContent() {
           </div>
 
           {/* Filters */}
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-center gap-6 pb-8">
             {/* Location Filter */}
-            <div className="relative min-w-[220px]">
+            <div className="relative min-w-[240px] z-[60]">
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                 <MapPin className="w-4 h-4" />
                 <span className="font-medium">Ubicacion</span>
@@ -179,15 +179,20 @@ export function HardwareLocationsContent() {
                 <ChevronDown className={`w-4 h-4 transition-transform ${locationDropdownOpen ? "rotate-180" : ""}`} />
               </button>
               
-              {locationDropdownOpen && (
-                <div 
-                  className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-[100] max-h-[280px] overflow-y-auto"
-                  style={{ 
-                    background: "#1a1a1f", 
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
-                  }}
-                >
+              {/* Location Dropdown */}
+              <div 
+                className={`absolute top-full left-0 right-0 mt-2 rounded-xl z-[100] transition-all duration-200 ease-out ${
+                  locationDropdownOpen 
+                    ? "opacity-100 translate-y-0 pointer-events-auto" 
+                    : "opacity-0 -translate-y-2 pointer-events-none"
+                }`}
+                style={{ 
+                  background: "#1a1a1f", 
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  boxShadow: "0 12px 40px rgba(0,0,0,0.7)",
+                }}
+              >
+                <div className="max-h-[280px] overflow-y-auto">
                   <button
                     onClick={() => {
                       setSelectedLocation("all")
@@ -220,11 +225,11 @@ export function HardwareLocationsContent() {
                     </button>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Hardware Type Filter */}
-            <div className="relative min-w-[220px]">
+            <div className="relative min-w-[240px] z-[50]">
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                 <Server className="w-4 h-4" />
                 <span className="font-medium">Tipo de Hardware</span>
@@ -244,15 +249,20 @@ export function HardwareLocationsContent() {
                 <ChevronDown className={`w-4 h-4 transition-transform ${typeDropdownOpen ? "rotate-180" : ""}`} />
               </button>
               
-              {typeDropdownOpen && (
-                <div 
-                  className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-[100] max-h-[280px] overflow-y-auto"
-                  style={{ 
-                    background: "#1a1a1f", 
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
-                  }}
-                >
+              {/* Hardware Type Dropdown */}
+              <div 
+                className={`absolute top-full left-0 right-0 mt-2 rounded-xl z-[100] transition-all duration-200 ease-out ${
+                  typeDropdownOpen 
+                    ? "opacity-100 translate-y-0 pointer-events-auto" 
+                    : "opacity-0 -translate-y-2 pointer-events-none"
+                }`}
+                style={{ 
+                  background: "#1a1a1f", 
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  boxShadow: "0 12px 40px rgba(0,0,0,0.7)",
+                }}
+              >
+                <div className="max-h-[280px] overflow-y-auto">
                   <button
                     onClick={() => {
                       setSelectedType("all")
@@ -277,7 +287,7 @@ export function HardwareLocationsContent() {
                     </button>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
           </div>
           </div>
