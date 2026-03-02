@@ -461,20 +461,33 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
             transform: plansVisible ? "translateY(0)" : "translateY(30px)",
           }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {game.plans.map((plan, index) => (
               <div
                 key={plan.name}
-                className="relative flex flex-col rounded-2xl overflow-hidden transition-all duration-500"
+                className="group relative flex flex-col rounded-2xl overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 cursor-pointer"
                 style={{
                   background: "#1a1a1f",
-                  border: plan.bestSeller ? "1px solid rgba(245,166,35,0.4)" : "1px solid rgba(255,255,255,0.07)",
-                  boxShadow: plan.bestSeller ? "0 0 30px rgba(245,166,35,0.08)" : "none",
                   transitionDelay: `${staggerDelay(index, 120)}ms`,
                   opacity: plansVisible ? 1 : 0,
                   transform: plansVisible ? "translateY(0)" : "translateY(30px)",
                 }}
               >
+                {/* Hover border effect */}
+                <div 
+                  className="absolute inset-0 rounded-2xl pointer-events-none transition-all duration-300"
+                  style={{
+                    border: plan.bestSeller ? "2px solid rgba(245,166,35,0.5)" : "1px solid rgba(255,255,255,0.07)",
+                    boxShadow: plan.bestSeller ? "0 0 30px rgba(245,166,35,0.1)" : "none",
+                  }}
+                />
+                <div 
+                  className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  style={{
+                    border: "2px solid rgba(245,166,35,0.6)",
+                    boxShadow: "0 0 25px rgba(245,166,35,0.15), 0 8px 32px rgba(0,0,0,0.3)",
+                  }}
+                />
                 {/* Best Seller ribbon at top */}
                 {plan.bestSeller && (
                   <div 
@@ -525,12 +538,12 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
 
                 <a
                   href={game.comingSoon ? undefined : "#"}
-                  className="flex items-center justify-center px-6 py-4 text-sm font-bold tracking-wide transition-all duration-200"
+                  className="flex items-center justify-center px-6 py-4 text-sm font-bold tracking-wide transition-all duration-300 group-hover:brightness-110"
                   style={{
                     background: plan.bestSeller
                       ? "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)"
-                      : "rgba(255,255,255,0.06)",
-                    color: plan.bestSeller ? "#0d0d0d" : "#f5f5f5",
+                      : "rgba(245,166,35,0.12)",
+                    color: plan.bestSeller ? "#0d0d0d" : "#f5a623",
                     borderTop: "1px solid rgba(255,255,255,0.06)",
                     pointerEvents: game.comingSoon ? "none" : "auto",
                     opacity: game.comingSoon ? 0.5 : 1,
