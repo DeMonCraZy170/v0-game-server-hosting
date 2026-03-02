@@ -152,7 +152,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
   // Server configuration state
   const [selectedTier, setSelectedTier] = useState<"budget" | "enterprise">("enterprise")
   const [selectedBilling, setSelectedBilling] = useState<"monthly" | "quarterly" | "semiannual" | "annual">("monthly")
-  const [selectedLocation, setSelectedLocation] = useState("Miami, Florida")
+  const [selectedLocation, setSelectedLocation] = useState("OVH Beauharnois, Canada")
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false)
   
   // Billing discounts
@@ -364,27 +364,27 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                   <Clock className="w-4 h-4" />
                   <span className="font-medium">Ciclo de Facturacion</span>
                 </div>
-                <div className="flex flex-wrap rounded-lg overflow-hidden" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <div className="flex flex-wrap rounded-lg" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
                   {billingOptions.map((option, idx) => (
                     <button
                       key={option.id}
                       onClick={() => setSelectedBilling(option.id)}
-                      className="relative px-4 py-2.5 text-sm font-medium transition-all flex-1 min-w-[90px]"
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all flex-1 min-w-[85px]"
                       style={{
                         background: selectedBilling === option.id ? "rgba(245,166,35,0.15)" : "transparent",
                         color: selectedBilling === option.id ? "#f5a623" : "rgba(255,255,255,0.6)",
                         borderRight: idx < billingOptions.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none",
                       }}
                     >
+                      <span>{option.label}</span>
                       {option.discount > 0 && (
                         <span 
-                          className="absolute -top-2 right-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                          className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
                           style={{ background: "#22c55e", color: "#fff" }}
                         >
                           -{option.discount}%
                         </span>
                       )}
-                      {option.label}
                     </button>
                   ))}
                 </div>
@@ -424,30 +424,43 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                           <div className="px-3 py-2 text-[10px] font-bold tracking-wider text-muted-foreground uppercase" style={{ background: "rgba(255,255,255,0.03)" }}>
                             {region.region}
                           </div>
-                          {region.locations.map(loc => (
-                            <button
-                              key={loc.name}
-                              onClick={() => {
-                                setSelectedLocation(loc.name)
-                                setLocationDropdownOpen(false)
-                              }}
-                              className="w-full flex items-center justify-between px-4 py-2.5 text-sm transition-all hover:bg-white/5"
-                              style={{
-                                color: selectedLocation === loc.name ? "#f5a623" : "rgba(255,255,255,0.7)",
-                                background: selectedLocation === loc.name ? "rgba(245,166,35,0.1)" : "transparent",
-                              }}
-                            >
-                              <span className="flex items-center gap-2">
-                                <span>{flagEmoji[loc.flag]}</span>
-                                <span>{loc.name}</span>
-                              </span>
-                              {loc.ping && (
-                                <span className="text-xs" style={{ color: signalColor[loc.signal] }}>
-                                  {loc.ping}ms
+                          {region.locations.map(loc => {
+                            const isAvailable = loc.name.includes("Beauharnois")
+                            return (
+                              <button
+                                key={loc.name}
+                                onClick={() => {
+                                  if (isAvailable) {
+                                    setSelectedLocation(loc.name)
+                                    setLocationDropdownOpen(false)
+                                  }
+                                }}
+                                className="w-full flex items-center justify-between px-4 py-2.5 text-sm transition-all"
+                                style={{
+                                  color: !isAvailable ? "rgba(255,255,255,0.35)" : selectedLocation === loc.name ? "#f5a623" : "rgba(255,255,255,0.7)",
+                                  background: selectedLocation === loc.name ? "rgba(245,166,35,0.1)" : "transparent",
+                                  cursor: isAvailable ? "pointer" : "not-allowed",
+                                }}
+                                disabled={!isAvailable}
+                              >
+                                <span className="flex items-center gap-2">
+                                  <span>{flagEmoji[loc.flag]}</span>
+                                  <span>{loc.name}</span>
                                 </span>
-                              )}
-                            </button>
-                          ))}
+                                {isAvailable ? (
+                                  loc.ping && (
+                                    <span className="text-xs" style={{ color: signalColor[loc.signal] }}>
+                                      {loc.ping}ms
+                                    </span>
+                                  )
+                                ) : (
+                                  <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)" }}>
+                                    Proximamente
+                                  </span>
+                                )}
+                              </button>
+                            )
+                          })}
                         </div>
                       ))}
                     </div>
@@ -495,18 +508,19 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                   transform: plansVisible ? "translateY(0)" : "translateY(30px)",
                 }}
               >
+                {/* Best Seller ribbon at top */}
                 {plan.bestSeller && (
-                  <span
-                    className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-bold tracking-wider px-3 py-1 rounded-full uppercase"
+                  <div 
+                    className="w-full text-center py-1.5 text-[10px] font-bold tracking-wider uppercase"
                     style={{ background: "#ef4444", color: "#fff" }}
                   >
                     BEST SELLER!
-                  </span>
+                  </div>
                 )}
                 
                 {/* Tier badge */}
                 <div 
-                  className="absolute top-3 right-3 text-[9px] font-bold tracking-wider px-2 py-1 rounded uppercase"
+                  className={`absolute ${plan.bestSeller ? "top-10" : "top-3"} right-3 text-[9px] font-bold tracking-wider px-2 py-1 rounded uppercase`}
                   style={{ 
                     background: selectedTier === "enterprise" ? "rgba(245,166,35,0.15)" : "rgba(59,130,246,0.15)",
                     color: selectedTier === "enterprise" ? "#f5a623" : "#3b82f6",
