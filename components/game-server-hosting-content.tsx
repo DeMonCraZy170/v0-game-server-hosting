@@ -532,8 +532,7 @@ export function GameServerHostingContent() {
               alt="Game Server Hosting"
               width={140}
               height={140}
-              className="object-contain"
-              style={{ width: "auto", height: "auto", maxWidth: 140, maxHeight: 140 }}
+              className="object-contain max-w-[140px] max-h-[140px]"
               priority
             />
           </div>

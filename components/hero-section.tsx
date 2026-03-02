@@ -38,6 +38,16 @@ const gameSlides: GameSlide[] = [
     comingSoon: true,
   },
   {
+    id: "dayz",
+    title: "Hosting de Servidores\nDayZ",
+    label: "DAYZ",
+    badges: ["Alto Rendimiento", "Proteccion DDoS", "Soporte 24/7", "Configuracion Instantanea"],
+    cta: "INICIAR MI SERVIDOR DAYZ",
+    bgImage: "/images/hero-dayz.jpg",
+    cardImage: "/images/card-dayz.jpg",
+    href: "/game-server-hosting/dayz",
+  },
+  {
     id: "astroneer",
     title: "Hosting de Servidores\nAstroneer",
     label: "ASTRONEER",
