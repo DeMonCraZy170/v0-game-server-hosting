@@ -307,26 +307,27 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
   return (
     <a
       href={href}
-      className="group relative rounded-xl hover:-translate-y-1.5"
+      className="group relative rounded-xl transition-transform duration-150 ease-out hover:-translate-y-1"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
         transitionDelay: `${staggerDelay(index, 50)}ms`,
         cursor: game.comingSoon ? "default" : "pointer",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
       }}
     >
-      {/* Border wrapper - yellowish border on hover */}
+      {/* Default border */}
       <div 
-        className="absolute inset-0 rounded-xl transition-all duration-200 ease-out"
+        className="absolute inset-0 rounded-xl transition-opacity duration-150 ease-out group-hover:opacity-0"
         style={{ 
-          border: game.isNew ? "2px solid #ef4444" : "1px solid rgba(255,255,255,0.1)",
+          border: game.isNew ? "2px solid #ef4444" : "1px solid rgba(255,255,255,0.15)",
         }}
       />
+      {/* Hover border - yellowish glow around entire card */}
       <div 
-        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-out"
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out"
         style={{ 
           border: "2px solid #f5a623",
+          boxShadow: "0 0 15px rgba(245,166,35,0.3), inset 0 0 15px rgba(245,166,35,0.05)",
         }}
       />
       
@@ -593,22 +594,25 @@ export function GameServerHostingContent() {
                 <a
                   key={game.name}
                   href={getGameHref(game)}
-                  className="group relative rounded-lg hover:-translate-y-1.5"
+                  className="group relative rounded-lg transition-transform duration-150 ease-out hover:-translate-y-1"
                   style={{
                     opacity: popularVisible ? 1 : 0,
                     transform: popularVisible ? "translateY(0)" : "translateY(20px)",
                     transitionDelay: `${staggerDelay(index, 100)}ms`,
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                   }}
                 >
-                  {/* Border wrapper - green border on hover */}
+                  {/* Default border */}
                   <div 
-                    className="absolute inset-0 rounded-lg transition-all duration-200 ease-out"
-                    style={{ border: "1px solid rgba(255,255,255,0.12)" }}
+                    className="absolute inset-0 rounded-lg transition-opacity duration-150 ease-out group-hover:opacity-0"
+                    style={{ border: "1px solid rgba(255,255,255,0.15)" }}
                   />
+                  {/* Hover border - green glow around entire card */}
                   <div 
-                    className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-out"
-                    style={{ border: "2px solid #22c55e" }}
+                    className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out"
+                    style={{ 
+                      border: "2px solid #22c55e",
+                      boxShadow: "0 0 15px rgba(34,197,94,0.3), inset 0 0 15px rgba(34,197,94,0.05)",
+                    }}
                   />
                   
                   {/* Full image with text overlay - NO scale on hover */}
