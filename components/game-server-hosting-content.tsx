@@ -43,7 +43,11 @@ const allGames: GameData[] = [
   { name: "Unturned", image: "/images/games/unturned.jpg", price: "$2.50/mo", popular: true, platforms: ["steam"] },
   { name: "Valheim", image: "/images/games/valheim.jpg", price: "$4.80/mo", popular: true, platforms: ["steam"] },
   { name: "Palworld", image: "/images/games/palworld.jpg", price: "$17.60/mo", popular: true, platforms: ["steam"] },
-  // Other games
+  // Other games with NEW! badges (red left border)
+  { name: "Voyagers of Nera", image: "/images/games/voyagersofnera.jpg", price: "$9.00/mo", isNew: true, platforms: ["steam"] },
+  { name: "BeamMP", image: "/images/games/beammp.jpg", price: "$2.39/mo", isNew: true, platforms: ["steam"] },
+  { name: "Renown", image: "/images/games/renown.jpg", price: "$9.00/mo", isNew: true, platforms: ["steam"] },
+  // Regular games
   { name: "Minecraft Bedrock", image: "/images/games/minecraft-bedrock.jpg", price: "$1.05/mo", platforms: ["pc", "console", "mobile"] },
   { name: "Ark: Survival Evolved", image: "/images/games/ark.jpg", price: "$8.00/mo", platforms: ["steam", "pc"] },
   { name: "Rust", image: "/images/games/rust.jpg", price: "$16.00/mo", platforms: ["steam"] },
@@ -68,6 +72,10 @@ const allGames: GameData[] = [
   { name: "Space Engineers", image: "/images/games/spaceengineers.jpg", price: "$12.00/mo", platforms: ["steam"] },
   { name: "V Rising", image: "/images/games/vrising.jpg", price: "$13.20/mo", platforms: ["steam"] },
   { name: "DayZ", image: "/images/games/dayz.jpg", price: "$12.00/mo", platforms: ["steam"] },
+  // Coming soon games
+  { name: "Killing Floor 3", image: "/images/games/killingfloor3.jpg", price: "$7.00/mo", comingSoon: true, platforms: ["steam"] },
+  { name: "Lost Isle", image: "/images/games/lostisle.jpg", price: "$8.00/mo", comingSoon: true, platforms: ["steam"] },
+  { name: "Hytale", image: "/images/games/hytale.jpg", price: "$4.00/mo", comingSoon: true, platforms: ["steam"] },
 ]
 
 const popularGames = allGames.filter((g) => g.popular)
@@ -604,14 +612,14 @@ export function GameServerHostingContent() {
                     boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                   }}
                 >
-                  {/* Border wrapper - yellow/gold border on hover */}
+                  {/* Border wrapper - green border on hover */}
                   <div 
                     className="absolute inset-0 rounded-lg transition-all duration-200 ease-out"
                     style={{ border: "1px solid rgba(255,255,255,0.12)" }}
                   />
                   <div 
                     className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-out"
-                    style={{ border: "2px solid #f5a623" }}
+                    style={{ border: "2px solid #22c55e" }}
                   />
                   
                   {/* Full image with text overlay - NO scale on hover */}
