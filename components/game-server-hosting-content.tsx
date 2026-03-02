@@ -107,7 +107,11 @@ const getGameSlug = (name: string) => {
 }
 
 const getGameHref = (game: GameData) => {
-  return game.comingSoon ? undefined : `/game-server-hosting/${getGameSlug(game.name)}`
+  if (game.comingSoon) return undefined
+  // Minecraft redirects to dedicated pages
+  if (game.name === "Minecraft Java") return "/minecraft"
+  if (game.name === "Minecraft Bedrock") return "/minecraft/bedrock"
+  return `/game-server-hosting/${getGameSlug(game.name)}`
 }
 
 /* ─── Perks ─── */

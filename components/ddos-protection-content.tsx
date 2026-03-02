@@ -270,7 +270,14 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
     return slugMap[name] || name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
   }
 
-  const href = game.comingSoon ? undefined : `/game-server-hosting/${getGameSlug(game.name)}`
+  // Minecraft redirects to dedicated pages
+  const getHref = () => {
+    if (game.comingSoon) return undefined
+    if (game.name === "Minecraft Java") return "/minecraft"
+    if (game.name === "Minecraft Bedrock") return "/minecraft/bedrock"
+    return `/game-server-hosting/${getGameSlug(game.name)}`
+  }
+  const href = getHref()
   return (
     <a
       href={href}

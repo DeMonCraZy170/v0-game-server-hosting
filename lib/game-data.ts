@@ -78,52 +78,6 @@ function makeBaseFaqs(gameName: string): GameFaq[] {
 
 const gameDataArray: GameDetail[] = [
   {
-    slug: "minecraft",
-    name: "Minecraft Java",
-    tagline: "Minecraft Java Server Hosting",
-    description: "Minecraft Java Edition es el juego sandbox de construccion y supervivencia mas popular del mundo. Explora mundos infinitos, construye estructuras increibles, lucha contra criaturas y juega con amigos en servidores personalizados con mods y plugins.",
-    coverImage: "/images/games/minecraft.jpg",
-    officialUrl: "https://www.minecraft.net/",
-    basePrice: "$1.05/mo",
-    platforms: ["pc", "java"],
-    multiplayerDescription: "Minecraft es increible con amigos. Construye ciudades, crea granjas automatizadas, explora dungeons y lucha contra el Ender Dragon juntos. Un servidor propio te permite instalar mods, plugins y personalizar cada aspecto del juego.",
-    features: [
-      ...universalFeatures,
-      { label: "Instalador de Modpacks con 1 Click" },
-      { label: "Instalador de Plugins con 1 Click" },
-      { label: "Soporte de Paper, Spigot, Forge, Fabric" },
-    ],
-    plans: [
-      { name: "Piedra", ram: "2GB", cores: "1 Core/s", storage: "10GB SSD", basePrice: 1.05, players: "10 Jugadores" },
-      { name: "Hierro", ram: "4GB", cores: "2 Cores/s", storage: "25GB SSD", basePrice: 3.25, players: "20 Jugadores", bestSeller: true },
-      { name: "Diamante", ram: "8GB", cores: "3 Cores/s", storage: "50GB NVMe", basePrice: 6.50, players: "40 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Minecraft Java"),
-  },
-  {
-    slug: "minecraft-bedrock",
-    name: "Minecraft Bedrock",
-    tagline: "Minecraft Bedrock Server Hosting",
-    description: "Minecraft Bedrock Edition permite juego cruzado entre PC, consolas y dispositivos moviles. Crea mundos increibles con amigos sin importar que plataforma usen. Perfecto para comunidades multiplataforma.",
-    coverImage: "/images/games/minecraft-bedrock.jpg",
-    officialUrl: "https://www.minecraft.net/",
-    basePrice: "$1.05/mo",
-    platforms: ["pc", "console", "mobile"],
-    multiplayerDescription: "Bedrock Edition conecta jugadores de Xbox, PlayStation, Switch, PC y moviles en un solo servidor. Ideal para amigos y familias que juegan en diferentes dispositivos.",
-    features: [
-      ...universalFeatures,
-      { label: "Juego Cruzado Multiplataforma" },
-      { label: "Soporte de Addons" },
-      { label: "Configuracion Sencilla" },
-    ],
-    plans: [
-      { name: "Piedra", ram: "2GB", cores: "1 Core/s", storage: "10GB SSD", basePrice: 1.05, players: "10 Jugadores" },
-      { name: "Hierro", ram: "4GB", cores: "2 Cores/s", storage: "25GB SSD", basePrice: 3.25, players: "20 Jugadores", bestSeller: true },
-      { name: "Diamante", ram: "8GB", cores: "3 Cores/s", storage: "50GB NVMe", basePrice: 6.50, players: "40 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Minecraft Bedrock"),
-  },
-  {
     slug: "dayz",
     name: "DayZ",
     tagline: "DayZ Server Hosting",

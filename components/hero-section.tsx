@@ -55,7 +55,7 @@ const gameSlides: GameSlide[] = [
     cta: "INICIAR MI SERVIDOR MINECRAFT",
     bgImage: "/images/hero-minecraft.jpg",
     cardImage: "/images/card-minecraft.jpg",
-    href: "/game-server-hosting/minecraft",
+    href: "/minecraft",
   },
   {
     id: "valheim",
