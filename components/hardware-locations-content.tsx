@@ -115,9 +115,9 @@ export function HardwareLocationsContent() {
   return (
     <main className="min-h-screen text-foreground">
       {/* Hero Section with background */}
-      <section className="relative pb-24 overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0">
+      <section className="relative pb-24">
+        {/* Background image - overflow-hidden only on this container */}
+        <div className="absolute inset-0 overflow-hidden">
           <Image
             src="/images/hardware-locations-bg.jpg"
             alt=""
