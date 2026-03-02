@@ -48,6 +48,16 @@ const gameSlides: GameSlide[] = [
     href: "/game-server-hosting/dayz",
   },
   {
+    id: "rust",
+    title: "Hosting de Servidores\nRust",
+    label: "RUST",
+    badges: ["Alto Rendimiento", "Proteccion DDoS", "Soporte 24/7", "Mods Personalizados"],
+    cta: "INICIAR MI SERVIDOR RUST",
+    bgImage: "/images/hero-rust.jpg",
+    cardImage: "/images/card-rust.jpg",
+    href: "/game-server-hosting/rust",
+  },
+  {
     id: "gtav",
     title: "Hosting de Servidores\nGTA V - FiveM & RageMP",
     label: "GTA V",
