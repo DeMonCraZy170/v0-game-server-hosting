@@ -113,11 +113,11 @@ export function HardwareLocationsContent() {
   })
 
   return (
-    <main className="min-h-screen bg-background text-foreground pt-28">
-      {/* Hero background section */}
-      <div className="relative">
-        {/* Background image container */}
-        <div className="absolute inset-0 h-[500px] overflow-hidden -z-10">
+    <main className="min-h-screen text-foreground pt-28">
+      {/* Hero Section with background */}
+      <section className="relative pb-24">
+        {/* Background image */}
+        <div className="absolute inset-0 overflow-hidden">
           <Image
             src="/images/hardware-locations-bg.jpg"
             alt=""
@@ -126,12 +126,12 @@ export function HardwareLocationsContent() {
             priority
             sizes="100vw"
           />
-          {/* Dark overlay */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.82) 0%, rgba(13,13,13,0.92) 60%, rgba(13,13,13,1) 100%)" }} />
+          {/* Dark overlay - 75% opacity to show image subtly */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.75) 0%, rgba(13,13,13,0.85) 70%, rgba(13,13,13,1) 100%)" }} />
         </div>
       
-        {/* Hero Section Content */}
-        <section className="relative pt-8 pb-24">
+        {/* Hero Content */}
+        <div className="relative z-10 pt-8">
           <div className="mx-auto max-w-6xl px-4">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
@@ -281,8 +281,7 @@ export function HardwareLocationsContent() {
             </div>
           </div>
         </div>
-        </section>
-      </div>
+      </section>
 
       {/* Hardware Nodes by Location */}
       <section className="py-16 bg-background">
