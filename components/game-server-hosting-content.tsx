@@ -322,7 +322,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
   return (
     <a
       href={href}
-      className="group relative rounded-xl overflow-hidden transition-transform duration-[50ms] hover:-translate-y-1.5"
+      className="group relative rounded-xl overflow-hidden transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
@@ -391,7 +391,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
       
       {/* Yellowish underline hover effect */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-[3px] transition-transform duration-[50ms] origin-left scale-x-0 group-hover:scale-x-100"
+        className="absolute bottom-0 left-0 right-0 h-[3px] transition-all duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100"
         style={{ background: "linear-gradient(90deg, #f5a623 0%, #d4a853 100%)" }}
       />
     </a>
@@ -599,7 +599,7 @@ export function GameServerHostingContent() {
                 <a
                   key={game.name}
                   href={getGameHref(game)}
-                  className="group relative rounded-lg overflow-hidden transition-transform duration-[50ms] hover:-translate-y-1.5"
+                  className="group relative rounded-lg overflow-hidden transition-transform duration-200 ease-out hover:-translate-y-1.5"
                   style={{
                     opacity: popularVisible ? 1 : 0,
                     transform: popularVisible ? "translateY(0)" : "translateY(20px)",
@@ -643,7 +643,7 @@ export function GameServerHostingContent() {
                   
                   {/* Bright green underline hover effect */}
                   <div 
-                    className="absolute bottom-0 left-0 right-0 h-[3px] transition-transform duration-[50ms] origin-left scale-x-0 group-hover:scale-x-100"
+                    className="absolute bottom-0 left-0 right-0 h-[3px] transition-all duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100"
                     style={{ background: "linear-gradient(90deg, #22c55e 0%, #4ade80 100%)" }}
                   />
                 </a>
