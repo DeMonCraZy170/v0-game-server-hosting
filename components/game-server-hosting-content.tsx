@@ -301,22 +301,23 @@ function MobileIcon() {
   )
 }
 
-/* ─── Game Card component - SparkedHost exact style ─── */
+/* ─── Game Card component - SparkedHost exact style with hover underline ─── */
 
 function GameCard({ game, index, isVisible }: { game: GameData; index: number; isVisible: boolean }) {
   const href = getGameHref(game)
   return (
     <a
       href={href}
-      className="group relative rounded-xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1"
+      className="group relative rounded-xl overflow-hidden transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
         transitionDelay: `${staggerDelay(index, 50)}ms`,
         cursor: game.comingSoon ? "default" : "pointer",
         boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+        border: "1px solid rgba(255,255,255,0.1)",
         // Red left border for NEW! cards
-        borderLeft: game.isNew ? "3px solid #ef4444" : "none",
+        borderLeft: game.isNew ? "3px solid #ef4444" : "1px solid rgba(255,255,255,0.1)",
       }}
     >
       {/* NEW! or UPDATE! badge */}
@@ -373,6 +374,12 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
           </div>
         </div>
       </div>
+      
+      {/* Yellowish underline hover effect */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-[3px] transition-all duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100"
+        style={{ background: "linear-gradient(90deg, #f5a623 0%, #d4a853 100%)" }}
+      />
     </a>
   )
 }
@@ -571,17 +578,18 @@ export function GameServerHostingContent() {
               </span>
             </div>
 
-            {/* Popular games grid - 4 large cards with overlay style */}
+            {/* Popular games grid - 4 large cards with green hover underline */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-4">
               {(filteredPopularGames.length > 0 ? filteredPopularGames : popularGames).slice(0, 4).map((game, index) => (
                 <a
                   key={game.name}
                   href={getGameHref(game)}
-                  className="group relative rounded-lg overflow-hidden transition-all duration-500 ease-out hover:scale-[1.03]"
+                  className="group relative rounded-lg overflow-hidden transition-all duration-300 ease-out hover:scale-[1.02]"
                   style={{
                     opacity: popularVisible ? 1 : 0,
                     transform: popularVisible ? "translateY(0)" : "translateY(20px)",
                     transitionDelay: `${staggerDelay(index, 100)}ms`,
+                    border: "1px solid rgba(255,255,255,0.15)",
                   }}
                 >
                   {/* Full image with text overlay */}
@@ -616,6 +624,12 @@ export function GameServerHostingContent() {
                       </div>
                     </div>
                   </div>
+                  
+                  {/* Bright green underline hover effect */}
+                  <div 
+                    className="absolute bottom-0 left-0 right-0 h-[3px] transition-all duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100"
+                    style={{ background: "linear-gradient(90deg, #22c55e 0%, #4ade80 100%)" }}
+                  />
                 </a>
               ))}
             </div>
