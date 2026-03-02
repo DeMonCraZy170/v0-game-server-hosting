@@ -443,13 +443,13 @@ export function HeroSection() {
                       }}
                     />
 
-                    {/* Overlay */}
+                    {/* Overlay - darker for better text contrast */}
                     <div
                       className="absolute inset-0"
                       style={{
                         background: isActive
-                          ? "linear-gradient(135deg, rgba(0,0,0,0.2), rgba(0,0,0,0.05))"
-                          : "rgba(0,0,0,0.45)",
+                          ? "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)"
+                          : "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%)",
                         transition: "background 0.6s ease",
                       }}
                     />
@@ -495,13 +495,15 @@ export function HeroSection() {
                     )}
 
                     {/* Card label */}
-                    <div className="relative h-full flex flex-col justify-center px-5 z-[2]">
+                    <div className="relative h-full flex flex-col justify-end pb-5 px-5 z-[2]">
                       <span
                         className="font-bold tracking-wider leading-tight"
                         style={{
                           fontSize: isActive ? 20 : 14,
-                          color: isActive ? "#f5f5f5" : "#999",
-                          textShadow: isActive ? "0 2px 8px rgba(0,0,0,0.5)" : "none",
+                          color: isActive ? "#ffffff" : "#e5e5e5",
+                          textShadow: isActive 
+                            ? "0 2px 12px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.8)" 
+                            : "0 2px 8px rgba(0,0,0,0.8), 0 1px 2px rgba(0,0,0,0.6)",
                           transition: "all 0.5s ease",
                         }}
                       >
@@ -512,6 +514,7 @@ export function HeroSection() {
                           className="text-[11px] font-semibold tracking-widest"
                           style={{
                             color: "#f5a623",
+                            textShadow: "0 1px 4px rgba(0,0,0,0.7)",
                             opacity: isActive ? 1 : 0,
                             transform: isActive ? "translateY(0)" : "translateY(-4px)",
                             transition: "opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s",
