@@ -175,7 +175,7 @@ export function Navbar() {
   return (
     <>
       <nav
-        className={`transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[200] transition-all duration-300 ${
           scrolled || openDropdown === "Hosting Minecraft" || openDropdown === "Hosting de Juegos" || openDropdown === "Cloud Hosting" || openDropdown === "Recursos" || openDropdown === "Mas"
             ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-black/20"
             : "bg-transparent"

@@ -118,7 +118,7 @@ export function HardwareLocationsContent() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-32 min-h-[520px]">
+      <section className="relative pt-24 pb-32 min-h-[520px]">
         {/* Background image */}
         <Image
           src="/images/hardware-locations-bg.jpg"
