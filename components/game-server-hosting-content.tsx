@@ -322,7 +322,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
   return (
     <a
       href={href}
-      className="group relative rounded-xl overflow-hidden transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1"
+      className="group relative rounded-xl overflow-hidden transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
@@ -350,13 +350,13 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
         </div>
       )}
       
-      {/* Full card image with overlay */}
+      {/* Full card image with overlay - NO scale on hover */}
       <div className="relative aspect-[4/5]">
         <Image
           src={game.image}
           alt={game.name}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
+          className="object-cover"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
         />
         {/* Gradient overlay - transparent top, dark bottom */}
@@ -599,7 +599,7 @@ export function GameServerHostingContent() {
                 <a
                   key={game.name}
                   href={getGameHref(game)}
-                  className="group relative rounded-lg overflow-hidden transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-0.5"
+                  className="group relative rounded-lg overflow-hidden transition-transform duration-200 ease-out hover:-translate-y-1.5"
                   style={{
                     opacity: popularVisible ? 1 : 0,
                     transform: popularVisible ? "translateY(0)" : "translateY(20px)",
@@ -608,13 +608,13 @@ export function GameServerHostingContent() {
                     boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                   }}
                 >
-                  {/* Full image with text overlay */}
+                  {/* Full image with text overlay - NO scale on hover */}
                   <div className="relative aspect-[4/5]">
                     <Image
                       src={game.image}
                       alt={game.name}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover"
                       sizes="(max-width: 640px) 50vw, 25vw"
                     />
                     {/* Gradient overlay - transparent to dark */}
