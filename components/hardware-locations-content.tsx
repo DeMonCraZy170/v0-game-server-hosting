@@ -115,29 +115,36 @@ export function HardwareLocationsContent() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-32 min-h-[520px]">
-        {/* Background image */}
-        <Image
-          src="/images/hardware-locations-bg.jpg"
-          alt=""
-          fill
-          className="object-cover object-center"
-          priority
-          sizes="100vw"
-        />
-        {/* Dark overlay - darker like SparkedHost */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.75) 0%, rgba(13,13,13,0.92) 70%, rgba(13,13,13,1) 100%)" }} />
+      {/* Hero background that extends behind navbar */}
+      <div className="relative">
+        {/* Background image container - positioned absolutely to cover navbar area too */}
+        <div className="absolute inset-0 h-[600px] overflow-hidden">
+          <Image
+            src="/images/hardware-locations-bg.jpg"
+            alt=""
+            fill
+            className="object-cover object-center"
+            priority
+            sizes="100vw"
+          />
+          {/* Dark overlay - darker like SparkedHost */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.7) 0%, rgba(13,13,13,0.88) 60%, rgba(13,13,13,1) 100%)" }} />
+        </div>
         
-        <div className="relative z-10 mx-auto max-w-6xl px-4">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-            <Link href="/" className="hover:text-primary transition-colors">Inicio</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground">Hardware y Ubicaciones</span>
-          </nav>
+        {/* Navbar */}
+        <div className="relative z-20">
+          <Navbar />
+        </div>
+      
+        {/* Hero Section Content */}
+        <section className="relative z-10 pt-8 pb-32 min-h-[420px]">
+          <div className="relative z-10 mx-auto max-w-6xl px-4">
+            {/* Breadcrumb */}
+            <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+              <Link href="/" className="hover:text-primary transition-colors">Inicio</Link>
+              <ChevronRight className="w-4 h-4" />
+              <span className="text-foreground">Hardware y Ubicaciones</span>
+            </nav>
 
           {/* Title */}
           <div className="text-center max-w-3xl mx-auto">
@@ -280,7 +287,8 @@ export function HardwareLocationsContent() {
             </div>
           </div>
         </div>
-      </section>
+        </section>
+      </div>
 
       {/* Hardware Nodes by Location */}
       <section className="py-16 bg-background">
