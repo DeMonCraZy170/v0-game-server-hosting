@@ -325,15 +325,12 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
         cursor: game.comingSoon ? "default" : "pointer",
       }}
     >
-      {/* Default border - red for NEW, blue for UPDATE, subtle for others */}
+      {/* Default border - red for NEW, blue for UPDATE, yellow for others */}
       <div 
         className="absolute inset-0 rounded-xl transition-opacity duration-150 ease-out group-hover:opacity-0"
         style={{ 
-          border: game.isNew 
-            ? "2px solid #ef4444" 
-            : game.isUpdate 
-              ? "2px solid #3b82f6" 
-              : "1px solid rgba(255,255,255,0.15)",
+          border: `2px solid ${underlineColor}`,
+          boxShadow: `0 0 8px ${underlineColor}30`,
         }}
       />
       {/* Hover border - yellowish glow around entire card */}
@@ -573,7 +570,7 @@ export function GameServerHostingContent() {
         </div>
       </section>
 
-      {/* ─── Popular Games - SparkedHost exact style ─── */}
+      {/* ─── Popular Games - SparkedHost exact style ─���─ */}
       <section className="py-10 bg-background">
         <div className="mx-auto max-w-5xl px-4 pt-4">
           {/* Outer wrapper to allow badge overflow */}
@@ -633,15 +630,12 @@ export function GameServerHostingContent() {
                     transitionDelay: `${staggerDelay(index, 100)}ms`,
                   }}
                 >
-                  {/* Default border - red for NEW, blue for UPDATE, subtle for others */}
+                  {/* Default border - red for NEW, blue for UPDATE, yellow for others */}
                   <div 
                     className="absolute inset-0 rounded-lg transition-opacity duration-150 ease-out group-hover:opacity-0"
                     style={{ 
-                      border: game.isNew 
-                        ? "2px solid #ef4444" 
-                        : game.isUpdate 
-                          ? "2px solid #3b82f6" 
-                          : "1px solid rgba(255,255,255,0.15)" 
+                      border: `2px solid ${popularUnderlineColor}`,
+                      boxShadow: `0 0 8px ${popularUnderlineColor}30`,
                     }}
                   />
                   {/* Hover border - green glow around entire card */}
