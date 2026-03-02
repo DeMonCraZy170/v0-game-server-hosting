@@ -536,7 +536,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                     opacity: game.comingSoon ? 0.5 : 1,
                   }}
                 >
-                  {game.comingSoon ? "Proximamente" : `Ordenar en ${selectedLocation.split(",")[0]}`}
+                  {game.comingSoon ? "Proximamente" : `Ordenar en ${selectedLocation.split(",")[1]?.trim() || "Canada"}, ${selectedLocation.split(",")[0]?.replace("OVH ", "") || "Beauharnois"}`}
                 </a>
               </div>
             ))}
