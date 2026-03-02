@@ -307,7 +307,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
   return (
     <a
       href={href}
-      className="group relative rounded-xl transition-all duration-200 ease-out hover:-translate-y-1.5"
+      className="group relative rounded-xl hover:-translate-y-1.5"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
@@ -589,7 +589,7 @@ export function GameServerHostingContent() {
                 <a
                   key={game.name}
                   href={getGameHref(game)}
-                  className="group relative rounded-lg transition-all duration-200 ease-out hover:-translate-y-1.5"
+                  className="group relative rounded-lg hover:-translate-y-1.5"
                   style={{
                     opacity: popularVisible ? 1 : 0,
                     transform: popularVisible ? "translateY(0)" : "translateY(20px)",
