@@ -26,10 +26,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
-        <div className="fixed top-0 left-0 right-0 z-50">
+        <header className="fixed top-0 left-0 right-0 z-50">
           <AnnouncementBar />
           <Navbar />
-        </div>
+        </header>
         {children}
         <TawkChat />
         <Analytics />

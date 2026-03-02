@@ -113,11 +113,11 @@ export function HardwareLocationsContent() {
   })
 
   return (
-    <main className="min-h-screen text-foreground pt-28">
+    <main className="min-h-screen text-foreground">
       {/* Hero Section with background */}
-      <section className="relative pb-24">
+      <section className="relative pb-24 overflow-hidden">
         {/* Background image */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0">
           <Image
             src="/images/hardware-locations-bg.jpg"
             alt=""
@@ -126,12 +126,12 @@ export function HardwareLocationsContent() {
             priority
             sizes="100vw"
           />
-          {/* Dark overlay - 75% opacity to show image subtly */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.75) 0%, rgba(13,13,13,0.85) 70%, rgba(13,13,13,1) 100%)" }} />
+          {/* Dark overlay - similar to SparkedHost */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.7) 0%, rgba(13,13,13,0.85) 60%, rgba(13,13,13,1) 100%)" }} />
         </div>
       
-        {/* Hero Content */}
-        <div className="relative z-10 pt-8">
+        {/* Hero Content - pt-32 accounts for fixed navbar */}
+        <div className="relative z-10 pt-32 lg:pt-36">
           <div className="mx-auto max-w-6xl px-4">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
