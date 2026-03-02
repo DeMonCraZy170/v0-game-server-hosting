@@ -301,41 +301,42 @@ function MobileIcon() {
   )
 }
 
-/* ─── Game Card component - SparkedHost style ─── */
+/* ─── Game Card component - SparkedHost exact style ─── */
 
 function GameCard({ game, index, isVisible }: { game: GameData; index: number; isVisible: boolean }) {
   const href = getGameHref(game)
   return (
     <a
       href={href}
-      className="group relative flex flex-col rounded-xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1"
+      className="group relative rounded-xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
         transitionDelay: `${staggerDelay(index, 50)}ms`,
         cursor: game.comingSoon ? "default" : "pointer",
-        background: "#1a1a1f",
-        boxShadow: "0 2px 12px rgba(0,0,0,0.2)",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+        // Red left border for NEW! cards
+        borderLeft: game.isNew ? "3px solid #ef4444" : "none",
       }}
     >
       {/* NEW! or UPDATE! badge */}
       {(game.isNew || game.isUpdate) && (
         <div className="absolute top-2 left-2 z-10">
           <span
-            className="inline-block text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded"
+            className="inline-block text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded"
             style={{
-              background: game.isNew ? "#22c55e" : "#3b82f6",
+              background: game.isNew ? "#ef4444" : "#3b82f6",
               color: "#fff",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
             }}
           >
-            {game.isNew ? "NUEVO!" : "UPDATE!"}
+            {game.isNew ? "NEW!" : "UPDATE!"}
           </span>
         </div>
       )}
       
-      {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      {/* Full card image with overlay */}
+      <div className="relative aspect-[4/5]">
         <Image
           src={game.image}
           alt={game.name}
@@ -343,33 +344,33 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
           className="object-cover group-hover:scale-110 transition-transform duration-500"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
         />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1f] via-[#1a1a1f]/30 to-transparent" />
-      </div>
+        {/* Gradient overlay - transparent top, dark bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+        
+        {/* Info overlaid on image at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <h3
+            className="font-bold text-white text-sm mb-1 truncate"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            {game.name}
+          </h3>
+          {game.comingSoon ? (
+            <p className="text-primary text-xs font-semibold italic">Proximamente</p>
+          ) : (
+            <p className="text-gray-300 text-xs">
+              {"Desde "}
+              <span className="text-primary font-bold">{game.price}</span>
+            </p>
+          )}
 
-      {/* Info */}
-      <div className="p-3 flex flex-col flex-1">
-        <h3
-          className="font-bold text-foreground text-xs md:text-sm mb-0.5 truncate"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
-          {game.name}
-        </h3>
-        {game.comingSoon ? (
-          <p className="text-primary text-[11px] font-semibold italic">Proximamente</p>
-        ) : (
-          <p className="text-muted-foreground text-[11px] md:text-xs">
-            {"Desde "}
-            <span className="text-primary font-bold">{game.price}</span>
-          </p>
-        )}
-
-        {/* Platform icons */}
-        <div className="flex items-center gap-1.5 mt-2">
-          {game.platforms?.includes("steam") && <SteamIcon />}
-          {game.platforms?.includes("pc") && <WindowsIcon />}
-          {game.platforms?.includes("console") && <ConsoleIcon />}
-          {game.platforms?.includes("mobile") && <MobileIcon />}
+          {/* Platform icons */}
+          <div className="flex items-center gap-2 mt-2">
+            {game.platforms?.includes("steam") && <SteamIcon />}
+            {game.platforms?.includes("pc") && <WindowsIcon />}
+            {game.platforms?.includes("console") && <ConsoleIcon />}
+            {game.platforms?.includes("mobile") && <MobileIcon />}
+          </div>
         </div>
       </div>
     </a>
@@ -537,69 +538,54 @@ export function GameServerHostingContent() {
         </div>
       </section>
 
-      {/* ─── Popular Games - SparkedHost style ─── */}
-      <section className="py-12 bg-background relative">
-        {/* Background gradient for this section */}
-        <div className="absolute inset-0 pointer-events-none" style={{ 
-          background: "radial-gradient(ellipse at center top, rgba(245,166,35,0.06) 0%, transparent 60%)" 
-        }} />
-        
-        <div className="mx-auto max-w-5xl px-4 relative">
+      {/* ─── Popular Games - SparkedHost exact style ─── */}
+      <section className="py-12 bg-background">
+        <div className="mx-auto max-w-5xl px-4">
           <div
             ref={popularRef}
-            className="relative rounded-2xl p-6 md:p-8 transition-all duration-700 ease-out"
+            className="relative rounded-2xl p-6 md:p-8 transition-all duration-700 ease-out overflow-hidden"
             style={{
               opacity: popularVisible ? 1 : 0,
               transform: popularVisible ? "translateY(0)" : "translateY(30px)",
-              background: "linear-gradient(180deg, rgba(26,26,31,0.95) 0%, rgba(26,26,31,1) 100%)",
-              border: "2px solid transparent",
-              backgroundClip: "padding-box",
-              boxShadow: "0 0 40px rgba(245,166,35,0.12), 0 0 80px rgba(245,166,35,0.06), inset 0 1px 0 rgba(255,255,255,0.05)",
+              border: "2px solid #f5a623",
             }}
           >
-            {/* Gradient border effect */}
+            {/* Inner gradient background - inside the container */}
             <div 
-              className="absolute inset-0 rounded-2xl -z-10" 
+              className="absolute inset-0 -z-10" 
               style={{ 
-                background: "linear-gradient(135deg, #f5a623 0%, #d97706 50%, #f5a623 100%)",
-                padding: "2px",
-                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                WebkitMaskComposite: "xor",
-                maskComposite: "exclude",
+                background: "linear-gradient(180deg, rgba(30,28,20,0.95) 0%, rgba(20,18,15,0.98) 100%)",
               }} 
             />
             
             {/* Badge on top */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+            <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 z-10">
               <span
-                className="inline-block text-xs font-bold uppercase tracking-[0.15em] px-6 py-2 rounded-full shadow-lg"
+                className="inline-block text-xs font-bold uppercase tracking-[0.12em] px-5 py-1.5 rounded-b-lg"
                 style={{
-                  background: "linear-gradient(135deg, #f5a623 0%, #d97706 100%)",
+                  background: "#f5a623",
                   color: "#0d0d0d",
-                  boxShadow: "0 4px 20px rgba(245,166,35,0.4)",
                 }}
               >
-                Juegos Populares
+                POPULAR GAMES
               </span>
             </div>
 
-            {/* Popular games grid - 4 large cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mt-6">
+            {/* Popular games grid - 4 large cards with overlay style */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-4">
               {(filteredPopularGames.length > 0 ? filteredPopularGames : popularGames).slice(0, 4).map((game, index) => (
                 <a
                   key={game.name}
                   href={getGameHref(game)}
-                  className="group relative flex flex-col rounded-xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.04] hover:-translate-y-1"
+                  className="group relative rounded-lg overflow-hidden transition-all duration-500 ease-out hover:scale-[1.03]"
                   style={{
                     opacity: popularVisible ? 1 : 0,
                     transform: popularVisible ? "translateY(0)" : "translateY(20px)",
                     transitionDelay: `${staggerDelay(index, 100)}ms`,
-                    background: "#1a1a1f",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
                   }}
                 >
-                  {/* Larger image for popular games */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  {/* Full image with text overlay */}
+                  <div className="relative aspect-[4/5]">
                     <Image
                       src={game.image}
                       alt={game.name}
@@ -607,24 +593,27 @@ export function GameServerHostingContent() {
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                       sizes="(max-width: 640px) 50vw, 25vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1f] via-[#1a1a1f]/20 to-transparent" />
-                  </div>
-                  <div className="p-4">
-                    <h3
-                      className="font-bold text-foreground text-sm md:text-base mb-1 truncate"
-                      style={{ fontFamily: "var(--font-heading)" }}
-                    >
-                      {game.name}
-                    </h3>
-                    <p className="text-muted-foreground text-xs md:text-sm">
-                      {"Desde "}
-                      <span className="text-primary font-bold">{game.price}</span>
-                    </p>
-                    <div className="flex items-center gap-2 mt-3">
-                      {game.platforms?.includes("steam") && <SteamIcon />}
-                      {game.platforms?.includes("pc") && <WindowsIcon />}
-                      {game.platforms?.includes("console") && <ConsoleIcon />}
-                      {game.platforms?.includes("mobile") && <MobileIcon />}
+                    {/* Gradient overlay - transparent to dark */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                    
+                    {/* Text overlay at bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                      <h3
+                        className="font-bold text-white text-sm md:text-base mb-1 truncate"
+                        style={{ fontFamily: "var(--font-heading)" }}
+                      >
+                        {game.name}
+                      </h3>
+                      <p className="text-gray-300 text-xs md:text-sm">
+                        {"Desde "}
+                        <span className="text-primary font-bold">{game.price}</span>
+                      </p>
+                      <div className="flex items-center gap-2 mt-2">
+                        {game.platforms?.includes("steam") && <SteamIcon />}
+                        {game.platforms?.includes("pc") && <WindowsIcon />}
+                        {game.platforms?.includes("console") && <ConsoleIcon />}
+                        {game.platforms?.includes("mobile") && <MobileIcon />}
+                      </div>
                     </div>
                   </div>
                 </a>
@@ -634,8 +623,8 @@ export function GameServerHostingContent() {
         </div>
       </section>
 
-      {/* ─── All Games Grid - 6 columns like SparkedHost ─── */}
-      <section className="py-12 bg-background">
+      {/* ─── All Games Grid - 5 columns like SparkedHost ─── */}
+      <section className="py-8 bg-background">
         <div className="mx-auto max-w-6xl px-4">
           <div
             ref={allGamesRef}
@@ -652,7 +641,7 @@ export function GameServerHostingContent() {
               </p>
             )}
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {(filteredOtherGames.length > 0 ? filteredOtherGames : otherGames).map((game, index) => (
               <GameCard key={game.name} game={game} index={index} isVisible={allGamesVisible} />
             ))}
