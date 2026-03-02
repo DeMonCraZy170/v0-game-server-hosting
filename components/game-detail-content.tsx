@@ -150,7 +150,6 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
   const [hoveredLocation, setHoveredLocation] = useState<string | null>(null)
   
   // Server configuration state
-  const [selectedTier, setSelectedTier] = useState<"budget" | "enterprise">("enterprise")
   const [selectedBilling, setSelectedBilling] = useState<"monthly" | "quarterly" | "semiannual" | "annual">("monthly")
   const [selectedLocation, setSelectedLocation] = useState("OVH Beauharnois, Canada")
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false)
@@ -172,8 +171,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
     return basePrice * (1 - discount / 100)
   }
   
-  // Tier multiplier
-  const tierMultiplier = selectedTier === "budget" ? 0.7 : 1
+
 
   const [heroRef, heroVisible] = useScrollReveal()
   const [plansRef, plansVisible] = useScrollReveal()
@@ -327,37 +325,6 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
       <section className="py-8 bg-background border-b border-white/5">
           <div className="mx-auto max-w-5xl px-4">
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-6">
-              {/* Server Tier */}
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Layers className="w-4 h-4" />
-                  <span className="font-medium">Tier del Servidor</span>
-                </div>
-                <div className="flex rounded-lg overflow-hidden" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <button
-                    onClick={() => setSelectedTier("budget")}
-                    className="px-4 py-2.5 text-sm font-medium transition-all"
-                    style={{
-                      background: selectedTier === "budget" ? "rgba(245,166,35,0.15)" : "transparent",
-                      color: selectedTier === "budget" ? "#f5a623" : "rgba(255,255,255,0.6)",
-                      borderRight: "1px solid rgba(255,255,255,0.08)",
-                    }}
-                  >
-                    Budget
-                  </button>
-                  <button
-                    onClick={() => setSelectedTier("enterprise")}
-                    className="px-4 py-2.5 text-sm font-medium transition-all"
-                    style={{
-                      background: selectedTier === "enterprise" ? "rgba(245,166,35,0.15)" : "transparent",
-                      color: selectedTier === "enterprise" ? "#f5a623" : "rgba(255,255,255,0.6)",
-                    }}
-                  >
-                    Enterprise
-                  </button>
-                </div>
-              </div>
-
               {/* Billing Cycle */}
               <div className="flex flex-col gap-2 flex-1">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -517,25 +484,13 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                     BEST SELLER!
                   </div>
                 )}
-                
-                {/* Tier badge */}
-                <div 
-                  className={`absolute ${plan.bestSeller ? "top-10" : "top-3"} right-3 text-[9px] font-bold tracking-wider px-2 py-1 rounded uppercase`}
-                  style={{ 
-                    background: selectedTier === "enterprise" ? "rgba(245,166,35,0.15)" : "rgba(59,130,246,0.15)",
-                    color: selectedTier === "enterprise" ? "#f5a623" : "#3b82f6",
-                    border: selectedTier === "enterprise" ? "1px solid rgba(245,166,35,0.3)" : "1px solid rgba(59,130,246,0.3)",
-                  }}
-                >
-                  {selectedTier === "enterprise" ? "Enterprise" : "Budget"}
-                </div>
 
                 <div className="p-6 flex-1">
                   <h3 className="text-lg font-bold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>
                     {plan.name}
                   </h3>
                   <p className="text-3xl font-extrabold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>
-                    ${getDiscountedPrice(plan.basePrice * tierMultiplier).toFixed(2)}
+                    ${getDiscountedPrice(plan.basePrice).toFixed(2)}
                   </p>
                   <p className="text-xs text-primary font-medium mb-5">
                     Facturado {billingOptions.find(b => b.id === selectedBilling)?.label.toLowerCase()}
