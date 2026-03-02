@@ -19,6 +19,10 @@ import {
   HardDrive,
   Users,
   ShieldCheck,
+  Clock,
+  Layers,
+  MapPin,
+  Sparkles,
 } from "lucide-react"
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 import { Footer } from "@/components/footer"
@@ -144,6 +148,32 @@ const signalColor = {
 export function GameDetailContent({ game }: { game: GameDetail }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [hoveredLocation, setHoveredLocation] = useState<string | null>(null)
+  
+  // Server configuration state
+  const [selectedTier, setSelectedTier] = useState<"budget" | "enterprise">("enterprise")
+  const [selectedBilling, setSelectedBilling] = useState<"monthly" | "quarterly" | "semiannual" | "annual">("monthly")
+  const [selectedLocation, setSelectedLocation] = useState("Miami, Florida")
+  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false)
+  
+  // Billing discounts
+  const billingOptions = [
+    { id: "monthly" as const, label: "Mensual", discount: 0 },
+    { id: "quarterly" as const, label: "Trimestral", discount: 5 },
+    { id: "semiannual" as const, label: "Semestral", discount: 12 },
+    { id: "annual" as const, label: "Anual", discount: 20 },
+  ]
+  
+  // All available locations for dropdown
+  const allLocations = regions.flatMap(r => r.locations.map(l => ({ ...l, region: r.region })))
+  
+  // Calculate price with billing discount
+  const getDiscountedPrice = (basePrice: number) => {
+    const discount = billingOptions.find(b => b.id === selectedBilling)?.discount || 0
+    return basePrice * (1 - discount / 100)
+  }
+  
+  // Tier multiplier
+  const tierMultiplier = selectedTier === "budget" ? 0.7 : 1
 
   const [heroRef, heroVisible] = useScrollReveal()
   const [plansRef, plansVisible] = useScrollReveal()
@@ -293,6 +323,156 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
         </div>
       </section>
 
+      {/* ─── Server Configuration Bar ─── */}
+      {!game.comingSoon && (
+        <section className="py-8 bg-background border-b border-white/5">
+          <div className="mx-auto max-w-5xl px-4">
+            <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-6">
+              {/* Server Tier */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Layers className="w-4 h-4" />
+                  <span className="font-medium">Tier del Servidor</span>
+                </div>
+                <div className="flex rounded-lg overflow-hidden" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <button
+                    onClick={() => setSelectedTier("budget")}
+                    className="px-4 py-2.5 text-sm font-medium transition-all"
+                    style={{
+                      background: selectedTier === "budget" ? "rgba(245,166,35,0.15)" : "transparent",
+                      color: selectedTier === "budget" ? "#f5a623" : "rgba(255,255,255,0.6)",
+                      borderRight: "1px solid rgba(255,255,255,0.08)",
+                    }}
+                  >
+                    Budget
+                  </button>
+                  <button
+                    onClick={() => setSelectedTier("enterprise")}
+                    className="px-4 py-2.5 text-sm font-medium transition-all"
+                    style={{
+                      background: selectedTier === "enterprise" ? "rgba(245,166,35,0.15)" : "transparent",
+                      color: selectedTier === "enterprise" ? "#f5a623" : "rgba(255,255,255,0.6)",
+                    }}
+                  >
+                    Enterprise
+                  </button>
+                </div>
+              </div>
+
+              {/* Billing Cycle */}
+              <div className="flex flex-col gap-2 flex-1">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Clock className="w-4 h-4" />
+                  <span className="font-medium">Ciclo de Facturacion</span>
+                </div>
+                <div className="flex flex-wrap rounded-lg overflow-hidden" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  {billingOptions.map((option, idx) => (
+                    <button
+                      key={option.id}
+                      onClick={() => setSelectedBilling(option.id)}
+                      className="relative px-4 py-2.5 text-sm font-medium transition-all flex-1 min-w-[90px]"
+                      style={{
+                        background: selectedBilling === option.id ? "rgba(245,166,35,0.15)" : "transparent",
+                        color: selectedBilling === option.id ? "#f5a623" : "rgba(255,255,255,0.6)",
+                        borderRight: idx < billingOptions.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none",
+                      }}
+                    >
+                      {option.discount > 0 && (
+                        <span 
+                          className="absolute -top-2 right-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                          style={{ background: "#22c55e", color: "#fff" }}
+                        >
+                          -{option.discount}%
+                        </span>
+                      )}
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Location Dropdown */}
+              <div className="flex flex-col gap-2 min-w-[200px]">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <MapPin className="w-4 h-4" />
+                  <span className="font-medium">Ubicacion</span>
+                </div>
+                <div className="relative">
+                  <button
+                    onClick={() => setLocationDropdownOpen(!locationDropdownOpen)}
+                    className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-lg transition-all"
+                    style={{ 
+                      background: "rgba(255,255,255,0.04)", 
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      color: "#f5f5f5",
+                    }}
+                  >
+                    <span>{selectedLocation}</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform ${locationDropdownOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  
+                  {locationDropdownOpen && (
+                    <div 
+                      className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-50 max-h-[300px] overflow-y-auto"
+                      style={{ 
+                        background: "#1a1a1f", 
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                      }}
+                    >
+                      {regions.map(region => (
+                        <div key={region.region}>
+                          <div className="px-3 py-2 text-[10px] font-bold tracking-wider text-muted-foreground uppercase" style={{ background: "rgba(255,255,255,0.03)" }}>
+                            {region.region}
+                          </div>
+                          {region.locations.map(loc => (
+                            <button
+                              key={loc.name}
+                              onClick={() => {
+                                setSelectedLocation(loc.name)
+                                setLocationDropdownOpen(false)
+                              }}
+                              className="w-full flex items-center justify-between px-4 py-2.5 text-sm transition-all hover:bg-white/5"
+                              style={{
+                                color: selectedLocation === loc.name ? "#f5a623" : "rgba(255,255,255,0.7)",
+                                background: selectedLocation === loc.name ? "rgba(245,166,35,0.1)" : "transparent",
+                              }}
+                            >
+                              <span className="flex items-center gap-2">
+                                <span>{flagEmoji[loc.flag]}</span>
+                                <span>{loc.name}</span>
+                              </span>
+                              {loc.ping && (
+                                <span className="text-xs" style={{ color: signalColor[loc.signal] }}>
+                                  {loc.ping}ms
+                                </span>
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Promotional Banner */}
+            <div 
+              className="mt-6 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium"
+              style={{ 
+                background: "rgba(245,166,35,0.1)", 
+                border: "1px solid rgba(245,166,35,0.25)",
+                color: "#f5a623",
+              }}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Oferta de Lanzamiento: Usa el codigo <strong>STARTER50</strong> para 50% de descuento en tu primer mes!</span>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ─── Pricing Plans ─── */}
       <section id="planes" className="py-20 bg-background">
         <div
@@ -325,15 +505,34 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                     BEST SELLER!
                   </span>
                 )}
+                
+                {/* Tier badge */}
+                <div 
+                  className="absolute top-3 right-3 text-[9px] font-bold tracking-wider px-2 py-1 rounded uppercase"
+                  style={{ 
+                    background: selectedTier === "enterprise" ? "rgba(245,166,35,0.15)" : "rgba(59,130,246,0.15)",
+                    color: selectedTier === "enterprise" ? "#f5a623" : "#3b82f6",
+                    border: selectedTier === "enterprise" ? "1px solid rgba(245,166,35,0.3)" : "1px solid rgba(59,130,246,0.3)",
+                  }}
+                >
+                  {selectedTier === "enterprise" ? "Enterprise" : "Budget"}
+                </div>
 
                 <div className="p-6 flex-1">
                   <h3 className="text-lg font-bold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>
                     {plan.name}
                   </h3>
                   <p className="text-3xl font-extrabold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>
-                    ${plan.basePrice.toFixed(2)}
+                    ${getDiscountedPrice(plan.basePrice * tierMultiplier).toFixed(2)}
                   </p>
-                  <p className="text-xs text-primary font-medium mb-5">Facturado mensualmente</p>
+                  <p className="text-xs text-primary font-medium mb-5">
+                    Facturado {billingOptions.find(b => b.id === selectedBilling)?.label.toLowerCase()}
+                    {selectedBilling !== "monthly" && (
+                      <span className="ml-1 text-green-500">
+                        (ahorras {billingOptions.find(b => b.id === selectedBilling)?.discount}%)
+                      </span>
+                    )}
+                  </p>
 
                   <ul className="flex flex-col gap-2.5">
                     <li className="flex items-center gap-2.5 text-sm text-foreground/90">
@@ -370,7 +569,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                     opacity: game.comingSoon ? 0.5 : 1,
                   }}
                 >
-                  {game.comingSoon ? "Proximamente" : "Ordenar en Miami, Florida"}
+                  {game.comingSoon ? "Proximamente" : `Ordenar en ${selectedLocation.split(",")[0]}`}
                 </a>
               </div>
             ))}
