@@ -498,8 +498,9 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                   </div>
                 )}
 
-                <div className="p-6 flex-1">
-                  <div className="flex items-center justify-between mb-1">
+                <div className="p-6 pt-5 flex-1">
+                  {/* Plan name and icon header */}
+                  <div className="flex items-center justify-between mb-4 pb-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                     <h3 className="text-lg font-bold text-foreground" style={{ fontFamily: "var(--font-heading)" }}>
                       {plan.name}
                     </h3>
@@ -507,8 +508,8 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                       <Image
                         src={plan.icon}
                         alt={plan.name}
-                        width={40}
-                        height={40}
+                        width={44}
+                        height={44}
                         className="object-contain"
                       />
                     )}
@@ -549,13 +550,15 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
 
                 <a
                   href={game.comingSoon ? undefined : "#"}
-                  className="flex items-center justify-center px-6 py-4 text-sm font-bold tracking-wide transition-all duration-300 group-hover:brightness-110"
+                  className="flex items-center justify-center mx-4 mb-4 px-6 py-3.5 text-sm font-bold tracking-wide rounded-lg transition-all duration-300 group-hover:brightness-110 group-hover:translate-y-[-1px]"
                   style={{
                     background: plan.bestSeller
                       ? "linear-gradient(135deg, #d97706, #f5a623, #fbbf24)"
-                      : "rgba(245,166,35,0.12)",
+                      : "rgba(245,166,35,0.15)",
                     color: plan.bestSeller ? "#0d0d0d" : "#f5a623",
-                    borderTop: "1px solid rgba(255,255,255,0.06)",
+                    boxShadow: plan.bestSeller 
+                      ? "0 4px 14px rgba(245,166,35,0.35), 0 2px 6px rgba(0,0,0,0.2)"
+                      : "0 2px 8px rgba(245,166,35,0.15), 0 1px 3px rgba(0,0,0,0.1)",
                     pointerEvents: game.comingSoon ? "none" : "auto",
                     opacity: game.comingSoon ? 0.5 : 1,
                   }}
