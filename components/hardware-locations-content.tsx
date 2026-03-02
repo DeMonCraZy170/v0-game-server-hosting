@@ -280,6 +280,7 @@ export function HardwareLocationsContent() {
               )}
             </div>
           </div>
+          </div>
         </div>
       </section>
 
