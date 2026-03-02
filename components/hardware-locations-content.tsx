@@ -115,10 +115,13 @@ export function HardwareLocationsContent() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      {/* Hero background that extends behind navbar */}
+      {/* Navbar - outside hero to prevent duplication */}
+      <Navbar />
+      
+      {/* Hero background section */}
       <div className="relative">
-        {/* Background image container - positioned absolutely to cover navbar area too */}
-        <div className="absolute inset-0 h-[600px] overflow-hidden">
+        {/* Background image container */}
+        <div className="absolute inset-0 h-[500px] overflow-hidden -z-10">
           <Image
             src="/images/hardware-locations-bg.jpg"
             alt=""
@@ -127,18 +130,13 @@ export function HardwareLocationsContent() {
             priority
             sizes="100vw"
           />
-          {/* Dark overlay - darker like SparkedHost */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.7) 0%, rgba(13,13,13,0.88) 60%, rgba(13,13,13,1) 100%)" }} />
-        </div>
-        
-        {/* Navbar */}
-        <div className="relative z-20">
-          <Navbar />
+          {/* Dark overlay */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.82) 0%, rgba(13,13,13,0.92) 60%, rgba(13,13,13,1) 100%)" }} />
         </div>
       
         {/* Hero Section Content */}
-        <section className="relative z-10 pt-8 pb-32 min-h-[420px]">
-          <div className="relative z-10 mx-auto max-w-6xl px-4">
+        <section className="relative pt-8 pb-24">
+          <div className="mx-auto max-w-6xl px-4">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
               <Link href="/" className="hover:text-primary transition-colors">Inicio</Link>
