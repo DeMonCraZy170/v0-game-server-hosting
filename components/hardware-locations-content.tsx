@@ -118,17 +118,18 @@ export function HardwareLocationsContent() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-32 pb-32 min-h-[520px]">
         {/* Background image */}
         <Image
           src="/images/hardware-locations-bg.jpg"
           alt=""
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
+          sizes="100vw"
         />
-        {/* Dark overlay */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.95) 100%)" }} />
+        {/* Dark overlay - darker like SparkedHost */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,13,13,0.75) 0%, rgba(13,13,13,0.92) 70%, rgba(13,13,13,1) 100%)" }} />
         
         <div className="relative z-10 mx-auto max-w-6xl px-4">
           {/* Breadcrumb */}
@@ -179,11 +180,11 @@ export function HardwareLocationsContent() {
               
               {locationDropdownOpen && (
                 <div 
-                  className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-50"
+                  className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-[100] max-h-[280px] overflow-y-auto"
                   style={{ 
                     background: "#1a1a1f", 
                     border: "1px solid rgba(255,255,255,0.1)",
-                    boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
                   }}
                 >
                   <button
@@ -244,11 +245,11 @@ export function HardwareLocationsContent() {
               
               {typeDropdownOpen && (
                 <div 
-                  className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-50"
+                  className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-[100] max-h-[280px] overflow-y-auto"
                   style={{ 
                     background: "#1a1a1f", 
                     border: "1px solid rgba(255,255,255,0.1)",
-                    boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
                   }}
                 >
                   <button
