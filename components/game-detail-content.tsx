@@ -324,8 +324,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
       </section>
 
       {/* ─── Server Configuration Bar ─── */}
-      {!game.comingSoon && (
-        <section className="py-8 bg-background border-b border-white/5">
+      <section className="py-8 bg-background border-b border-white/5">
           <div className="mx-auto max-w-5xl px-4">
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-6">
               {/* Server Tier */}
@@ -471,7 +470,6 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
             </div>
           </div>
         </section>
-      )}
 
       {/* ─── Pricing Plans ─── */}
       <section id="planes" className="py-20 bg-background">
