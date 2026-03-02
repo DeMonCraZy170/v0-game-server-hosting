@@ -39,15 +39,15 @@ interface GameData {
 
 const allGames: GameData[] = [
   // Popular games - exactly 4 like SparkedHost (Minecraft Java, Unturned, Valheim, Palworld)
-  { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$1.05/mo", popular: true, platforms: ["pc", "java"] },
-  { name: "Unturned", image: "/images/games/unturned.jpg", price: "$2.50/mo", popular: true, platforms: ["steam"] },
+  { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$1.05/mo", popular: true, isUpdate: true, platforms: ["pc", "java"] },
+  { name: "Unturned", image: "/images/games/unturned.jpg", price: "$2.50/mo", popular: true, isNew: true, platforms: ["steam"] },
   { name: "Valheim", image: "/images/games/valheim.jpg", price: "$4.80/mo", popular: true, platforms: ["steam"] },
   { name: "Palworld", image: "/images/games/palworld.jpg", price: "$17.60/mo", popular: true, platforms: ["steam"] },
   // Other games
   { name: "Minecraft Bedrock", image: "/images/games/minecraft-bedrock.jpg", price: "$1.05/mo", platforms: ["pc", "console", "mobile"] },
   { name: "Ark: Survival Evolved", image: "/images/games/ark.jpg", price: "$8.00/mo", platforms: ["steam", "pc"] },
-  { name: "Rust", image: "/images/games/rust.jpg", price: "$16.00/mo", platforms: ["steam"] },
-  { name: "Terraria", image: "/images/games/terraria.jpg", price: "$2.50/mo", platforms: ["steam", "mobile"] },
+  { name: "Rust", image: "/images/games/rust.jpg", price: "$16.00/mo", isNew: true, platforms: ["steam"] },
+  { name: "Terraria", image: "/images/games/terraria.jpg", price: "$2.50/mo", isUpdate: true, platforms: ["steam", "mobile"] },
   { name: "Garry's Mod", image: "/images/games/garrysmod.jpg", price: "$2.00/mo", platforms: ["steam"] },
   { name: "Satisfactory", image: "/images/games/satisfactory.jpg", price: "$8.00/mo", platforms: ["steam"] },
   { name: "Mindustry", image: "/images/games/mindustry.jpg", price: "$2.00/mo", platforms: ["steam"] },
@@ -315,11 +315,15 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
         cursor: game.comingSoon ? "default" : "pointer",
       }}
     >
-      {/* Default border */}
+      {/* Default border - red for NEW, blue for UPDATE, subtle for others */}
       <div 
         className="absolute inset-0 rounded-xl transition-opacity duration-150 ease-out group-hover:opacity-0"
         style={{ 
-          border: game.isNew ? "2px solid #ef4444" : "1px solid rgba(255,255,255,0.15)",
+          border: game.isNew 
+            ? "2px solid #ef4444" 
+            : game.isUpdate 
+              ? "2px solid #3b82f6" 
+              : "1px solid rgba(255,255,255,0.15)",
         }}
       />
       {/* Hover border - yellowish glow around entire card */}
@@ -601,10 +605,16 @@ export function GameServerHostingContent() {
                     transitionDelay: `${staggerDelay(index, 100)}ms`,
                   }}
                 >
-                  {/* Default border */}
+                  {/* Default border - red for NEW, blue for UPDATE, subtle for others */}
                   <div 
                     className="absolute inset-0 rounded-lg transition-opacity duration-150 ease-out group-hover:opacity-0"
-                    style={{ border: "1px solid rgba(255,255,255,0.15)" }}
+                    style={{ 
+                      border: game.isNew 
+                        ? "2px solid #ef4444" 
+                        : game.isUpdate 
+                          ? "2px solid #3b82f6" 
+                          : "1px solid rgba(255,255,255,0.15)" 
+                    }}
                   />
                   {/* Hover border - green glow around entire card */}
                   <div 
@@ -614,6 +624,22 @@ export function GameServerHostingContent() {
                       boxShadow: "0 0 15px rgba(34,197,94,0.3), inset 0 0 15px rgba(34,197,94,0.05)",
                     }}
                   />
+                  
+                  {/* NEW! or UPDATE! badge */}
+                  {(game.isNew || game.isUpdate) && (
+                    <div className="absolute top-2 left-2 z-10">
+                      <span
+                        className="inline-block text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded"
+                        style={{
+                          background: game.isNew ? "#ef4444" : "#3b82f6",
+                          color: "#fff",
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                        }}
+                      >
+                        {game.isNew ? "NEW!" : "UPDATE!"}
+                      </span>
+                    </div>
+                  )}
                   
                   {/* Full image with text overlay - NO scale on hover */}
                   <div className="relative aspect-[4/5] rounded-lg overflow-hidden">
