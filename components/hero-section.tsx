@@ -48,6 +48,16 @@ const gameSlides: GameSlide[] = [
     href: "/game-server-hosting/dayz",
   },
   {
+    id: "gtav",
+    title: "Hosting de Servidores\nGTA V - FiveM & RageMP",
+    label: "GTA V",
+    badges: ["FiveM & RageMP", "Alto Rendimiento", "Proteccion DDoS", "Soporte 24/7"],
+    cta: "INICIAR MI SERVIDOR GTA V",
+    bgImage: "/images/hero-gtav.jpg",
+    cardImage: "/images/card-gtav.jpg",
+    href: "/game-server-hosting/gtav",
+  },
+  {
     id: "astroneer",
     title: "Hosting de Servidores\nAstroneer",
     label: "ASTRONEER",
