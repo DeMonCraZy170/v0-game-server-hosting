@@ -304,6 +304,16 @@ function MobileIcon() {
 
 function GameCard({ game, index, isVisible }: { game: GameData; index: number; isVisible: boolean }) {
   const href = getGameHref(game)
+  
+  // Determine underline color based on tags
+  const getUnderlineColor = () => {
+    if (game.isNew) return "#ef4444" // Red for NEW
+    if (game.isUpdate) return "#3b82f6" // Blue for UPDATE
+    return "#eab308" // Yellow for no tags
+  }
+  
+  const underlineColor = getUnderlineColor()
+  
   return (
     <a
       href={href}
@@ -332,6 +342,15 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
         style={{ 
           border: "2px solid #f5a623",
           boxShadow: "0 0 15px rgba(245,166,35,0.3), inset 0 0 15px rgba(245,166,35,0.05)",
+        }}
+      />
+      
+      {/* Bottom underline indicator - Yellow for no tags, Red for NEW, Blue for UPDATE */}
+      <div 
+        className="absolute bottom-0 left-2 right-2 h-1 rounded-full z-20 transition-all duration-200 group-hover:h-1.5"
+        style={{ 
+          backgroundColor: underlineColor,
+          boxShadow: `0 0 10px ${underlineColor}80, 0 0 20px ${underlineColor}40`,
         }}
       />
       
