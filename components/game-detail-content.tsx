@@ -499,9 +499,20 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                 )}
 
                 <div className="p-6 flex-1">
-                  <h3 className="text-lg font-bold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>
-                    {plan.name}
-                  </h3>
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-lg font-bold text-foreground" style={{ fontFamily: "var(--font-heading)" }}>
+                      {plan.name}
+                    </h3>
+                    {plan.icon && (
+                      <Image
+                        src={plan.icon}
+                        alt={plan.name}
+                        width={40}
+                        height={40}
+                        className="object-contain"
+                      />
+                    )}
+                  </div>
                   <p className="text-3xl font-extrabold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>
                     ${getDiscountedPrice(plan.basePrice).toFixed(2)}
                   </p>

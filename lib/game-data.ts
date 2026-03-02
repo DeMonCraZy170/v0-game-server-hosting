@@ -6,6 +6,7 @@ export interface GamePlan {
   basePrice: number
   players: string
   bestSeller?: boolean
+  icon?: string
 }
 
 export interface GameFaq {
@@ -156,9 +157,9 @@ const gameDataArray: GameDetail[] = [
       { label: "Servidores Dedicados" },
     ],
     plans: [
-      { name: "Tela", ram: "10GB", cores: "2.5 Cores/s", storage: "100GB NVMe", basePrice: 15.00, players: "40 Jugadores" },
-      { name: "Cuero", ram: "16GB", cores: "3 Cores/s", storage: "100GB NVMe", basePrice: 24.00, players: "80 Jugadores", bestSeller: true },
-      { name: "Metal", ram: "24GB", cores: "3.5 Cores/s", storage: "100GB NVMe", basePrice: 36.00, players: "120 Jugadores" },
+      { name: "Tela", ram: "10GB", cores: "2.5 Cores/s", storage: "100GB NVMe", basePrice: 15.00, players: "40 Jugadores", icon: "/images/plans/rust-cloth.png" },
+      { name: "Cuero", ram: "16GB", cores: "3 Cores/s", storage: "100GB NVMe", basePrice: 24.00, players: "80 Jugadores", bestSeller: true, icon: "/images/plans/rust-leather.png" },
+      { name: "Combustible", ram: "24GB", cores: "3.5 Cores/s", storage: "100GB NVMe", basePrice: 36.00, players: "120 Jugadores", icon: "/images/plans/rust-fuel.png" },
     ],
     faqs: makeBaseFaqs("Rust"),
   },
