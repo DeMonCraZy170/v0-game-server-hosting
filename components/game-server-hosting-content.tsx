@@ -38,36 +38,44 @@ interface GameData {
 }
 
 const allGames: GameData[] = [
-  // Popular games - only 4 like SparkedHost
+  // Popular games - exactly 4 like SparkedHost (Minecraft Java, Unturned, Valheim, Palworld)
   { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$1.05/mo", popular: true, platforms: ["pc", "java"] },
+  { name: "Unturned", image: "/images/games/unturned.jpg", price: "$2.50/mo", popular: true, platforms: ["steam"] },
   { name: "Valheim", image: "/images/games/valheim.jpg", price: "$4.80/mo", popular: true, platforms: ["steam"] },
-  { name: "Rust", image: "/images/games/rust.jpg", price: "$8.00/mo", popular: true, platforms: ["steam"] },
-  { name: "Palworld", image: "/images/games/palworld.jpg", price: "$6.00/mo", popular: true, platforms: ["steam"] },
-  // Other games
-  { name: "DayZ", image: "/images/games/dayz.jpg", price: "$4.00/mo", isNew: true, platforms: ["steam"] },
+  { name: "Palworld", image: "/images/games/palworld.jpg", price: "$17.60/mo", popular: true, platforms: ["steam"] },
+  // Other games with NEW! badges (red left border)
+  { name: "Voyagers of Nera", image: "/images/games/voyagersofnera.jpg", price: "$9.00/mo", isNew: true, platforms: ["steam"] },
+  { name: "BeamMP", image: "/images/games/beammp.jpg", price: "$2.39/mo", isNew: true, platforms: ["steam"] },
+  { name: "Renown", image: "/images/games/renown.jpg", price: "$9.00/mo", isNew: true, platforms: ["steam"] },
+  // Regular games
   { name: "Minecraft Bedrock", image: "/images/games/minecraft-bedrock.jpg", price: "$1.05/mo", platforms: ["pc", "console", "mobile"] },
-  { name: "Ark: Survival Evolved", image: "/images/games/ark.jpg", price: "$8.00/mo", isUpdate: true, platforms: ["steam", "pc"] },
-  { name: "Terraria", image: "/images/games/terraria.jpg", price: "$2.50/mo", isUpdate: true, platforms: ["steam"] },
-  { name: "Unturned", image: "/images/games/unturned.jpg", price: "$2.50/mo", platforms: ["steam"] },
+  { name: "Ark: Survival Evolved", image: "/images/games/ark.jpg", price: "$8.00/mo", platforms: ["steam", "pc"] },
+  { name: "Rust", image: "/images/games/rust.jpg", price: "$16.00/mo", platforms: ["steam"] },
+  { name: "Terraria", image: "/images/games/terraria.jpg", price: "$2.50/mo", platforms: ["steam", "mobile"] },
   { name: "Garry's Mod", image: "/images/games/garrysmod.jpg", price: "$2.00/mo", platforms: ["steam"] },
   { name: "Satisfactory", image: "/images/games/satisfactory.jpg", price: "$8.00/mo", platforms: ["steam"] },
-  { name: "7 Days to Die", image: "/images/games/7daystodie.jpg", price: "$4.50/mo", platforms: ["steam"] },
-  { name: "Project Zomboid", image: "/images/games/projectzomboid.jpg", price: "$4.00/mo", platforms: ["steam"] },
-  { name: "The Forest", image: "/images/games/theforest.jpg", price: "$8.80/mo", platforms: ["steam"] },
-  { name: "Sons of the Forest", image: "/images/games/sonsoftheforest.jpg", price: "$8.80/mo", platforms: ["steam"] },
-  { name: "Enshrouded", image: "/images/games/enshrouded.jpg", price: "$6.00/mo", platforms: ["steam"] },
-  { name: "Conan Exiles", image: "/images/games/conanexiles.jpg", price: "$6.00/mo", platforms: ["steam"] },
-  { name: "V Rising", image: "/images/games/vrising.jpg", price: "$6.00/mo", platforms: ["steam"] },
-  { name: "Space Engineers", image: "/images/games/spaceengineers.jpg", price: "$6.00/mo", platforms: ["steam"] },
-  { name: "Don't Starve Together", image: "/images/games/dontstarvetogether.jpg", price: "$3.00/mo", platforms: ["steam"] },
-  { name: "Factorio", image: "/images/games/factorio.jpg", price: "$3.00/mo", platforms: ["steam"] },
-  { name: "Squad", image: "/images/games/squad.jpg", price: "$9.00/mo", platforms: ["steam"] },
-  { name: "Icarus", image: "/images/games/icarus.jpg", price: "$6.00/mo", platforms: ["steam"] },
-  { name: "Team Fortress 2", image: "/images/games/tf2.jpg", price: "$2.00/mo", platforms: ["steam"] },
-  { name: "Euro Truck Simulator 2", image: "/images/games/eurotruck.jpg", price: "$4.40/mo", platforms: ["steam"] },
   { name: "Mindustry", image: "/images/games/mindustry.jpg", price: "$2.00/mo", platforms: ["steam"] },
-  { name: "FiveM", image: "/images/games/fivem.jpg", price: "$12.00/mo", comingSoon: true, platforms: ["steam"] },
-  { name: "RageMP", image: "/images/games/ragemp.jpg", price: "$12.00/mo", comingSoon: true, platforms: ["steam"] },
+  { name: "7 Days to Die", image: "/images/games/7daystodie.jpg", price: "$4.50/mo", platforms: ["steam"] },
+  { name: "Squad", image: "/images/games/squad.jpg", price: "$9.00/mo", platforms: ["steam"] },
+  { name: "The Forest", image: "/images/games/theforest.jpg", price: "$8.80/mo", platforms: ["steam"] },
+  { name: "Euro Truck Simulator 2", image: "/images/games/eurotruck.jpg", price: "$4.40/mo", platforms: ["steam"] },
+  { name: "American Truck Simulator", image: "/images/games/americantruck.jpg", price: "$4.40/mo", platforms: ["steam"] },
+  { name: "Icarus", image: "/images/games/icarus.jpg", price: "$8.00/mo", platforms: ["steam"] },
+  { name: "Sons of the Forest", image: "/images/games/sonsoftheforest.jpg", price: "$8.00/mo", platforms: ["steam"] },
+  { name: "Project Zomboid", image: "/images/games/projectzomboid.jpg", price: "$4.00/mo", platforms: ["steam"] },
+  { name: "Team Fortress 2", image: "/images/games/tf2.jpg", price: "$4.40/mo", platforms: ["steam"] },
+  { name: "Enshrouded", image: "/images/games/enshrouded.jpg", price: "$13.20/mo", platforms: ["steam"] },
+  { name: "Don't Starve Together", image: "/images/games/dontstarvetogether.jpg", price: "$8.80/mo", platforms: ["steam"] },
+  { name: "Factorio", image: "/images/games/factorio.jpg", price: "$4.40/mo", platforms: ["steam"] },
+  { name: "Astroneer", image: "/images/games/astroneer.jpg", price: "$4.40/mo", platforms: ["steam"] },
+  { name: "Conan Exiles", image: "/images/games/conanexiles.jpg", price: "$12.00/mo", platforms: ["steam"] },
+  { name: "Space Engineers", image: "/images/games/spaceengineers.jpg", price: "$12.00/mo", platforms: ["steam"] },
+  { name: "V Rising", image: "/images/games/vrising.jpg", price: "$13.20/mo", platforms: ["steam"] },
+  { name: "DayZ", image: "/images/games/dayz.jpg", price: "$12.00/mo", platforms: ["steam"] },
+  // Coming soon games
+  { name: "Killing Floor 3", image: "/images/games/killingfloor3.jpg", price: "$7.00/mo", comingSoon: true, platforms: ["steam"] },
+  { name: "Lost Isle", image: "/images/games/lostisle.jpg", price: "$8.00/mo", comingSoon: true, platforms: ["steam"] },
+  { name: "Hytale", image: "/images/games/hytale.jpg", price: "$4.00/mo", comingSoon: true, platforms: ["steam"] },
 ]
 
 const popularGames = allGames.filter((g) => g.popular)
@@ -101,9 +109,15 @@ const getGameSlug = (name: string) => {
     "Icarus": "icarus",
     "Team Fortress 2": "team-fortress-2",
     "Euro Truck Simulator 2": "euro-truck-simulator-2",
+    "American Truck Simulator": "american-truck-simulator",
     "Mindustry": "mindustry",
-    "FiveM": "fivem",
-    "RageMP": "ragemp",
+    "Astroneer": "astroneer",
+    "Voyagers of Nera": "voyagers-of-nera",
+    "BeamMP": "beammp",
+    "Renown": "renown",
+    "Killing Floor 3": "killing-floor-3",
+    "Lost Isle": "lost-isle",
+    "Hytale": "hytale",
   }
   return slugMap[name] || name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
 }
@@ -121,39 +135,39 @@ const getGameHref = (game: GameData) => {
 const perks = [
   {
     icon: Cpu,
-    title: "El Hardware Mas Rapido",
+    title: "The Fastest Hardware",
     description:
-      "Disfruta de velocidad y rendimiento inigualables con CPUs Ryzen 7900X y 9900X, RAM DDR5 y SSDs NVMe.",
+      "Enjoy unmatched speed and performance with Sparked Host's Ryzen 7900X & 9900X CPUs, DDR5 RAM, and NVMe SSDs.",
   },
   {
     icon: DollarSign,
-    title: "A Los Precios Mas Bajos",
+    title: "At The Lowest Prices",
     description:
-      "Sin importar cuanto rendimiento necesites, siempre tenemos una opcion con precio mas bajo que la competencia.",
+      "No matter how much performance you need, we always have an option that's lower priced than the competition.",
   },
   {
     icon: Shield,
-    title: "99.9% de Uptime",
+    title: "99.9% Uptime",
     description:
-      "Asegura que tu servidor permanezca en linea 24/7 con infraestructura empresarial confiable.",
+      "Ensure your server stays online 24/7 with reliable enterprise infrastructure. You never have to worry about downtime.",
   },
   {
     icon: Clock,
-    title: "Soporte 24/7",
+    title: "24/7 Support",
     description:
-      "Nuestro equipo siempre esta listo para ayudar. Damos respuestas rapidas y soluciones reales.",
+      "When you buy a server, our team is always ready to help. We give fast responses and real solutions whenever you need them.",
   },
   {
     icon: Zap,
-    title: "Configuracion Instantanea",
+    title: "Instant Setup",
     description:
-      "Ve de navegacion a configuracion en solo minutos. Elige un servidor, paga, y comienza a jugar.",
+      "Go from browsing to setup in just a few minutes. Pick a server, checkout, and answer some questions to get started.",
   },
   {
     icon: ShieldCheck,
-    title: "Proteccion DDoS",
+    title: "DDoS Protection",
     description:
-      "Nos asociamos con proveedores premium de proteccion DDoS para proteger tu servidor.",
+      "We partner with premium DDoS protection providers to protect your server from bad actors.",
   },
 ]
 
@@ -172,46 +186,46 @@ interface RegionData {
 
 const regions: RegionData[] = [
   {
-    region: "Norte America",
+    region: "North America",
     locations: [
-      { name: "OVH Beauharnois, Canada", flag: "CA", active: true },
-      { name: "Miami, Florida", flag: "US", active: false },
-      { name: "Dallas, Texas", flag: "US", active: false },
-      { name: "Los Angeles, California", flag: "US", active: false },
+      { name: "Miami, Florida", flag: "US", active: true },
+      { name: "Dallas, Texas", flag: "US", active: true },
+      { name: "Salt Lake City, Utah", flag: "US", active: true },
+      { name: "Ashburn, Virginia", flag: "US", active: true },
     ],
   },
   {
-    region: "Europa",
+    region: "Europe",
     locations: [
-      { name: "Paris, Francia", flag: "FR", active: false },
-      { name: "Helsinki, Finlandia", flag: "FI", active: false },
-      { name: "Viena, Austria", flag: "AT", active: false },
+      { name: "Paris, France", flag: "FR", active: true },
+      { name: "Helsinki, Finland", flag: "FI", active: true },
+      { name: "Vienna, Austria", flag: "AT", active: true },
     ],
   },
   {
     region: "Asia",
     locations: [
-      { name: "Singapur, Asia", flag: "SG", active: false },
-      { name: "Mumbai, India", flag: "IN", active: false },
+      { name: "Singapore, Asia", flag: "SG", active: true },
+      { name: "Mumbai, India", flag: "IN", active: true },
     ],
   },
   {
     region: "Oceania",
-    locations: [{ name: "Sydney, Australia", flag: "AU", active: false }],
+    locations: [{ name: "Sydney, Australia", flag: "AU", active: true }],
   },
 ]
 
 const locationDots = [
-  { name: "OVH Beauharnois, Canada", x: 27, y: 28, active: true },
-  { name: "Miami, Florida", x: 24, y: 40, active: false },
-  { name: "Dallas, Texas", x: 20, y: 36, active: false },
-  { name: "Los Angeles, California", x: 14, y: 35, active: false },
-  { name: "Paris, Francia", x: 48, y: 27, active: false },
-  { name: "Helsinki, Finlandia", x: 54, y: 19, active: false },
-  { name: "Viena, Austria", x: 51, y: 27, active: false },
-  { name: "Singapur, Asia", x: 76, y: 52, active: false },
-  { name: "Mumbai, India", x: 70, y: 42, active: false },
-  { name: "Sydney, Australia", x: 86, y: 72, active: false },
+  { name: "Miami, Florida", x: 24, y: 40, active: true },
+  { name: "Dallas, Texas", x: 20, y: 36, active: true },
+  { name: "Salt Lake City, Utah", x: 17, y: 34, active: true },
+  { name: "Ashburn, Virginia", x: 26, y: 35, active: true },
+  { name: "Paris, France", x: 48, y: 27, active: true },
+  { name: "Helsinki, Finland", x: 54, y: 19, active: true },
+  { name: "Vienna, Austria", x: 51, y: 27, active: true },
+  { name: "Singapore, Asia", x: 76, y: 52, active: true },
+  { name: "Mumbai, India", x: 70, y: 42, active: true },
+  { name: "Sydney, Australia", x: 86, y: 72, active: true },
 ]
 
 /* ─── FAQ ─── */
@@ -351,16 +365,16 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
         {/* Info overlaid on image at bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <h3
-            className="font-bold text-white text-sm mb-1 truncate"
+            className="font-bold text-white text-sm mb-0.5 truncate"
             style={{ fontFamily: "var(--font-heading)" }}
           >
             {game.name}
           </h3>
           {game.comingSoon ? (
-            <p className="text-primary text-xs font-semibold italic">Proximamente</p>
+            <p className="text-gray-400 text-xs">Coming Soon!</p>
           ) : (
-            <p className="text-gray-300 text-xs">
-              {"Desde "}
+            <p className="text-gray-400 text-xs">
+              {"Starting at "}
               <span className="text-primary font-bold">{game.price}</span>
             </p>
           )}
@@ -514,8 +528,8 @@ export function GameServerHostingContent() {
           </div>
 
           {/* Trust badge */}
-          <p className="text-primary text-sm font-bold mb-3 uppercase tracking-widest">
-            Respaldados por 10,000+ Clientes
+          <p className="text-primary text-xs font-bold mb-2 uppercase tracking-[0.2em]">
+            Trusted by 10,000+ Customers
           </p>
 
           {/* Title */}
@@ -527,18 +541,18 @@ export function GameServerHostingContent() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-muted-foreground text-base md:text-lg max-w-xl mx-auto mb-8 text-pretty">
-            {"Ofrecemos el mejor hosting de servidores de juegos a los precios mas bajos. Busca tu juego favorito para comenzar en 5 minutos o menos!"}
+          <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto mb-8 text-pretty">
+            {"We provide the best game server hosting for the lowest prices. Search your favorite game to get started in 5 minutes or less!"}
           </p>
 
           {/* Search bar */}
-          <div className="relative max-w-xl mx-auto">
+          <div className="relative max-w-lg mx-auto">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cual es tu juego favorito para jugar con tus amigos?"
-              className="w-full bg-card/80 backdrop-blur-sm border border-border rounded-xl px-5 py-4 pr-12 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+              placeholder="What's your favorite game to play with your friends?"
+              className="w-full bg-[#1a1a1f]/90 backdrop-blur-sm border border-border/50 rounded-xl px-5 py-4 pr-12 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
             />
             <Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           </div>
@@ -546,29 +560,30 @@ export function GameServerHostingContent() {
       </section>
 
       {/* ─── Popular Games - SparkedHost exact style ─── */}
-      <section className="py-12 bg-background">
+      <section className="py-10 bg-background">
         <div className="mx-auto max-w-5xl px-4">
           <div
             ref={popularRef}
-            className="relative rounded-2xl p-6 md:p-8 transition-all duration-700 ease-out overflow-hidden"
+            className="relative rounded-xl p-5 md:p-6 transition-all duration-700 ease-out overflow-hidden"
             style={{
               opacity: popularVisible ? 1 : 0,
               transform: popularVisible ? "translateY(0)" : "translateY(30px)",
               border: "2px solid #f5a623",
             }}
           >
-            {/* Inner gradient background - inside the container */}
+            {/* Inner warm/brownish gradient background like SparkedHost */}
             <div 
-              className="absolute inset-0 -z-10" 
+              className="absolute inset-0" 
               style={{ 
-                background: "linear-gradient(180deg, rgba(30,28,20,0.95) 0%, rgba(20,18,15,0.98) 100%)",
+                background: "linear-gradient(180deg, rgba(35,30,20,0.97) 0%, rgba(25,22,18,0.99) 50%, rgba(18,16,14,1) 100%)",
+                zIndex: 0,
               }} 
             />
             
-            {/* Badge on top */}
-            <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 z-10">
+            {/* Badge on top - centered pill */}
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20">
               <span
-                className="inline-block text-xs font-bold uppercase tracking-[0.12em] px-5 py-1.5 rounded-b-lg"
+                className="inline-block text-[11px] font-bold uppercase tracking-[0.15em] px-5 py-1.5 rounded-full"
                 style={{
                   background: "#f5a623",
                   color: "#0d0d0d",
@@ -579,17 +594,18 @@ export function GameServerHostingContent() {
             </div>
 
             {/* Popular games grid - 4 large cards with green hover underline */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-4">
+            <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-3">
               {(filteredPopularGames.length > 0 ? filteredPopularGames : popularGames).slice(0, 4).map((game, index) => (
                 <a
                   key={game.name}
                   href={getGameHref(game)}
-                  className="group relative rounded-lg overflow-hidden transition-all duration-300 ease-out hover:scale-[1.02]"
+                  className="group relative rounded-lg overflow-hidden transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-0.5"
                   style={{
                     opacity: popularVisible ? 1 : 0,
                     transform: popularVisible ? "translateY(0)" : "translateY(20px)",
                     transitionDelay: `${staggerDelay(index, 100)}ms`,
-                    border: "1px solid rgba(255,255,255,0.15)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                   }}
                 >
                   {/* Full image with text overlay */}
@@ -602,18 +618,18 @@ export function GameServerHostingContent() {
                       sizes="(max-width: 640px) 50vw, 25vw"
                     />
                     {/* Gradient overlay - transparent to dark */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
                     
                     {/* Text overlay at bottom */}
                     <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
                       <h3
-                        className="font-bold text-white text-sm md:text-base mb-1 truncate"
+                        className="font-bold text-white text-sm md:text-base mb-0.5 truncate"
                         style={{ fontFamily: "var(--font-heading)" }}
                       >
                         {game.name}
                       </h3>
-                      <p className="text-gray-300 text-xs md:text-sm">
-                        {"Desde "}
+                      <p className="text-gray-400 text-xs md:text-sm">
+                        {"Starting at "}
                         <span className="text-primary font-bold">{game.price}</span>
                       </p>
                       <div className="flex items-center gap-2 mt-2">
