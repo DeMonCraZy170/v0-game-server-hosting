@@ -181,9 +181,9 @@ const gameDataArray: GameDetail[] = [
       { label: "Backups del Mundo" },
     ],
     plans: [
-      { name: "Greyling", ram: "4GB", cores: "2 Cores/s", storage: "30GB SSD", basePrice: 4.80, players: "4 Jugadores" },
-      { name: "Viking", ram: "6GB", cores: "2.5 Cores/s", storage: "50GB SSD", basePrice: 7.20, players: "6 Jugadores", bestSeller: true },
-      { name: "Odin", ram: "8GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 10.00, players: "10 Jugadores" },
+      { name: "Greyling", ram: "4GB", cores: "2 Cores/s", storage: "30GB SSD", basePrice: 4.80, players: "4 Jugadores", icon: "/images/plans/valheim-leather.png" },
+      { name: "Viking", ram: "6GB", cores: "2.5 Cores/s", storage: "50GB SSD", basePrice: 7.20, players: "6 Jugadores", bestSeller: true, icon: "/images/plans/valheim-cyan.png" },
+      { name: "Odin", ram: "8GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 10.00, players: "10 Jugadores", icon: "/images/plans/valheim-blue.png" },
     ],
     faqs: makeBaseFaqs("Valheim"),
   },
