@@ -550,7 +550,15 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
 
       {/* ─── DDoS Protection ─── */}
       <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(13,13,13,0.97) 0%, rgba(13,13,13,0.9) 50%, rgba(13,13,13,0.85) 100%)" }} />
+        {/* Server room background */}
+        <Image
+          src="/images/ddos-protection-bg.png"
+          alt=""
+          fill
+          className="object-cover object-right"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(13,13,13,0.97) 0%, rgba(13,13,13,0.88) 50%, rgba(13,13,13,0.75) 100%)" }} />
 
         <div className="relative mx-auto max-w-7xl px-4">
           <div
