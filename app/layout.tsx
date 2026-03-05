@@ -10,8 +10,8 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' })
 
 export const metadata: Metadata = {
-  title: 'ForzaHost - Hosting de Servidores de Juegos',
-  description: 'Hosting de servidores de juegos de alto rendimiento. Minecraft, Valheim, Terraria y mas. Configuracion instantanea, proteccion DDoS, soporte 24/7.',
+  title: 'ForzaHost - Hosting Services',
+  description: 'Servicios de hosting de alto rendimiento. Servidores de juegos, VPS y mas. Configuracion instantanea, proteccion DDoS, soporte 24/7.',
 }
 
 export const viewport: Viewport = {
