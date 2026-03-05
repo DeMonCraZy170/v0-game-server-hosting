@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 50" width="280" height="50">
+  <!-- Lightning bolt icon -->
+  <g transform="translate(4, 3)">
+    <path d="M22 2L9 26h9L14 42l16-24h-9L22 2z" fill="#f59e0b" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+
+  <!-- FORZA text -->
+  <text x="52" y="35" font-family="'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="900" letter-spacing="1.5" fill="#ffffff">
+    FORZA
+  </text>
+
+  <!-- PANEL text in primary amber color -->
+  <text x="162" y="35" font-family="'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="900" letter-spacing="1.5" fill="#f59e0b">
+    PANEL
+  </text>
+</svg>
