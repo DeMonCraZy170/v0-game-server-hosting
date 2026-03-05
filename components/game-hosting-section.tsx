@@ -268,11 +268,9 @@ export function GameHostingSection() {
                 <Image
                   src={category.icon}
                   alt={category.title}
-                  width={category.iconWidth}
-                  height={category.iconHeight}
+                  fill
                   className="object-contain drop-shadow-lg rounded-lg"
-                  style={{ width: "auto", height: "auto" }}
-                  sizes="110px"
+                  sizes="140px"
                 />
               </div>
 
