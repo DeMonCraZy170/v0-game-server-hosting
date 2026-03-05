@@ -16,11 +16,11 @@ export function AnnouncementBar() {
           <ArrowRight className="h-4 w-4 text-foreground" />
         </div>
         <div className="hidden md:flex items-center gap-4">
-          <a href="/proximamente" className="text-[15px] font-semibold text-foreground/80 hover:text-foreground transition-colors flex items-center gap-1.5">
+          <a href="https://panel.forzahost.com" target="_blank" rel="noopener noreferrer" className="text-[15px] font-semibold text-foreground/80 hover:text-foreground transition-colors flex items-center gap-1.5">
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
             Panel de Juegos
           </a>
-          <a href="/proximamente" className="text-[15px] font-semibold text-foreground/80 hover:text-foreground transition-colors flex items-center gap-1.5">
+          <a href="https://billing.forzahost.com" target="_blank" rel="noopener noreferrer" className="text-[15px] font-semibold text-foreground/80 hover:text-foreground transition-colors flex items-center gap-1.5">
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
             Area de Cliente
           </a>
