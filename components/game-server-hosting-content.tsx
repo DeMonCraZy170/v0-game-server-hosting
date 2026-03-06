@@ -173,44 +173,46 @@ const regions: RegionData[] = [
   {
     region: "North America",
     locations: [
-      { name: "Miami, Florida", flag: "US", active: true },
-      { name: "Dallas, Texas", flag: "US", active: true },
-      { name: "Salt Lake City, Utah", flag: "US", active: true },
-      { name: "Ashburn, Virginia", flag: "US", active: true },
+      { name: "Montreal, Canada", flag: "CA", active: true },
+      { name: "Miami, Florida", flag: "US", active: false },
+      { name: "Dallas, Texas", flag: "US", active: false },
+      { name: "Salt Lake City, Utah", flag: "US", active: false },
+      { name: "Ashburn, Virginia", flag: "US", active: false },
     ],
   },
   {
     region: "Europe",
     locations: [
-      { name: "Paris, France", flag: "FR", active: true },
-      { name: "Helsinki, Finland", flag: "FI", active: true },
-      { name: "Vienna, Austria", flag: "AT", active: true },
+      { name: "Paris, France", flag: "FR", active: false },
+      { name: "Helsinki, Finland", flag: "FI", active: false },
+      { name: "Vienna, Austria", flag: "AT", active: false },
     ],
   },
   {
     region: "Asia",
     locations: [
-      { name: "Singapore, Asia", flag: "SG", active: true },
-      { name: "Mumbai, India", flag: "IN", active: true },
+      { name: "Singapore, Asia", flag: "SG", active: false },
+      { name: "Mumbai, India", flag: "IN", active: false },
     ],
   },
   {
     region: "Oceania",
-    locations: [{ name: "Sydney, Australia", flag: "AU", active: true }],
+    locations: [{ name: "Sydney, Australia", flag: "AU", active: false }],
   },
 ]
 
 const locationDots = [
-  { name: "Miami, Florida", x: 24, y: 40, active: true },
-  { name: "Dallas, Texas", x: 20, y: 36, active: true },
-  { name: "Salt Lake City, Utah", x: 17, y: 34, active: true },
-  { name: "Ashburn, Virginia", x: 26, y: 35, active: true },
-  { name: "Paris, France", x: 48, y: 27, active: true },
-  { name: "Helsinki, Finland", x: 54, y: 19, active: true },
-  { name: "Vienna, Austria", x: 51, y: 27, active: true },
-  { name: "Singapore, Asia", x: 76, y: 52, active: true },
-  { name: "Mumbai, India", x: 70, y: 42, active: true },
-  { name: "Sydney, Australia", x: 86, y: 72, active: true },
+  { name: "Montreal, Canada", x: 25, y: 28, active: true },
+  { name: "Miami, Florida", x: 24, y: 40, active: false },
+  { name: "Dallas, Texas", x: 20, y: 36, active: false },
+  { name: "Salt Lake City, Utah", x: 17, y: 34, active: false },
+  { name: "Ashburn, Virginia", x: 26, y: 35, active: false },
+  { name: "Paris, France", x: 48, y: 27, active: false },
+  { name: "Helsinki, Finland", x: 54, y: 19, active: false },
+  { name: "Vienna, Austria", x: 51, y: 27, active: false },
+  { name: "Singapore, Asia", x: 76, y: 52, active: false },
+  { name: "Mumbai, India", x: 70, y: 42, active: false },
+  { name: "Sydney, Australia", x: 86, y: 72, active: false },
 ]
 
 /* ─── FAQ ─── */
