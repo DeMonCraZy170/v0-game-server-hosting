@@ -56,7 +56,7 @@ const gameSlides: GameSlide[] = [
     label: "MINECRAFT",
     badges: ["Bedrock & Java", "Configuracion Instantanea", "Mejor Precio", "Soporte 24/7"],
     cta: "INICIAR MI SERVIDOR MINECRAFT",
-    bgImage: "/images/hero-minecraft.jpg",
+    bgImage: "/images/hero-minecraft.avif",
     cardImage: "/images/card-minecraft.jpg",
     href: "/minecraft",
   },
