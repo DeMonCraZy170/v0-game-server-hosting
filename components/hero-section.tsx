@@ -24,7 +24,7 @@ const gameSlides: GameSlide[] = [
     label: "SERVIDOR DEDICADO",
     badges: ["Rendimiento Maximo", "Control Total", "Mejor Precio", "Soporte 24/7"],
     cta: "INICIAR MI SERVIDOR DEDICADO",
-    bgImage: "/images/hero-dedicated.jpg",
+    bgImage: "/images/hero-dedicated.avif",
     cardImage: "/images/card-dedicated.jpg",
     comingSoon: true,
     viewAllText: "VER TODAS LAS OPCIONES",
