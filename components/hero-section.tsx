@@ -46,8 +46,8 @@ const gameSlides: GameSlide[] = [
     label: "DAYZ",
     badges: ["Alto Rendimiento", "Proteccion DDoS", "Soporte 24/7", "Configuracion Instantanea"],
     cta: "INICIAR MI SERVIDOR DAYZ",
-    bgImage: "/images/hero-dayz.jpg",
-    cardImage: "/images/card-dayz.jpg",
+    bgImage: "/images/hero-dayz.png",
+    cardImage: "/images/hero-dayz.png",
     href: "/game-server-hosting/dayz",
   },
   {
