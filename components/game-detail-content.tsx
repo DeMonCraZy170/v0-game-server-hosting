@@ -67,16 +67,16 @@ const regions: { region: string; locations: LocationWithPing[] }[] = [
   {
     region: "Norte America",
     locations: [
-      { name: "Miami, Florida", flag: "US", active: true, ping: 45, signal: "excellent" },
+      { name: "OVH Beauharnois, Canada", flag: "CA", active: true, ping: 35, signal: "excellent" },
+      { name: "Miami, Florida", flag: "US", active: false, ping: 45, signal: "excellent" },
       { name: "Dallas, Texas", flag: "US", active: false, ping: 62, signal: "excellent" },
       { name: "Los Angeles, California", flag: "US", active: false, ping: 78, signal: "good" },
-      { name: "OVH Beauharnois, Canada", flag: "CA", active: false, ping: 85, signal: "good" },
     ],
   },
   {
     region: "Latinoamerica",
     locations: [
-      { name: "Sao Paulo, Brasil", flag: "BR", active: true, ping: 28, signal: "excellent" },
+      { name: "Sao Paulo, Brasil", flag: "BR", active: false, ping: 28, signal: "excellent" },
       { name: "Buenos Aires, Argentina", flag: "AR", active: false, ping: 35, signal: "excellent" },
       { name: "Santiago, Chile", flag: "CL", active: false, ping: 42, signal: "excellent" },
       { name: "Ciudad de Mexico, Mexico", flag: "MX", active: false, ping: 55, signal: "good" },
@@ -112,15 +112,15 @@ interface LocationDot {
 
 const locationDots: LocationDot[] = [
   // North America
-  { name: "Miami, Florida", x: 24, y: 38, active: true, ping: 45, signal: "excellent" },
+  { name: "OVH Beauharnois, Canada", x: 27, y: 26, active: true, ping: 35, signal: "excellent" },
+  { name: "Miami, Florida", x: 24, y: 38, active: false, ping: 45, signal: "excellent" },
   { name: "Dallas, Texas", x: 20, y: 35, active: false, ping: 62, signal: "excellent" },
   { name: "Los Angeles, California", x: 14, y: 34, active: false, ping: 78, signal: "good" },
-  { name: "OVH Beauharnois, Canada", x: 27, y: 26, active: false, ping: 85, signal: "good" },
   // Latin America
   { name: "Ciudad de Mexico, Mexico", x: 18, y: 43, active: false, ping: 55, signal: "good" },
   { name: "Bogota, Colombia", x: 22, y: 52, active: false, ping: 52, signal: "good" },
   { name: "Lima, Peru", x: 21, y: 60, active: false, ping: 48, signal: "good" },
-  { name: "Sao Paulo, Brasil", x: 28, y: 62, active: true, ping: 28, signal: "excellent" },
+  { name: "Sao Paulo, Brasil", x: 28, y: 62, active: false, ping: 28, signal: "excellent" },
   { name: "Buenos Aires, Argentina", x: 26, y: 70, active: false, ping: 35, signal: "excellent" },
   { name: "Santiago, Chile", x: 23, y: 68, active: false, ping: 42, signal: "excellent" },
   // Europe
@@ -392,7 +392,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                             {region.region}
                           </div>
                           {region.locations.map(loc => {
-                            const isAvailable = loc.name.includes("Beauharnois")
+                            const isAvailable = loc.active
                             return (
                               <button
                                 key={loc.name}
