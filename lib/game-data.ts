@@ -83,7 +83,7 @@ const gameDataArray: GameDetail[] = [
     name: "DayZ",
     tagline: "DayZ Server Hosting",
     description: "DayZ es un juego de supervivencia multijugador en un mundo abierto post-apocaliptico. Explora Chernarus, encuentra armas, comida y suministros mientras evitas zombis y otros jugadores en un entorno hostil donde cada encuentro puede ser tu ultimo.",
-    coverImage: "/images/games/dayz.jpg",
+    coverImage: "/images/games/dayz.png",
     steamUrl: "https://store.steampowered.com/app/221100/DayZ/",
     steamPrice: "$44.99",
     basePrice: "$4.00/mo",
