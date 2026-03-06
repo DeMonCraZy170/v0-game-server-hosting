@@ -35,7 +35,7 @@ const gameSlides: GameSlide[] = [
     label: "BOT DE DISCORD",
     badges: ["Configuracion Instantanea", "Uptime 99.9%", "Hardware Potente", "Soporte 24/7"],
     cta: "INICIAR MI BOT DE DISCORD",
-    bgImage: "/images/hero-discord.jpg",
+    bgImage: "/images/hero-discord.avif",
     cardImage: "/images/card-discord.jpg",
     comingSoon: true,
     viewAllText: "VER TODAS LAS OPCIONES",
