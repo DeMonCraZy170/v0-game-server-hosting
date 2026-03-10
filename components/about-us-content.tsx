@@ -24,9 +24,9 @@ const values = [
   },
   {
     icon: Shield,
-    title: "Proteccion DDoS Avanzada",
+    title: "Proteccion DDoS Layer 7",
     description:
-      "Todos nuestros servidores incluyen proteccion DDoS gratuita para mantener tu servidor en linea incluso durante los ataques mas intensos.",
+      "Anti-DDoS especializado para cada juego con proteccion Layer 7. Tu seguridad tambien es nuestra prioridad, manteniendote en linea incluso durante los ataques mas intensos.",
   },
   {
     icon: Clock,
