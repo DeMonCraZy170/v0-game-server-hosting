@@ -77,10 +77,13 @@ export function AboutUsContent() {
             src="/images/about-bg.png"
             alt=""
             fill
-            className="object-cover"
+            className="object-cover opacity-40"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/90 to-background" />
+          {/* Multiple gradient overlays for better fade effect */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/70 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </div>
 
         {/* Content */}
