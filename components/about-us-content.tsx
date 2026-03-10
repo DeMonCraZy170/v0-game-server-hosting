@@ -70,18 +70,19 @@ export function AboutUsContent() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section with Background */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden min-h-[500px]">
         {/* Background Image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/about-bg.png"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/90 to-background" />
-        </div>
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/images/about-bg.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        {/* Gradient fade at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
         {/* Content */}
         <div className="relative mx-auto max-w-7xl px-4 pt-32 pb-20">
