@@ -8,7 +8,7 @@ import { Footer } from "@/components/footer"
 
 // Stats data
 const stats = [
-  { label: "HOSTING DESDE", value: "2024", description: "Ano de fundacion" },
+  { label: "HOSTING DESDE", value: "2026", description: "Ano de fundacion" },
   { label: "UBICACIONES GLOBALES", value: "1", description: "Proximamente mas" },
   { label: "CLIENTES ACTIVOS", value: "50+", description: "Y creciendo" },
   { label: "SERVIDORES DESPLEGADOS", value: "100+", description: "Capacidad total" },
