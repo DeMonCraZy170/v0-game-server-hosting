@@ -402,6 +402,9 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
     : isBedrock
       ? (selectedType === "community" ? bedrockCommunityPlans : bedrockVanillaPlans)
       : (selectedType === "community" ? communityPlans : vanillaPlans)
+  
+  // Filter plans for display - for non-modded variants, we want all plans including popular ones
+  const displayPlans = plans
   const popularPlans = plans.filter((p) => p.popular || p.bestSeller)
   const allOtherPlans = plans.filter((p) => !p.popular && !p.bestSeller)
 
@@ -637,8 +640,8 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               </div>
             </div>
           </div>
-        ) : isModded ? (
-          /* ── MODDED: Direct plans layout (no wizard steps) ── */
+        ) : (
+          /* ── STANDARD/BEDROCK/MODDED: Direct plans layout (no wizard steps) ── */
           <div className="mx-auto max-w-7xl px-4">
             <div
               ref={wizardRef}
@@ -657,21 +660,21 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
                     {(["vanilla", "community"] as const).map((tier) => (
                       <button
                         key={tier}
-                        onClick={() => setSelectedType(tier === "vanilla" ? "modded" : "community")}
+                        onClick={() => setSelectedType(tier)}
                         className="px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200"
                         style={{
-                          background: (tier === "vanilla" && selectedType === "modded") || (tier === "community" && selectedType === "community")
+                          background: (tier === "vanilla" && (selectedType === "vanilla" || selectedType === "modded")) || (tier === "community" && selectedType === "community")
                             ? "rgba(34,197,94,0.15)"
                             : "rgba(255,255,255,0.03)",
-                          border: (tier === "vanilla" && selectedType === "modded") || (tier === "community" && selectedType === "community")
+                          border: (tier === "vanilla" && (selectedType === "vanilla" || selectedType === "modded")) || (tier === "community" && selectedType === "community")
                             ? "1px solid rgba(34,197,94,0.4)"
                             : "1px solid rgba(255,255,255,0.06)",
-                          color: (tier === "vanilla" && selectedType === "modded") || (tier === "community" && selectedType === "community")
+                          color: (tier === "vanilla" && (selectedType === "vanilla" || selectedType === "modded")) || (tier === "community" && selectedType === "community")
                             ? "#22c55e"
                             : "rgba(255,255,255,0.5)",
                         }}
                       >
-                        {tier === "vanilla" ? "Enterprise" : "Extreme"}
+                        {tier === "vanilla" ? (isModded ? "Enterprise" : "Standard") : (isModded ? "Extreme" : "Comunidad")}
                       </button>
                     ))}
                   </div>
@@ -764,331 +767,6 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               </div>
             </div>
           </div>
-        ) : (
-        <div className="mx-auto max-w-5xl px-4">
-          {/* Navigation buttons above wizard */}
-          <div className="flex items-center justify-end gap-3 mb-4">
-            {currentStep > 1 && (
-              <button onClick={goBack} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold text-foreground transition-all duration-200 hover:bg-secondary" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                <ArrowLeft className="w-4 h-4" />
-                Volver
-              </button>
-            )}
-            {currentStep < 3 && (
-              <button
-                onClick={goNext}
-                disabled={currentStep === 2 && !selectedLocation}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold text-foreground transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-secondary"
-                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
-              >
-                Continuar
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            )}
-            {currentStep === 3 && (
-              <span className="text-sm text-muted-foreground">Selecciona un plan para continuar al checkout</span>
-            )}
-          </div>
-
-          <div
-            ref={wizardRef}
-            className="rounded-2xl overflow-hidden transition-all duration-700 ease-out"
-            style={{ background: "#141416", border: "1px solid rgba(255,255,255,0.06)", opacity: wizardVisible ? 1 : 0, transform: wizardVisible ? "translateY(0)" : "translateY(30px)" }}
-          >
-            {/* Step indicator */}
-            <div className="px-8 pt-8 pb-4">
-              <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
-                <span>{`Paso ${currentStep} de 3`}</span>
-                <span>{`${stepPercent}%`}</span>
-              </div>
-              <div className="w-full h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
-                <div className="h-full rounded-full transition-all duration-500" style={{ width: `${stepPercent}%`, background: "linear-gradient(90deg, #22c55e, #4ade80)" }} />
-              </div>
-            </div>
-
-            {/* ── STEP 1: Server Type ── */}
-            {currentStep === 1 && (
-              <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-                <div className="px-8 pb-2">
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                    {isModded ? "Que tipo de servidor Modded quieres iniciar?" : "Que tipo de servidor Minecraft quieres iniciar?"}
-                  </h2>
-                </div>
-
-                <div className="px-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {serverTypes.map((type) => {
-                    const isSelected = selectedType === type.id
-                    return (
-                      <button
-                        key={type.id}
-                        onClick={() => setSelectedType(type.id)}
-                        className="relative text-left rounded-xl p-5 transition-all duration-200"
-                        style={{ background: isSelected ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)", border: isSelected ? `2px solid ${type.color}` : "2px solid rgba(255,255,255,0.06)" }}
-                      >
-                        {isSelected && (
-                          <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: type.color }}>
-                            <Check className="w-3.5 h-3.5 text-background" />
-                          </div>
-                        )}
-                        <p className="text-sm font-bold tracking-wider mb-4" style={{ color: type.color }}>{type.label}</p>
-                        <p className="text-sm text-muted-foreground mb-4">
-                          {"Solo "}
-                          <span className="text-xl font-extrabold text-foreground">{type.price}</span>
-                          {type.unit}
-                        </p>
-                        <ul className="flex flex-col gap-2 mb-4">
-                          <li className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <Check className="w-3.5 h-3.5 shrink-0" style={{ color: type.color }} />
-                            <span>{type.processor}</span>
-                          </li>
-                          {type.features.map((feat) => (
-                            <li key={feat} className="flex items-center gap-2 text-xs text-muted-foreground">
-                              <Check className="w-3.5 h-3.5 shrink-0" style={{ color: type.color }} />
-                              <span>{feat}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <p className="text-[11px] text-muted-foreground/60 leading-relaxed">{type.description}</p>
-                      </button>
-                    )
-                  })}
-                </div>
-
-                <div className="px-8 pb-6 text-sm text-muted-foreground">
-                  {"Buscas una opcion mas economica? Revisa nuestro "}
-                  <a href="/minecraft/budget" className="text-primary font-semibold hover:underline">Budget Minecraft Server Hosting</a>.
-                </div>
-              </div>
-            )}
-
-            {/* ── STEP 2: Location ── */}
-            {currentStep === 2 && (
-              <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-                <div className="px-8 pb-2">
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                    Cual ubicacion tiene el mejor ping para tu servidor?
-                  </h2>
-                  <p className="text-muted-foreground text-sm mt-2">
-                    Elige una ubicacion cercana a donde tus jugadores se van a conectar:
-                  </p>
-                </div>
-
-                <div className="px-8 py-6 flex flex-col gap-6">
-                  {locationRegions.map((region) => (
-                    <div key={region.region}>
-                      <p className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-primary" />
-                        {region.region}:
-                      </p>
-                      <div className="flex flex-wrap gap-3">
-                        {region.locations.map((loc) => {
-                          const isSelected = selectedLocation === loc.id
-                          const isComingSoon = "comingSoon" in loc && loc.comingSoon
-                          const isHovered = hoveredLocation === loc.id
-                          const currentPing = locationPings[loc.id]
-                          const bars = locationBars[loc.id] ?? 4
-                          // Always green or yellow, biased green
-                          const pingColor = currentPing != null
-                            ? currentPing < 70 ? "#22c55e" : "#f5a623"
-                            : "#22c55e"
-                          return (
-                            <div key={loc.id} className="relative">
-                              <button
-                                onMouseEnter={() => { if (!isComingSoon) setHoveredLocation(loc.id) }}
-                                onMouseLeave={() => setHoveredLocation(null)}
-                                onClick={() => {
-                                  if (!isComingSoon) setSelectedLocation(loc.id)
-                                }}
-                                disabled={isComingSoon}
-                                className="flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
-                                style={{
-                                  background: isSelected
-                                    ? "rgba(34,197,94,0.1)"
-                                    : isHovered
-                                      ? "rgba(255,255,255,0.06)"
-                                      : "rgba(255,255,255,0.03)",
-                                  border: isSelected
-                                    ? "2px solid #22c55e"
-                                    : isHovered
-                                      ? "2px solid rgba(255,255,255,0.15)"
-                                      : "2px solid rgba(255,255,255,0.08)",
-                                }}
-                              >
-                                <FlagEmoji code={loc.flag} />
-                                <span className="text-foreground">{loc.name}</span>
-                                {!isComingSoon && (
-                                  <svg width="14" height="14" viewBox="0 0 16 16" className="shrink-0">
-                                    {[
-                                      { x: 1, h: 4, y: 12, idx: 1 },
-                                      { x: 5, h: 7, y: 9, idx: 2 },
-                                      { x: 9, h: 10, y: 6, idx: 3 },
-                                      { x: 13, h: 13, y: 3, idx: 4 },
-                                    ].map((bar) => {
-                                      const activeBars = isHovered ? bars : isSelected ? 4 : 3
-                                      const isActive = bar.idx <= activeBars
-                                      return (
-                                        <rect
-                                          key={bar.idx}
-                                          x={bar.x}
-                                          y={bar.y}
-                                          width="2.5"
-                                          height={bar.h}
-                                          rx="0.5"
-                                          fill={isActive ? "#22c55e" : "rgba(255,255,255,0.12)"}
-                                          className="transition-all duration-500"
-                                        />
-                                      )
-                                    })}
-                                  </svg>
-                                )}
-                                {isComingSoon && (
-                                  <span className="text-[9px] font-bold tracking-wider px-1.5 py-0.5 rounded uppercase" style={{ background: "rgba(245,166,35,0.15)", color: "#f5a623", border: "1px solid rgba(245,166,35,0.3)" }}>
-                                    PRONTO
-                                  </span>
-                                )}
-                                {isSelected && !isHovered && (
-                                  <Check className="w-4 h-4 text-[#22c55e]" />
-                                )}
-                              </button>
-
-                              {/* Ping tooltip on hover */}
-                              {isHovered && !isComingSoon && (
-                                <div
-                                  className="absolute -top-10 left-1/2 -translate-x-1/2 z-30 pointer-events-none animate-in fade-in zoom-in-95 duration-150"
-                                  style={{ filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.5))" }}
-                                >
-                                  <div
-                                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap"
-                                    style={{
-                                      backgroundColor: "rgba(20,20,20,0.95)",
-                                      border: `1px solid ${pingColor}33`,
-                                      backdropFilter: "blur(8px)",
-                                    }}
-                                  >
-                                    <span
-                                      className="w-1.5 h-1.5 rounded-full shrink-0 animate-pulse"
-                                      style={{ backgroundColor: pingColor }}
-                                    />
-                                    <span style={{ color: pingColor }}>
-                                      {currentPing != null ? `~${currentPing}ms` : "Midiendo..."}
-                                    </span>
-                                    <svg width="12" height="12" viewBox="0 0 16 16" className="shrink-0">
-                                      {[
-                                        { x: 1, h: 4, y: 12, idx: 1 },
-                                        { x: 5, h: 7, y: 9, idx: 2 },
-                                        { x: 9, h: 10, y: 6, idx: 3 },
-                                        { x: 13, h: 13, y: 3, idx: 4 },
-                                      ].map((bar) => (
-                                        <rect
-                                          key={bar.idx}
-                                          x={bar.x}
-                                          y={bar.y}
-                                          width="2.5"
-                                          height={bar.h}
-                                          rx="0.5"
-                                          fill={bar.idx <= bars ? "#22c55e" : "rgba(255,255,255,0.12)"}
-                                          className="transition-all duration-500"
-                                        />
-                                      ))}
-                                    </svg>
-                                  </div>
-                                  {/* Arrow */}
-                                  <div
-                                    className="w-2 h-2 rotate-45 mx-auto -mt-1"
-                                    style={{ backgroundColor: "rgba(20,20,20,0.95)" }}
-                                  />
-                                </div>
-                              )}
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {!selectedLocation && (
-                  <div className="px-8 pb-6">
-                    <p className="text-xs text-muted-foreground/60">Selecciona una ubicacion para continuar.</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* ── STEP 3: Plans ── */}
-            {currentStep === 3 && (
-              <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-                <div className="px-8 pb-4">
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-heading)" }}>
-                    {isModded ? "Que tan poderoso quieres tu servidor Modded?" : "Que tan poderoso quieres tu servidor de Minecraft?"}
-                  </h2>
-                  <p className="text-muted-foreground text-sm mt-2">
-                    {"No sabes cuanta RAM necesitas? "}
-                    <a href="/proximamente" className="text-primary font-semibold hover:underline">{isModded ? "Consulta nuestra Guia de RAM para Modpacks" : "Consulta nuestra Guia de RAM"}</a>
-                    {" para mas info."}
-                  </p>
-                </div>
-
-                {/* Billing cycle toggle */}
-                <div className="px-8 pb-4">
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-muted-foreground font-medium mr-1">Ciclo de Facturacion:</span>
-                    {billingCycles.map((cycle) => (
-                      <button
-                        key={cycle.id}
-                        onClick={() => setBillingCycle(cycle.id)}
-                        className="relative px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200"
-                        style={{
-                          background: billingCycle === cycle.id ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.03)",
-                          border: billingCycle === cycle.id ? "1px solid rgba(34,197,94,0.4)" : "1px solid rgba(255,255,255,0.06)",
-                          color: billingCycle === cycle.id ? "#22c55e" : "rgba(255,255,255,0.5)",
-                        }}
-                      >
-                        {cycle.label}
-                        {cycle.discount > 0 && (
-                          <span className="ml-1 px-1 py-0.5 rounded text-[9px] font-bold" style={{ background: "rgba(245,166,35,0.2)", color: "#f5a623" }}>
-                            {`-${cycle.discount}%`}
-                          </span>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Popular plans */}
-                {popularPlans.length > 0 && (
-                  <div className="px-8 pb-4">
-                    <p className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
-                      <Star className="w-4 h-4" />
-                      {`Planes Populares para ${selectedType === "community" ? "Comunidad" : selectedType === "modded" ? "Modded" : "Vanilla"}`}
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {popularPlans.map((plan) => (
-                        <PlanCard key={plan.whmcsId} plan={plan} cycle={billingCycle} onSelect={() => handlePlanSelect(plan)} highlight />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* All other plans */}
-                <div className="px-8 py-4">
-                  <p className="text-sm font-bold text-muted-foreground mb-3">
-                    {`Todos los Planes para ${selectedType === "community" ? "Comunidad" : selectedType === "modded" ? "Modded" : "Vanilla"}`}
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {allOtherPlans.map((plan) => (
-                      <PlanCard key={plan.whmcsId} plan={plan} cycle={billingCycle} onSelect={() => handlePlanSelect(plan)} />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="px-8 pb-8 pt-2 text-sm text-muted-foreground">
-                  {"Al seleccionar un plan seras redirigido a nuestro sistema de facturacion para completar la compra."}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
         )}
       </section>
 
