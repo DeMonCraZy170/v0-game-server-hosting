@@ -93,7 +93,7 @@ const resourcesInfo = [
 
 /* ── More mega-dropdown data ── */
 const moreCompany = [
-  { label: "Sobre Nosotros", href: "/proximamente", icon: Users, comingSoon: true },
+  { label: "Sobre Nosotros", href: "/sobre-nosotros", icon: Users },
   { label: "Empleos y Carreras", href: "/proximamente", icon: Briefcase, comingSoon: true },
   { label: "Nuestra Marca", href: "/proximamente", icon: Palette, comingSoon: true },
 ]
