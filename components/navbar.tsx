@@ -34,9 +34,10 @@ const minecraftCards = [
     label: "Budget Hosting",
     href: "/minecraft/budget",
     image: "/images/dropdown-budget.jpg",
-    borderColor: "#22c55e",
-    badge: "NUEVA ACTUALIZACION!",
-    badgeColor: "#ef4444",
+    borderColor: "#6b7280",
+    badge: "PROXIMAMENTE",
+    badgeColor: "#6b7280",
+    disabled: true,
   },
 ]
 
@@ -282,8 +283,9 @@ export function Navbar() {
             {minecraftCards.map((card) => (
               <a
                 key={card.label}
-                href={card.href}
-                className="group relative block h-[100px] rounded-lg overflow-hidden transition-transform duration-200 hover:scale-[1.03]"
+                href={card.disabled ? undefined : card.href}
+                onClick={card.disabled ? (e) => e.preventDefault() : undefined}
+                className={`group relative block h-[100px] rounded-lg overflow-hidden transition-transform duration-200 ${card.disabled ? 'cursor-not-allowed opacity-60' : 'hover:scale-[1.03]'}`}
                 style={{
                   borderLeft: `4px solid ${card.borderColor}`,
                 }}
@@ -293,12 +295,12 @@ export function Navbar() {
                   src={card.image}
                   alt={card.label}
                   fill
-                  className="object-cover"
+                  className={`object-cover ${card.disabled ? 'grayscale' : ''}`}
                   sizes="300px"
                 />
                 {/* Dark overlay */}
                 <div
-                  className="absolute inset-0 bg-black/50 group-hover:bg-black/35 transition-colors duration-200"
+                  className={`absolute inset-0 transition-colors duration-200 ${card.disabled ? 'bg-black/70' : 'bg-black/50 group-hover:bg-black/35'}`}
                 />
                 {/* Badge */}
                 <div className="absolute top-2 right-2 z-[2]">
@@ -311,7 +313,7 @@ export function Navbar() {
                 </div>
                 {/* Label */}
                 <div className="absolute inset-0 flex items-center justify-center z-[1]">
-                  <span className="text-lg font-extrabold text-white tracking-wide drop-shadow-lg">
+                  <span className={`text-lg font-extrabold tracking-wide drop-shadow-lg ${card.disabled ? 'text-gray-400' : 'text-white'}`}>
                     {card.label}
                   </span>
                 </div>
@@ -795,10 +797,16 @@ export function Navbar() {
                     ? minecraftCards.map((card) => (
                         <a
                           key={card.label}
-                          href={card.href}
-                          className="text-sm text-muted-foreground hover:text-foreground"
+                          href={card.disabled ? undefined : card.href}
+                          onClick={card.disabled ? (e) => e.preventDefault() : undefined}
+                          className={`text-sm flex items-center gap-2 ${card.disabled ? 'text-gray-500 cursor-not-allowed' : 'text-muted-foreground hover:text-foreground'}`}
                         >
                           {card.label}
+                          {card.disabled && (
+                            <span className="text-[9px] font-bold text-gray-400 bg-gray-700 px-1 py-0.5 rounded">
+                              {card.badge}
+                            </span>
+                          )}
                         </a>
                       ))
                     : item.isMega && item.megaType === "games"
