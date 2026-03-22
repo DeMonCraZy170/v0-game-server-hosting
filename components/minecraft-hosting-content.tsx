@@ -56,7 +56,7 @@ const serverTypes = [
     color: "#22c55e",
     price: "$2.59",
     unit: "/GB Por Mes",
-    processor: "Ryzen 9 7900 o equivalente",
+    processor: "AMD Ryzen 7 9800X3D",
     features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
     description: "Ideal para un servidor Minecraft pequeno con amigos.",
   },
@@ -66,7 +66,7 @@ const serverTypes = [
     color: "#3b82f6",
     price: "$2.59",
     unit: "/GB Por Mes",
-    processor: "Ryzen 9 7900 o equivalente",
+    processor: "AMD Ryzen 7 9800X3D",
     features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
     description: "Perfecto para jugar modpacks e instalar mods y plugins.",
   },
@@ -76,7 +76,7 @@ const serverTypes = [
     color: "#a855f7",
     price: "$4",
     unit: "/GB Por Mes",
-    processor: "Ryzen 9 9900X o equivalente",
+    processor: "AMD Ryzen 7 9800X3D",
     features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
     description: "Para comunidades Minecraft con muchos jugadores en linea.",
   },
@@ -260,7 +260,7 @@ const moddedServerCapabilities = ["Soporte Forge", "Soporte Fabric", "Soporte Sp
 
 /* ── Modded-specific FAQ ── */
 const moddedFaqItems = [
-  { q: "Por que ForzaHost es el mejor hosting para Minecraft Modded?", a: "Ofrecemos hardware de ultima generacion optimizado para modpacks pesados. Ryzen 9 7900 o equivalente, DDR5 RAM y almacenamiento NVMe para que tus mods carguen rapido y sin lag." },
+  { q: "Por que ForzaHost es el mejor hosting para Minecraft Modded?", a: "Ofrecemos hardware de ultima generacion optimizado para modpacks pesados. AMD Ryzen 7 9800X3D, DDR5 RAM y Dual NVMe SSDs para que tus mods carguen rapido y sin lag." },
   { q: "Puedo instalar cualquier modpack como RLCraft o Pixelmon?", a: "Si, soportamos todos los modpacks populares incluyendo RLCraft, Pixelmon, All The Mods, Better Minecraft, Vault Hunters, Create y muchos mas. La instalacion es con un solo clic." },
   { q: "Cuanta RAM necesito para un servidor Modded?", a: "Depende del modpack. Para modpacks ligeros (menos de 50 mods) recomendamos minimo 4GB. Para modpacks medianos como Better Minecraft, 6-8GB. Para modpacks pesados como RLCraft o ATM, 8-12GB o mas." },
   { q: "Que tan rapido responde el soporte cuando tengo un problema?", a: "Nuestro equipo de soporte especializado en mods responde en promedio en menos de 5 minutos. Estamos disponibles 24/7 a traves de chat en vivo y tickets." },
@@ -613,11 +613,11 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               {/* AMD Badge */}
               <div className="flex items-center gap-2 mb-6">
                 <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>AMD</span>
-                <span className="text-sm text-muted-foreground">
-                  {"Powered by "}
-                  <span className="font-bold text-foreground">Ryzen 9 7900</span>
-                  {" o "}
-                  <a href="/proximamente" className="text-primary font-semibold hover:underline">equivalente</a>
+<span className="text-sm text-muted-foreground">
+  {"Powered by "}
+  <span className="font-bold text-foreground">AMD Ryzen 7 9800X3D</span>
+  {" - "}
+  <span className="text-primary font-semibold">8 cores / 16 threads</span>
                 </span>
               </div>
 
@@ -740,11 +740,11 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               {/* AMD Badge */}
               <div className="flex items-center gap-2 mb-6">
                 <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>AMD</span>
-                <span className="text-sm text-muted-foreground">
-                  {"Powered by "}
-                  <span className="font-bold text-foreground">{selectedType === "community" ? "Ryzen 9 9900X" : "Ryzen 9 7900"}</span>
-                  {" o "}
-                  <a href="/proximamente" className="text-primary font-semibold hover:underline">equivalente</a>
+<span className="text-sm text-muted-foreground">
+  {"Powered by "}
+  <span className="font-bold text-foreground">AMD Ryzen 7 9800X3D</span>
+  {" - "}
+  <span className="text-primary font-semibold">8 cores / 16 threads</span>
                 </span>
               </div>
 

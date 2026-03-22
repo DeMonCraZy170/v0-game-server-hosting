@@ -38,35 +38,24 @@ interface GameData {
 }
 
 const allGames: GameData[] = [
-  // Popular games - exactly 4 like SparkedHost (Minecraft Java, Unturned, Valheim, Palworld)
-  { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$1.05/mo", popular: true, isUpdate: true, platforms: ["pc", "java"] },
-  { name: "Unturned", image: "/images/games/unturned.jpg", price: "$2.50/mo", popular: true, isNew: true, platforms: ["steam"] },
-  { name: "Valheim", image: "/images/games/valheim.jpg", price: "$4.80/mo", popular: true, platforms: ["steam"] },
-  { name: "Palworld", image: "/images/games/palworld.jpg", price: "$17.60/mo", popular: true, platforms: ["steam"] },
+  // Popular games
+  { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$5.99/mo", popular: true, isUpdate: true, platforms: ["pc", "java"] },
+  { name: "DayZ", image: "/images/games/dayz.jpg", price: "$24.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
+  { name: "Rust", image: "/images/games/rust.jpg", price: "$21.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
+  { name: "CS2", image: "/images/games/cs2.jpg", price: "$10.99/mo", popular: true, isNew: true, platforms: ["steam"] },
   // Other games
-  { name: "Minecraft Bedrock", image: "/images/games/minecraft-bedrock.jpg", price: "$1.05/mo", platforms: ["pc", "console", "mobile"] },
-  { name: "Ark: Survival Evolved", image: "/images/games/ark.jpg", price: "$8.00/mo", platforms: ["steam", "pc"] },
-  { name: "Rust", image: "/images/games/rust.jpg", price: "$16.00/mo", isNew: true, platforms: ["steam"] },
-  { name: "Terraria", image: "/images/games/terraria.jpg", price: "$2.50/mo", isUpdate: true, platforms: ["steam", "mobile"] },
-  { name: "Garry's Mod", image: "/images/games/garrysmod.jpg", price: "$2.00/mo", platforms: ["steam"] },
-  { name: "Satisfactory", image: "/images/games/satisfactory.jpg", price: "$8.00/mo", platforms: ["steam"] },
-  { name: "Mindustry", image: "/images/games/mindustry.jpg", price: "$2.00/mo", platforms: ["steam"] },
-  { name: "7 Days to Die", image: "/images/games/7daystodie.jpg", price: "$4.50/mo", platforms: ["steam"] },
-  { name: "Squad", image: "/images/games/squad.jpg", price: "$9.00/mo", platforms: ["steam"] },
-  { name: "The Forest", image: "/images/games/theforest.jpg", price: "$8.80/mo", platforms: ["steam"] },
-  { name: "Euro Truck Simulator 2", image: "/images/games/eurotruck.jpg", price: "$4.40/mo", platforms: ["steam"] },
-  { name: "Icarus", image: "/images/games/icarus.jpg", price: "$8.00/mo", platforms: ["steam"] },
-  { name: "Sons of the Forest", image: "/images/games/sonsoftheforest.jpg", price: "$8.00/mo", platforms: ["steam"] },
-  { name: "Project Zomboid", image: "/images/games/projectzomboid.jpg", price: "$4.00/mo", platforms: ["steam"] },
-  { name: "Team Fortress 2", image: "/images/games/tf2.jpg", price: "$4.40/mo", platforms: ["steam"] },
-  { name: "Enshrouded", image: "/images/games/enshrouded.jpg", price: "$13.20/mo", platforms: ["steam"] },
-  { name: "Don't Starve Together", image: "/images/games/dontstarvetogether.jpg", price: "$8.80/mo", platforms: ["steam"] },
-  { name: "Factorio", image: "/images/games/factorio.jpg", price: "$4.40/mo", platforms: ["steam"] },
-  { name: "Astroneer", image: "/images/games/astroneer.jpg", price: "$4.40/mo", platforms: ["steam"] },
-  { name: "Conan Exiles", image: "/images/games/conanexiles.jpg", price: "$12.00/mo", platforms: ["steam"] },
-  { name: "Space Engineers", image: "/images/games/spaceengineers.jpg", price: "$12.00/mo", platforms: ["steam"] },
-  { name: "V Rising", image: "/images/games/vrising.jpg", price: "$13.20/mo", platforms: ["steam"] },
-  { name: "DayZ", image: "/images/games/dayz.jpg", price: "$12.00/mo", platforms: ["steam"] },
+  { name: "Minecraft Bedrock", image: "/images/games/minecraft-bedrock.jpg", price: "$5.99/mo", platforms: ["pc", "console", "mobile"] },
+  { name: "Garry's Mod", image: "/images/games/garrysmod.jpg", price: "$10.99/mo", platforms: ["steam"] },
+  { name: "Project Zomboid", image: "/images/games/projectzomboid.jpg", price: "$11.99/mo", platforms: ["steam"] },
+  { name: "7 Days to Die", image: "/images/games/7daystodie.jpg", price: "$11.99/mo", platforms: ["steam"] },
+  { name: "SAMP", image: "/images/games/samp.jpg", price: "$7.99/mo", platforms: ["pc"] },
+  { name: "MTA", image: "/images/games/mta.jpg", price: "$7.99/mo", platforms: ["pc"] },
+  { name: "Unturned", image: "/images/games/unturned.jpg", price: "$5.99/mo", platforms: ["steam"] },
+  { name: "Arma 3", image: "/images/games/arma3.jpg", price: "$12.99/mo", platforms: ["steam"] },
+  { name: "Arma Reforger", image: "/images/games/armareforger.jpg", price: "$19.99/mo", isNew: true, platforms: ["steam", "console"] },
+  { name: "Assetto Corsa", image: "/images/games/assettocorsa.jpg", price: "$9.99/mo", platforms: ["steam"] },
+  { name: "RAGE-MP", image: "/images/games/ragemp.jpg", price: "$9.99/mo", platforms: ["steam"] },
+  { name: "FiveM", image: "/images/games/fivem.jpg", price: "$12.00/mo", comingSoon: true, platforms: ["steam"] },
 ]
 
 const popularGames = allGames.filter((g) => g.popular)
@@ -77,32 +66,20 @@ const getGameSlug = (name: string) => {
   const slugMap: Record<string, string> = {
     "Minecraft Java": "minecraft",
     "Minecraft Bedrock": "minecraft-bedrock",
-    "Ark: Survival Evolved": "ark-survival-evolved",
-    "Rust": "rust",
-    "Valheim": "valheim",
-    "Terraria": "terraria",
-    "7 Days to Die": "7-days-to-die",
-    "Unturned": "unturned",
-    "Garry's Mod": "garrys-mod",
-    "Satisfactory": "satisfactory",
-    "Project Zomboid": "project-zomboid",
-    "The Forest": "the-forest",
-    "Sons of the Forest": "sons-of-the-forest",
-    "Enshrouded": "enshrouded",
-    "Palworld": "palworld",
-    "Conan Exiles": "conan-exiles",
-    "V Rising": "v-rising",
     "DayZ": "dayz",
-    "Space Engineers": "space-engineers",
-    "Don't Starve Together": "dont-starve-together",
-    "Factorio": "factorio",
-    "Squad": "squad",
-    "Icarus": "icarus",
-    "Team Fortress 2": "team-fortress-2",
-    "Euro Truck Simulator 2": "euro-truck-simulator-2",
-    "Mindustry": "mindustry",
-    "Astroneer": "astroneer",
-    "Hytale": "hytale",
+    "Rust": "rust",
+    "CS2": "cs2",
+    "Garry's Mod": "garrys-mod",
+    "Project Zomboid": "project-zomboid",
+    "7 Days to Die": "7-days-to-die",
+    "SAMP": "samp",
+    "MTA": "mta",
+    "Unturned": "unturned",
+    "Arma 3": "arma-3",
+    "Arma Reforger": "arma-reforger",
+    "Assetto Corsa": "assetto-corsa",
+    "RAGE-MP": "ragemp",
+    "FiveM": "fivem",
   }
   return slugMap[name] || name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
 }
@@ -122,7 +99,7 @@ const perks = [
     icon: Cpu,
     title: "The Fastest Hardware",
     description:
-      "Enjoy unmatched speed and performance with Sparked Host's Ryzen 7900X & 9900X CPUs, DDR5 RAM, and NVMe SSDs.",
+      "Enjoy unmatched speed and performance with AMD Ryzen 7 9800X3D CPUs (8 cores / 16 threads), DDR5 RAM, and Dual NVMe SSDs.",
   },
   {
     icon: DollarSign,
@@ -173,44 +150,24 @@ const regions: RegionData[] = [
   {
     region: "North America",
     locations: [
-      { name: "Miami, Florida", flag: "US", active: true },
-      { name: "Dallas, Texas", flag: "US", active: true },
-      { name: "Salt Lake City, Utah", flag: "US", active: true },
-      { name: "Ashburn, Virginia", flag: "US", active: true },
+      { name: "Canada (BHS8, OVH)", flag: "CA", active: true },
     ],
   },
   {
-    region: "Europe",
+    region: "Coming Soon",
     locations: [
-      { name: "Paris, France", flag: "FR", active: true },
-      { name: "Helsinki, Finland", flag: "FI", active: true },
-      { name: "Vienna, Austria", flag: "AT", active: true },
+      { name: "Miami, Florida", flag: "US", active: false },
+      { name: "Dallas, Texas", flag: "US", active: false },
+      { name: "Sao Paulo, Brazil", flag: "BR", active: false },
     ],
-  },
-  {
-    region: "Asia",
-    locations: [
-      { name: "Singapore, Asia", flag: "SG", active: true },
-      { name: "Mumbai, India", flag: "IN", active: true },
-    ],
-  },
-  {
-    region: "Oceania",
-    locations: [{ name: "Sydney, Australia", flag: "AU", active: true }],
   },
 ]
 
 const locationDots = [
-  { name: "Miami, Florida", x: 24, y: 40, active: true },
-  { name: "Dallas, Texas", x: 20, y: 36, active: true },
-  { name: "Salt Lake City, Utah", x: 17, y: 34, active: true },
-  { name: "Ashburn, Virginia", x: 26, y: 35, active: true },
-  { name: "Paris, France", x: 48, y: 27, active: true },
-  { name: "Helsinki, Finland", x: 54, y: 19, active: true },
-  { name: "Vienna, Austria", x: 51, y: 27, active: true },
-  { name: "Singapore, Asia", x: 76, y: 52, active: true },
-  { name: "Mumbai, India", x: 70, y: 42, active: true },
-  { name: "Sydney, Australia", x: 86, y: 72, active: true },
+  { name: "Canada (BHS8, OVH)", x: 24, y: 28, active: true },
+  { name: "Miami, Florida", x: 24, y: 40, active: false },
+  { name: "Dallas, Texas", x: 20, y: 36, active: false },
+  { name: "Sao Paulo, Brazil", x: 30, y: 62, active: false },
 ]
 
 /* ─── FAQ ─── */
@@ -257,6 +214,7 @@ function FlagEmoji({ code }: { code: string }) {
   const flags: Record<string, string> = {
     CA: "\u{1F1E8}\u{1F1E6}",
     US: "\u{1F1FA}\u{1F1F8}",
+    BR: "\u{1F1E7}\u{1F1F7}",
     FR: "\u{1F1EB}\u{1F1F7}",
     FI: "\u{1F1EB}\u{1F1EE}",
     AT: "\u{1F1E6}\u{1F1F9}",
