@@ -13,8 +13,9 @@ const contactMethods = [
     description:
       "Plataforma principal de soporte. Para todo lo relacionado con facturacion, ventas, pre-ventas y asistencia tecnica.",
     cta: "Enviar un Ticket",
-    href: "#",
+    href: "https://billing.forzahost.com/contact.php",
     disabled: false,
+    external: true,
   },
   {
     icon: MessageSquare,
