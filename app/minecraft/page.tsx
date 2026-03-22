@@ -1,5 +1,7 @@
 import { Metadata } from "next"
-import { MinecraftHostingContent } from "@/components/minecraft-hosting-content"
+import { getGameBySlug } from "@/lib/game-data"
+import { GameDetailContent } from "@/components/game-detail-content"
+import { notFound } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Minecraft Server Hosting - ForzaHost",
@@ -8,5 +10,11 @@ export const metadata: Metadata = {
 }
 
 export default function MinecraftPage() {
-  return <MinecraftHostingContent />
+  const game = getGameBySlug("minecraft")
+  
+  if (!game) {
+    notFound()
+  }
+  
+  return <GameDetailContent game={game} />
 }
