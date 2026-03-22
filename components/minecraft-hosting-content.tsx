@@ -325,7 +325,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
   return (
     <div className="min-h-screen bg-background">
       {/* ─── HERO ─── */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-32 pb-8 overflow-hidden">
         <div className="absolute inset-0">
           <Image src="/images/minecraft-bg.jpg" alt="" fill className="object-cover object-right-top" priority sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(13,13,13,0.97) 0%, rgba(13,13,13,0.85) 40%, rgba(13,13,13,0.5) 100%)" }} />
