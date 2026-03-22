@@ -27,6 +27,7 @@ import {
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 import { Footer } from "@/components/footer"
 import type { GameDetail } from "@/lib/game-data"
+import { hardwareSpecs } from "@/lib/game-data"
 
 /* ─── DDoS features ─── */
 
@@ -322,21 +323,21 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
       </section>
 
       {/* ─── Server Configuration Bar ─── */}
-      <section className="py-8 bg-background border-b border-white/5">
+      <section className="py-10 bg-background border-b border-white/5">
           <div className="mx-auto max-w-5xl px-4">
-            <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-6">
+            <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6 lg:gap-8">
               {/* Billing Cycle */}
-              <div className="flex flex-col gap-2 flex-1">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Clock className="w-4 h-4" />
-                  <span className="font-medium">Ciclo de Facturacion</span>
+              <div className="flex flex-col gap-3 flex-1">
+                <div className="flex items-center gap-2.5 text-base text-muted-foreground">
+                  <Clock className="w-5 h-5" />
+                  <span className="font-semibold">Ciclo de Facturacion</span>
                 </div>
-                <div className="flex flex-wrap rounded-lg" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <div className="flex flex-wrap rounded-xl" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
                   {billingOptions.map((option, idx) => (
                     <button
                       key={option.id}
                       onClick={() => setSelectedBilling(option.id)}
-                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all flex-1 min-w-[85px]"
+                      className="flex items-center justify-center gap-2 px-5 py-3.5 text-base font-semibold transition-all flex-1 min-w-[100px]"
                       style={{
                         background: selectedBilling === option.id ? "rgba(245,166,35,0.15)" : "transparent",
                         color: selectedBilling === option.id ? "#f5a623" : "rgba(255,255,255,0.6)",
@@ -346,7 +347,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                       <span>{option.label}</span>
                       {option.discount > 0 && (
                         <span 
-                          className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                          className="text-[10px] font-bold px-2 py-1 rounded-full"
                           style={{ background: "#22c55e", color: "#fff" }}
                         >
                           -{option.discount}%
@@ -358,15 +359,15 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
               </div>
 
               {/* Location Dropdown */}
-              <div className="flex flex-col gap-2 min-w-[200px]">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  <span className="font-medium">Ubicacion</span>
+              <div className="flex flex-col gap-3 min-w-[240px]">
+                <div className="flex items-center gap-2.5 text-base text-muted-foreground">
+                  <MapPin className="w-5 h-5" />
+                  <span className="font-semibold">Ubicacion</span>
                 </div>
                 <div className="relative">
                   <button
                     onClick={() => setLocationDropdownOpen(!locationDropdownOpen)}
-                    className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-lg transition-all"
+                    className="w-full flex items-center justify-between px-5 py-3.5 text-base font-semibold rounded-xl transition-all"
                     style={{ 
                       background: "rgba(255,255,255,0.04)", 
                       border: "1px solid rgba(255,255,255,0.08)",
@@ -374,7 +375,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                     }}
                   >
                     <span>{selectedLocation}</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${locationDropdownOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`w-5 h-5 transition-transform ${locationDropdownOpen ? "rotate-180" : ""}`} />
                   </button>
                   
                   {locationDropdownOpen && (
@@ -451,17 +452,45 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
           </div>
         </section>
 
+      {/* ─── Hardware Specs Bar ─── */}
+      <section className="py-8 border-b border-white/5" style={{ background: "rgba(255,255,255,0.02)" }}>
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+            <div className="flex items-center gap-3 text-base">
+              <Cpu className="w-5 h-5 text-primary" />
+              <span className="text-muted-foreground">CPU:</span>
+              <span className="text-foreground font-semibold">{hardwareSpecs.cpu}</span>
+            </div>
+            <div className="flex items-center gap-3 text-base">
+              <HardDrive className="w-5 h-5 text-primary" />
+              <span className="text-muted-foreground">Storage:</span>
+              <span className="text-foreground font-semibold">{hardwareSpecs.storage}</span>
+            </div>
+            <div className="flex items-center gap-3 text-base">
+              <MapPin className="w-5 h-5 text-primary" />
+              <span className="text-muted-foreground">Ubicacion:</span>
+              <span className="text-foreground font-semibold">{hardwareSpecs.location}</span>
+            </div>
+            <div className="flex items-center gap-3 text-base">
+              <Shield className="w-5 h-5 text-primary" />
+              <span className="text-muted-foreground">DDoS:</span>
+              <span className="text-foreground font-semibold">{hardwareSpecs.ddosProtection}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── Pricing Plans ─── */}
       <section id="planes" className="py-20 bg-background">
         <div
           ref={plansRef}
-          className="mx-auto max-w-5xl px-4 transition-all duration-700 ease-out"
+          className="mx-auto max-w-6xl px-4 transition-all duration-700 ease-out"
           style={{
             opacity: plansVisible ? 1 : 0,
             transform: plansVisible ? "translateY(0)" : "translateY(30px)",
           }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className={`grid grid-cols-1 gap-6 ${game.plans.length <= 3 ? 'md:grid-cols-3' : game.plans.length === 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'}`}>
             {game.plans.map((plan, index) => (
               <div
                 key={plan.name}
@@ -517,7 +546,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                   <p className="text-3xl font-extrabold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>
                     ${getDiscountedPrice(plan.basePrice).toFixed(2)}
                   </p>
-                  <p className="text-xs text-primary font-medium mb-5">
+                  <p className="text-xs text-primary font-medium mb-4">
                     Facturado {billingOptions.find(b => b.id === selectedBilling)?.label.toLowerCase()}
                     {selectedBilling !== "monthly" && (
                       <span className="ml-1 text-green-500">
@@ -525,6 +554,17 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                       </span>
                     )}
                   </p>
+
+                  {/* Recommended Players Badge */}
+                  {plan.recommendedPlayers && (
+                    <div 
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium mb-4"
+                      style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.3)" }}
+                    >
+                      <Users className="w-3 h-3" />
+                      {plan.recommendedPlayers}
+                    </div>
+                  )}
 
                   <ul className="flex flex-col gap-2.5">
                     <li className="flex items-center gap-2.5 text-sm text-foreground/90">
@@ -549,7 +589,9 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                 </div>
 
                 <a
-                  href={game.comingSoon ? undefined : "#"}
+                  href={game.comingSoon ? undefined : plan.orderUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center mx-4 mb-4 px-4 py-3.5 text-sm font-bold tracking-wide rounded-lg transition-all duration-300 group-hover:brightness-110 group-hover:translate-y-[-1px] whitespace-nowrap"
                   style={{
                     background: plan.bestSeller
@@ -563,7 +605,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                     opacity: game.comingSoon ? 0.5 : 1,
                   }}
                 >
-                  {game.comingSoon ? "Proximamente" : `Ordenar en ${selectedLocation.split(",")[1]?.trim() || "Canada"}, ${selectedLocation.split(",")[0]?.replace("OVH ", "") || "Beauharnois"}`}
+                  {game.comingSoon ? "Proximamente" : "Ordenar Ahora"}
                 </a>
               </div>
             ))}

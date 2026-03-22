@@ -102,7 +102,7 @@ export function ComingSoonContent() {
               Volver al Inicio
             </Link>
             <a
-              href="https://discord.gg/EVxNxChX"
+              href="https://discord.gg/YRHckAJD"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 font-semibold px-6 py-3 rounded-lg text-sm transition-colors"

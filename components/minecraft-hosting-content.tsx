@@ -48,37 +48,17 @@ function FlagEmoji({ code }: { code: string }) {
   return <span className="text-lg leading-none">{flags[code] || ""}</span>
 }
 
-/* ── Step 1: Server Type Data ── */
+/* ── Server Type Data (single type for now) ── */
 const serverTypes = [
   {
-    id: "vanilla",
-    label: "VANILLA",
-    color: "#22c55e",
-    price: "$2.59",
-    unit: "/GB Por Mes",
-    processor: "Ryzen 9 7900 o equivalente",
-    features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
-    description: "Ideal para un servidor Minecraft pequeno con amigos.",
-  },
-  {
-    id: "modded",
-    label: "MODDED",
-    color: "#3b82f6",
-    price: "$2.59",
-    unit: "/GB Por Mes",
-    processor: "Ryzen 9 7900 o equivalente",
-    features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
-    description: "Perfecto para jugar modpacks e instalar mods y plugins.",
-  },
-  {
     id: "community",
-    label: "COMUNIDAD",
-    color: "#a855f7",
-    price: "$4",
-    unit: "/GB Por Mes",
-    processor: "Ryzen 9 9900X o equivalente",
+    label: "MINECRAFT SERVER",
+    color: "#22c55e",
+    price: "$5.99",
+    unit: "/mes",
+    processor: "Ryzen 7 9800X3D",
     features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
-    description: "Para comunidades Minecraft con muchos jugadores en linea.",
+    description: "Servidores Minecraft de alto rendimiento para todos los usos.",
   },
 ]
 
@@ -123,31 +103,13 @@ interface PlanDef {
   whmcsId: string
 }
 
-const vanillaPlans: PlanDef[] = [
-  { name: "Asteroide", planet: "asteroid", ram: "512MB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 1.30, whmcsId: "1" },
-  { name: "Pluton", planet: "pluto", ram: "1GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 2.59, whmcsId: "2" },
-  { name: "Triton", planet: "triton", ram: "2GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 5.18, whmcsId: "3" },
-  { name: "Luna", planet: "moon", ram: "3GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 7.77, whmcsId: "4" },
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, popular: true, whmcsId: "5" },
-  { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "6" },
-  { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "7" },
-  { name: "Tierra", planet: "earth", ram: "7GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 18.13, extras: ["1 Splitter Slot"], whmcsId: "8" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 20.72, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "9" },
-  { name: "Saturno", planet: "saturn", ram: "9GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 23.31, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "10" },
-  { name: "Jupiter", planet: "jupiter", ram: "10GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 25.90, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "11" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "15" },
-]
-
-const communityPlans: PlanDef[] = [
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 16.00, popular: true, whmcsId: "c5" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 32.00, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "c9" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "c12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "c13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 80.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "c14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "c15" },
+/* ── Main Minecraft Java Plans ── */
+const minecraftPlans: PlanDef[] = [
+  { name: "Stone", planet: "mercury", ram: "2GB", cores: "Ryzen 7 9800X3D", storage: "20GB NVMe", basePrice: 5.99, whmcsId: "stone" },
+  { name: "Iron", planet: "neptune", ram: "4GB", cores: "Ryzen 7 9800X3D", storage: "40GB NVMe", basePrice: 8.99, bestSeller: true, whmcsId: "iron" },
+  { name: "Diamond", planet: "sun", ram: "8GB", cores: "Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 15.99, whmcsId: "diamond" },
+  { name: "Netherite", planet: "milkyway", ram: "16GB", cores: "Ryzen 7 9800X3D", storage: "160GB NVMe", basePrice: 27.99, whmcsId: "netherite" },
+  { name: "Community", planet: "blackhole", ram: "32GB", cores: "Ryzen 7 9800X3D", storage: "300GB NVMe", basePrice: 89.99, extras: ["Network Support", "Priority Support"], whmcsId: "community" },
 ]
 
 /* ── Feature / DDoS / FAQ Data ── */
@@ -197,74 +159,12 @@ function calcMonthlyPrice(base: number, cycle: BillingCycle): number {
   return parseFloat((base * (1 - discount / 100)).toFixed(2))
 }
 
-/* ── Bedrock-specific plans (same planet names, slightly different specs) ── */
-const bedrockVanillaPlans: PlanDef[] = [
-  { name: "Asteroide", planet: "asteroid", ram: "512MB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 1.30, whmcsId: "b1" },
-  { name: "Pluton", planet: "pluto", ram: "1GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 2.59, whmcsId: "b2" },
-  { name: "Triton", planet: "triton", ram: "2GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 5.18, whmcsId: "b3" },
-  { name: "Luna", planet: "moon", ram: "3GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 7.77, whmcsId: "b4" },
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, popular: true, whmcsId: "b5" },
-  { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "b6" },
-  { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "b7" },
-  { name: "Tierra", planet: "earth", ram: "7GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 18.13, extras: ["1 Splitter Slot"], whmcsId: "b8" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 20.72, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b9" },
-  { name: "Saturno", planet: "saturn", ram: "9GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 23.31, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b10" },
-  { name: "Jupiter", planet: "jupiter", ram: "10GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 25.90, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b11" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "b12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "b13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "b14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "b15" },
-]
-
-const bedrockCommunityPlans: PlanDef[] = [
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 16.00, popular: true, whmcsId: "bc5" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 32.00, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "bc9" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "bc12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "bc13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 80.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "bc14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "bc15" },
-]
-
-/* ── Modded-specific plans (higher RAM recommendations for modpacks) ── */
-const moddedVanillaPlans: PlanDef[] = [
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, whmcsId: "m5" },
-  { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "m6" },
-  { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "m7" },
-  { name: "Tierra", planet: "earth", ram: "7GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 18.13, extras: ["1 Splitter Slot"], whmcsId: "m8" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 20.72, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m9" },
-  { name: "Saturno", planet: "saturn", ram: "9GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 23.31, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m10" },
-  { name: "Jupiter", planet: "jupiter", ram: "10GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 25.90, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m11" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "m12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "m13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "m14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "m15" },
-]
-
-const moddedCommunityPlans: PlanDef[] = [
-  { name: "Moon", planet: "moon", ram: "4GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 16.00, whmcsId: "mc1" },
-  { name: "Mercury", planet: "mercury", ram: "5GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 20.00, whmcsId: "mc2" },
-  { name: "Mars", planet: "mars", ram: "6GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 24.00, extras: ["1 Splitter Slot"], whmcsId: "mc3" },
-  { name: "Venus", planet: "venus", ram: "7GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 28.00, extras: ["1 Splitter Slot"], whmcsId: "mc4" },
-  { name: "Earth", planet: "earth", ram: "8GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 32.00, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "mc5" },
-  { name: "Neptune", planet: "neptune", ram: "9GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 36.00, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "mc6" },
-  { name: "Saturn", planet: "saturn", ram: "10GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 40.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "mc7" },
-  { name: "Jupiter", planet: "jupiter", ram: "12GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "mc8" },
-  { name: "Sun", planet: "sun", ram: "16GB", cores: "3.5 Core/s", storage: "250GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "mc9" },
-  { name: "Milky Way", planet: "milkyway", ram: "20GB", cores: "3.5 Core/s", storage: "250GB NVMe", basePrice: 75.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "mc10" },
-  { name: "Supernova", planet: "supernova", ram: "24GB", cores: "4 Core/s", storage: "250GB NVMe", basePrice: 90.00, extras: ["Game Vault", "6 Splitter Slots"], whmcsId: "mc11" },
-  { name: "Black Hole", planet: "blackhole", ram: "32GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 110.00, extras: ["Game Vault", "8 Splitter Slots"], whmcsId: "mc12" },
-]
-
-/* ── Modded-specific server capabilities ── */
-const moddedServerCapabilities = ["Soporte Forge", "Soporte Fabric", "Soporte Spigot", "Soporte Curseforge", "Soporte FTB", "Soporte Technic"]
-
-/* ── Modded-specific FAQ ── */
-const moddedFaqItems = [
-  { q: "Por que ForzaHost es el mejor hosting para Minecraft Modded?", a: "Ofrecemos hardware de ultima generacion optimizado para modpacks pesados. Ryzen 9 7900 o equivalente, DDR5 RAM y almacenamiento NVMe para que tus mods carguen rapido y sin lag." },
-  { q: "Puedo instalar cualquier modpack como RLCraft o Pixelmon?", a: "Si, soportamos todos los modpacks populares incluyendo RLCraft, Pixelmon, All The Mods, Better Minecraft, Vault Hunters, Create y muchos mas. La instalacion es con un solo clic." },
-  { q: "Cuanta RAM necesito para un servidor Modded?", a: "Depende del modpack. Para modpacks ligeros (menos de 50 mods) recomendamos minimo 4GB. Para modpacks medianos como Better Minecraft, 6-8GB. Para modpacks pesados como RLCraft o ATM, 8-12GB o mas." },
-  { q: "Que tan rapido responde el soporte cuando tengo un problema?", a: "Nuestro equipo de soporte especializado en mods responde en promedio en menos de 5 minutos. Estamos disponibles 24/7 a traves de chat en vivo y tickets." },
-  { q: "Puedo cambiar de modpack despues de crear mi servidor?", a: "Si, puedes cambiar de modpack en cualquier momento desde nuestro panel de control. El proceso es simple y rapido, solo selecciona el nuevo modpack y nosotros nos encargamos del resto." },
+/* ── Bedrock-specific plans ── */
+const bedrockPlans: PlanDef[] = [
+  { name: "Stone Bedrock", planet: "mercury", ram: "2GB", cores: "Ryzen 7 9800X3D", storage: "10GB NVMe", basePrice: 5.99, whmcsId: "stone-bedrock" },
+  { name: "Iron Bedrock", planet: "neptune", ram: "4GB", cores: "Ryzen 7 9800X3D", storage: "20GB NVMe", basePrice: 8.99, bestSeller: true, whmcsId: "iron-bedrock" },
+  { name: "Diamond Bedrock", planet: "sun", ram: "8GB", cores: "Ryzen 7 9800X3D", storage: "40GB NVMe", basePrice: 15.99, whmcsId: "diamond-bedrock" },
+  { name: "Netherite Bedrock", planet: "milkyway", ram: "16GB", cores: "Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 27.99, whmcsId: "netherite-bedrock" },
 ]
 
 /* ── Budget-specific plan type ── */
@@ -315,8 +215,8 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
   const isModded = variant === "modded"
   const isBudget = variant === "budget"
   const [currentStep, setCurrentStep] = useState(1)
-  const [selectedType, setSelectedType] = useState(isModded ? "modded" : "vanilla")
-  const [selectedLocation, setSelectedLocation] = useState<string | null>((isModded || isBudget) ? "ca-bhs" : null)
+  const [selectedType, setSelectedType] = useState("community")
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(isBudget ? "ca-bhs" : null)
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly")
   const [openFaq, setOpenFaq] = useState<number | null>(0)
@@ -386,22 +286,16 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
 
   const activeFaqItems = isBudget
     ? budgetFaqItems
-    : isModded
-      ? moddedFaqItems
-      : isBedrock
-        ? faqItems.map((item) =>
-            item.q.includes("versiones")
-              ? { ...item, a: "Soportamos todas las versiones de Minecraft Bedrock Edition, incluyendo Windows 10/11, consolas (Xbox, PlayStation, Nintendo Switch) y dispositivos moviles (iOS, Android)." }
-              : item
-          )
-        : faqItems
-
-  const stepPercent = currentStep === 1 ? 25 : currentStep === 2 ? 50 : 75
-  const plans = isModded
-    ? (selectedType === "community" ? moddedCommunityPlans : moddedVanillaPlans)
     : isBedrock
-      ? (selectedType === "community" ? bedrockCommunityPlans : bedrockVanillaPlans)
-      : (selectedType === "community" ? communityPlans : vanillaPlans)
+      ? faqItems.map((item) =>
+          item.q.includes("versiones")
+            ? { ...item, a: "Soportamos todas las versiones de Minecraft Bedrock Edition, incluyendo Windows 10/11, consolas (Xbox, PlayStation, Nintendo Switch) y dispositivos moviles (iOS, Android)." }
+            : item
+        )
+      : faqItems
+
+  const stepPercent = currentStep === 1 ? 50 : 75
+  const plans = isBedrock ? bedrockPlans : minecraftPlans
   
   // Filter plans for display - for non-modded variants, we want all plans including popular ones
   const displayPlans = plans
@@ -420,15 +314,18 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
 
   const handlePlanSelect = (plan: PlanDef) => {
     setSelectedPlan(plan.whmcsId)
-    // Redirect to WHMCS billing
-    const url = `https://billing.forzahost.com/cart.php?a=add&pid=${plan.whmcsId}&billingcycle=${billingCycle}&configoption[1]=${selectedLocation}`
+    // Redirect to WHMCS billing - using direct store URLs
+    const storeBase = isBedrock 
+      ? "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/" 
+      : "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/"
+    const url = `${storeBase}${plan.whmcsId}`
     window.open(url, "_blank")
   }
 
   return (
     <div className="min-h-screen bg-background">
       {/* ─── HERO ─── */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-32 pb-8 overflow-hidden">
         <div className="absolute inset-0">
           <Image src="/images/minecraft-bg.jpg" alt="" fill className="object-cover object-right-top" priority sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(13,13,13,0.97) 0%, rgba(13,13,13,0.85) 40%, rgba(13,13,13,0.5) 100%)" }} />
@@ -462,7 +359,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
 
             <div className="flex-1 max-w-2xl">
               {(isModded || isBudget) && (
-                <a href="/minecraft" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
+                <a href="/game-server-hosting" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
                   <ArrowLeft className="w-4 h-4" />
                   Seleccionar un juego diferente
                 </a>
@@ -507,22 +404,12 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             </div>
           </div>
 
-          {/* Version banner (hidden for modded/budget, shown in plans section instead) */}
-          {!isModded && !isBudget && (
-            <div className="mt-12 px-5 py-3 rounded-lg flex items-center gap-3 text-sm transition-all duration-700" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)", transitionDelay: "200ms" }}>
-              <Zap className="w-4 h-4 text-primary shrink-0" />
-              <span className="text-foreground font-medium">
-                {isBedrock
-                  ? "Todos los planes de Minecraft Bedrock Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""
-                  : "Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""}
-              </span>
-            </div>
-          )}
+
         </div>
       </section>
 
       {/* ─── MULTI-STEP WIZARD ─── */}
-      <section id="wizard" className="py-20 bg-background scroll-mt-28">
+      <section id="wizard" className="pt-8 pb-16 bg-background scroll-mt-28">
         {isBudget ? (
           /* ── BUDGET: Direct plans layout (no wizard, single tier) ── */
           <div className="mx-auto max-w-7xl px-4">
@@ -624,14 +511,6 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
                 </span>
               </div>
 
-              {/* Version banner */}
-              <div className="mb-8 px-5 py-3 rounded-lg flex items-center gap-3 text-sm" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}>
-                <Zap className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-foreground font-medium">
-                  {"Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.11 \"Mounts Of Mayhem\""}
-                </span>
-              </div>
-
               {/* ── Budget Plan cards in 4-column grid ── */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {budgetPlans.map((plan) => (
@@ -650,36 +529,6 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             >
               {/* ── Inline filter controls ── */}
               <div className="flex flex-wrap items-start gap-8 mb-6">
-                {/* Server Tier */}
-                <div>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
-                    <Server className="w-4 h-4" />
-                    <span>Tipo de Servidor</span>
-                  </div>
-                  <div className="flex gap-2">
-                    {(["vanilla", "community"] as const).map((tier) => (
-                      <button
-                        key={tier}
-                        onClick={() => setSelectedType(tier)}
-                        className="px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200"
-                        style={{
-                          background: (tier === "vanilla" && (selectedType === "vanilla" || selectedType === "modded")) || (tier === "community" && selectedType === "community")
-                            ? "rgba(34,197,94,0.15)"
-                            : "rgba(255,255,255,0.03)",
-                          border: (tier === "vanilla" && (selectedType === "vanilla" || selectedType === "modded")) || (tier === "community" && selectedType === "community")
-                            ? "1px solid rgba(34,197,94,0.4)"
-                            : "1px solid rgba(255,255,255,0.06)",
-                          color: (tier === "vanilla" && (selectedType === "vanilla" || selectedType === "modded")) || (tier === "community" && selectedType === "community")
-                            ? "#22c55e"
-                            : "rgba(255,255,255,0.5)",
-                        }}
-                      >
-                        {tier === "vanilla" ? (isModded ? "Enterprise" : "Standard") : (isModded ? "Extreme" : "Comunidad")}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
                 {/* Billing Cycle */}
                 <div>
                   <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
@@ -745,9 +594,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
                 <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>AMD</span>
                 <span className="text-sm text-muted-foreground">
                   {"Powered by "}
-                  <span className="font-bold text-foreground">{selectedType === "community" ? "Ryzen 9 9900X" : "Ryzen 9 7900"}</span>
-                  {" o "}
-                  <a href="/proximamente" className="text-primary font-semibold hover:underline">equivalente</a>
+                  <span className="font-bold text-foreground">Ryzen 7 9800X3D</span>
                 </span>
               </div>
 
@@ -755,7 +602,11 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               <div className="mb-8 px-5 py-3 rounded-lg flex items-center gap-3 text-sm" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}>
                 <Zap className="w-4 h-4 text-primary shrink-0" />
                 <span className="text-foreground font-medium">
-                  {"Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.11 \"Mounts Of Mayhem\""}
+                  {isModded
+                    ? "Todos los planes de Minecraft Java estan listos para modded, compatible con Forge. Cambia el tipo de servidor compatible con mods desde el panel de versiones."
+                    : isBedrock
+                      ? "Todos los planes de Minecraft Bedrock estan listos para la version 1.21.80"
+                      : "Todos los planes de Minecraft Java estan listos para la version 1.21.4"}
                 </span>
               </div>
 
@@ -786,7 +637,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
                     : "Puedes ejecutar muchos tipos de servidores de Minecraft dependiendo de la experiencia que busques. Ofrecemos soporte completo para Minecraft Java vanilla, asi como para servidores Bedrock. Buscas una experiencia con mods? Tenemos soporte completo para Forge, Fabric, Spigot y Sponge."}
               </p>
               <div className="flex flex-wrap gap-3">
-                {(isModded ? moddedServerCapabilities : isBedrock ? bedrockServerCapabilities : serverCapabilities).map((cap) => (
+                {(isBedrock ? bedrockServerCapabilities : serverCapabilities).map((cap) => (
                   <span key={cap} className="flex items-center gap-2 text-sm font-medium text-foreground">
                     <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(34,197,94,0.2)" }}>
                       <Check className="w-3 h-3 text-[#22c55e]" />

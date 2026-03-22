@@ -34,32 +34,31 @@ const minecraftCards = [
     label: "Budget Hosting",
     href: "/minecraft/budget",
     image: "/images/dropdown-budget.jpg",
-    borderColor: "#22c55e",
-    badge: "NUEVA ACTUALIZACION!",
-    badgeColor: "#ef4444",
+    borderColor: "#6b7280",
+    badge: "PROXIMAMENTE",
+    badgeColor: "#6b7280",
+    disabled: true,
   },
 ]
 
 /* ── Game Hosting mega-dropdown data ── */
 const gameNewReleases = [
-  { label: "Palworld", href: "/game-server-hosting/palworld", icon: Globe, badge: "NUEVO!", badgeColor: "#f5a623" },
-  { label: "Enshrouded", href: "/game-server-hosting/enshrouded", icon: Flame, badge: "NUEVO!", badgeColor: "#f5a623" },
-  { label: "Soulmask", href: "/proximamente", icon: Skull, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "CS2", href: "/game-server-hosting/cs2", icon: Crosshair, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Arma Reforger", href: "/game-server-hosting/arma-reforger", icon: Shield, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Assetto Corsa", href: "/game-server-hosting/assetto-corsa", icon: Rocket, badge: "NUEVO!", badgeColor: "#f5a623" },
 ]
 
 const gamePopular = [
-  { label: "Rust", href: "/game-server-hosting/rust", icon: Shield, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
-  { label: "Valheim", href: "/game-server-hosting/valheim", icon: Sword },
-  { label: "Unturned", href: "/game-server-hosting/unturned", icon: Bug },
-  { label: "Terraria", href: "/game-server-hosting/terraria", icon: Pickaxe, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
-  { label: "DayZ", href: "/game-server-hosting/dayz", icon: Crosshair },
-  { label: "Project Zomboid", href: "/game-server-hosting/project-zomboid", icon: Skull },
+  { label: "DayZ", href: "/game-server-hosting/dayz", icon: Skull, badge: "POPULAR", badgeColor: "#ef4444" },
+  { label: "Rust", href: "/game-server-hosting/rust", icon: Shield, badge: "POPULAR", badgeColor: "#ef4444" },
   { label: "Garry's Mod", href: "/game-server-hosting/garrys-mod", icon: Gamepad2 },
+  { label: "Project Zomboid", href: "/game-server-hosting/project-zomboid", icon: Bug },
   { label: "7 Days to Die", href: "/game-server-hosting/7-days-to-die", icon: Swords },
-  { label: "Ark: Survival", href: "/game-server-hosting/ark-survival-evolved", icon: Mountain },
-  { label: "Satisfactory", href: "/game-server-hosting/satisfactory", icon: Factory },
-  { label: "Astroneer", href: "/proximamente", icon: Rocket },
-  { label: "Factorio", href: "/game-server-hosting/factorio", icon: Compass },
+  { label: "SA-MP", href: "/game-server-hosting/samp", icon: Globe },
+  { label: "MTA", href: "/game-server-hosting/mta", icon: Globe },
+  { label: "Unturned", href: "/game-server-hosting/unturned", icon: Mountain },
+  { label: "Arma 3", href: "/game-server-hosting/arma-3", icon: Compass },
+  { label: "RAGE-MP", href: "/game-server-hosting/ragemp", icon: Flame },
 ]
 
 /* ── Cloud Hosting mega-dropdown data ── */
@@ -282,8 +281,9 @@ export function Navbar() {
             {minecraftCards.map((card) => (
               <a
                 key={card.label}
-                href={card.href}
-                className="group relative block h-[100px] rounded-lg overflow-hidden transition-transform duration-200 hover:scale-[1.03]"
+                href={card.disabled ? undefined : card.href}
+                onClick={card.disabled ? (e) => e.preventDefault() : undefined}
+                className={`group relative block h-[100px] rounded-lg overflow-hidden transition-transform duration-200 ${card.disabled ? 'cursor-not-allowed opacity-60' : 'hover:scale-[1.03]'}`}
                 style={{
                   borderLeft: `4px solid ${card.borderColor}`,
                 }}
@@ -293,12 +293,12 @@ export function Navbar() {
                   src={card.image}
                   alt={card.label}
                   fill
-                  className="object-cover"
+                  className={`object-cover ${card.disabled ? 'grayscale' : ''}`}
                   sizes="300px"
                 />
                 {/* Dark overlay */}
                 <div
-                  className="absolute inset-0 bg-black/50 group-hover:bg-black/35 transition-colors duration-200"
+                  className={`absolute inset-0 transition-colors duration-200 ${card.disabled ? 'bg-black/70' : 'bg-black/50 group-hover:bg-black/35'}`}
                 />
                 {/* Badge */}
                 <div className="absolute top-2 right-2 z-[2]">
@@ -311,7 +311,7 @@ export function Navbar() {
                 </div>
                 {/* Label */}
                 <div className="absolute inset-0 flex items-center justify-center z-[1]">
-                  <span className="text-lg font-extrabold text-white tracking-wide drop-shadow-lg">
+                  <span className={`text-lg font-extrabold tracking-wide drop-shadow-lg ${card.disabled ? 'text-gray-400' : 'text-white'}`}>
                     {card.label}
                   </span>
                 </div>
@@ -795,10 +795,16 @@ export function Navbar() {
                     ? minecraftCards.map((card) => (
                         <a
                           key={card.label}
-                          href={card.href}
-                          className="text-sm text-muted-foreground hover:text-foreground"
+                          href={card.disabled ? undefined : card.href}
+                          onClick={card.disabled ? (e) => e.preventDefault() : undefined}
+                          className={`text-sm flex items-center gap-2 ${card.disabled ? 'text-gray-500 cursor-not-allowed' : 'text-muted-foreground hover:text-foreground'}`}
                         >
                           {card.label}
+                          {card.disabled && (
+                            <span className="text-[9px] font-bold text-gray-400 bg-gray-700 px-1 py-0.5 rounded">
+                              {card.badge}
+                            </span>
+                          )}
                         </a>
                       ))
                     : item.isMega && item.megaType === "games"

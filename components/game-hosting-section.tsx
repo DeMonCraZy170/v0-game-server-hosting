@@ -84,14 +84,14 @@ const hostingCategories = [
     description:
       "Hosting dedicado para servidores Rage MP con rendimiento optimizado y soporte tecnico especializado.",
     features: ["Rendimiento Optimizado", "Soporte Especializado", "Alta Disponibilidad"],
-    cta: "Proximamente",
-    href: "/proximamente",
+    cta: "Ver Planes",
+    href: "/game-server-hosting/ragemp",
     accentColor: "#e11d48",
     accentGlow: "rgba(225,29,72,0.5)",
     buttonBg: "linear-gradient(135deg, #be123c, #e11d48, #fb7185)",
     dotColor: "#e11d48",
     dotGlow: "rgba(225,29,72,0.5)",
-    comingSoon: true,
+    comingSoon: false,
   },
   {
     icon: "/images/icon-cloud.avif",
