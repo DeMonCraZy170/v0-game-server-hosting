@@ -409,7 +409,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
       </section>
 
       {/* ─── MULTI-STEP WIZARD ─── */}
-      <section id="wizard" className="py-20 bg-background scroll-mt-28">
+      <section id="wizard" className="pt-8 pb-16 bg-background scroll-mt-28">
         {isBudget ? (
           /* ── BUDGET: Direct plans layout (no wizard, single tier) ── */
           <div className="mx-auto max-w-7xl px-4">
