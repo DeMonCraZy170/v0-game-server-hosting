@@ -39,7 +39,7 @@ interface GameData {
 
 const allGames: GameData[] = [
   // Popular games
-  { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$5.99/mo", popular: true, isUpdate: true, platforms: ["pc", "java"] },
+  { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$5.99/mo", popular: true, platforms: ["pc", "java"] },
   { name: "DayZ", image: "/images/games/dayz.jpg", price: "$24.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
   { name: "Rust", image: "/images/games/rust.jpg", price: "$21.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
   { name: "CS2", image: "/images/games/cs2.jpg", price: "$10.99/mo", popular: true, isNew: true, platforms: ["steam"] },
@@ -55,13 +55,6 @@ const allGames: GameData[] = [
   { name: "Arma Reforger", image: "/images/games/armareforger.jpg", price: "$19.99/mo", isNew: true, platforms: ["steam", "console"] },
   { name: "Assetto Corsa", image: "/images/games/assettocorsa.jpg", price: "$9.99/mo", platforms: ["steam"] },
   { name: "RAGE-MP", image: "/images/games/ragemp.jpg", price: "$9.99/mo", platforms: ["pc"] },
-  { name: "Valheim", image: "/images/games/valheim.jpg", price: "$4.80/mo", platforms: ["steam"] },
-  { name: "Palworld", image: "/images/games/palworld.jpg", price: "$6.00/mo", platforms: ["steam"] },
-  { name: "Ark: Survival Evolved", image: "/images/games/ark.jpg", price: "$8.00/mo", platforms: ["steam", "pc"] },
-  { name: "Terraria", image: "/images/games/terraria.jpg", price: "$2.50/mo", isUpdate: true, platforms: ["steam", "mobile"] },
-  { name: "Satisfactory", image: "/images/games/satisfactory.jpg", price: "$8.00/mo", platforms: ["steam"] },
-  { name: "The Forest", image: "/images/games/theforest.jpg", price: "$8.80/mo", platforms: ["steam"] },
-  { name: "Sons of the Forest", image: "/images/games/sonsoftheforest.jpg", price: "$8.00/mo", platforms: ["steam"] },
 ]
 
 const popularGames = allGames.filter((g) => g.popular)
@@ -72,22 +65,15 @@ const getGameSlug = (name: string) => {
   const slugMap: Record<string, string> = {
     "Minecraft Java": "minecraft",
     "Minecraft Bedrock": "minecraft-bedrock",
-    "Ark: Survival Evolved": "ark-survival-evolved",
-    "Rust": "rust",
-    "Valheim": "valheim",
-    "Terraria": "terraria",
-    "7 Days to Die": "7-days-to-die",
-    "Unturned": "unturned",
-    "Garry's Mod": "garrys-mod",
-    "Satisfactory": "satisfactory",
-    "Project Zomboid": "project-zomboid",
-    "The Forest": "the-forest",
-    "Sons of the Forest": "sons-of-the-forest",
-    "Palworld": "palworld",
     "DayZ": "dayz",
+    "Rust": "rust",
     "CS2": "cs2",
+    "Garry's Mod": "garrys-mod",
+    "Project Zomboid": "project-zomboid",
+    "7 Days to Die": "7-days-to-die",
     "SA-MP": "samp",
     "MTA": "mta",
+    "Unturned": "unturned",
     "Arma 3": "arma-3",
     "Arma Reforger": "arma-reforger",
     "Assetto Corsa": "assetto-corsa",
