@@ -890,6 +890,10 @@ export function getAllGames(): GameDetail[] {
   return gameDataArray
 }
 
+export function getAllGameSlugs(): string[] {
+  return gameDataArray.map((game) => game.slug)
+}
+
 export function getGameBySlug(slug: string): GameDetail | undefined {
   return gameDataArray.find((game) => game.slug === slug)
 }
