@@ -1,7 +1,5 @@
 import { Metadata } from "next"
-import { getGameBySlug } from "@/lib/game-data"
-import { GameDetailContent } from "@/components/game-detail-content"
-import { notFound } from "next/navigation"
+import { MinecraftHostingContent } from "@/components/minecraft-hosting-content"
 
 export const metadata: Metadata = {
   title: "Minecraft Bedrock Server Hosting - ForzaHost",
@@ -10,11 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function MinecraftBedrockPage() {
-  const game = getGameBySlug("minecraft-bedrock")
-  
-  if (!game) {
-    notFound()
-  }
-  
-  return <GameDetailContent game={game} />
+  return <MinecraftHostingContent variant="bedrock" />
 }
