@@ -8,7 +8,7 @@ const perks = [
     icon: Cpu,
     title: "El Hardware Mas Rapido",
     description:
-      "Disfruta de velocidad y rendimiento inigualables con el CPU AMD Ryzen 7 9800X3D (8 cores/16 threads), RAM DDR5 y Dual NVMe SSDs de ForzaHost.",
+      "Disfruta de velocidad y rendimiento inigualables con los CPUs Ryzen 7900X y 9900X, RAM DDR5 y SSDs NVMe de ForzaHost.",
   },
   {
     icon: DollarSign,
