@@ -404,17 +404,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
             </div>
           </div>
 
-          {/* Version banner (hidden for modded/budget, shown in plans section instead) */}
-          {!isModded && !isBudget && (
-            <div className="mt-12 px-5 py-3 rounded-lg flex items-center gap-3 text-sm transition-all duration-700" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(20px)", transitionDelay: "200ms" }}>
-              <Zap className="w-4 h-4 text-primary shrink-0" />
-              <span className="text-foreground font-medium">
-                {isBedrock
-                  ? "Todos los planes de Minecraft Bedrock Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""
-                  : "Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.4 \"Garden Awakening\""}
-              </span>
-            </div>
-          )}
+
         </div>
       </section>
 
@@ -521,14 +511,6 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
                 </span>
               </div>
 
-              {/* Version banner */}
-              <div className="mb-8 px-5 py-3 rounded-lg flex items-center gap-3 text-sm" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}>
-                <Zap className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-foreground font-medium">
-                  {"Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.11 \"Mounts Of Mayhem\""}
-                </span>
-              </div>
-
               {/* ── Budget Plan cards in 4-column grid ── */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {budgetPlans.map((plan) => (
@@ -620,7 +602,9 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               <div className="mb-8 px-5 py-3 rounded-lg flex items-center gap-3 text-sm" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}>
                 <Zap className="w-4 h-4 text-primary shrink-0" />
                 <span className="text-foreground font-medium">
-                  {"Todos los planes de Minecraft Server Hosting estan listos para la version 1.21.11 \"Mounts Of Mayhem\""}
+                  {isBedrock
+                    ? "Todos los planes de Minecraft Bedrock estan listos para la version 1.21.80"
+                    : "Todos los planes de Minecraft Java estan listos para la version 1.21.4"}
                 </span>
               </div>
 
