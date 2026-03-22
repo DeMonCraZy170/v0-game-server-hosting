@@ -323,21 +323,21 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
       </section>
 
       {/* ─── Server Configuration Bar ─── */}
-      <section className="py-8 bg-background border-b border-white/5">
+      <section className="py-10 bg-background border-b border-white/5">
           <div className="mx-auto max-w-5xl px-4">
-            <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-6">
+            <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6 lg:gap-8">
               {/* Billing Cycle */}
-              <div className="flex flex-col gap-2 flex-1">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Clock className="w-4 h-4" />
-                  <span className="font-medium">Ciclo de Facturacion</span>
+              <div className="flex flex-col gap-3 flex-1">
+                <div className="flex items-center gap-2.5 text-base text-muted-foreground">
+                  <Clock className="w-5 h-5" />
+                  <span className="font-semibold">Ciclo de Facturacion</span>
                 </div>
-                <div className="flex flex-wrap rounded-lg" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <div className="flex flex-wrap rounded-xl" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
                   {billingOptions.map((option, idx) => (
                     <button
                       key={option.id}
                       onClick={() => setSelectedBilling(option.id)}
-                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all flex-1 min-w-[85px]"
+                      className="flex items-center justify-center gap-2 px-5 py-3.5 text-base font-semibold transition-all flex-1 min-w-[100px]"
                       style={{
                         background: selectedBilling === option.id ? "rgba(245,166,35,0.15)" : "transparent",
                         color: selectedBilling === option.id ? "#f5a623" : "rgba(255,255,255,0.6)",
@@ -347,7 +347,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                       <span>{option.label}</span>
                       {option.discount > 0 && (
                         <span 
-                          className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                          className="text-[10px] font-bold px-2 py-1 rounded-full"
                           style={{ background: "#22c55e", color: "#fff" }}
                         >
                           -{option.discount}%
@@ -359,15 +359,15 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
               </div>
 
               {/* Location Dropdown */}
-              <div className="flex flex-col gap-2 min-w-[200px]">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  <span className="font-medium">Ubicacion</span>
+              <div className="flex flex-col gap-3 min-w-[240px]">
+                <div className="flex items-center gap-2.5 text-base text-muted-foreground">
+                  <MapPin className="w-5 h-5" />
+                  <span className="font-semibold">Ubicacion</span>
                 </div>
                 <div className="relative">
                   <button
                     onClick={() => setLocationDropdownOpen(!locationDropdownOpen)}
-                    className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-lg transition-all"
+                    className="w-full flex items-center justify-between px-5 py-3.5 text-base font-semibold rounded-xl transition-all"
                     style={{ 
                       background: "rgba(255,255,255,0.04)", 
                       border: "1px solid rgba(255,255,255,0.08)",
@@ -375,7 +375,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                     }}
                   >
                     <span>{selectedLocation}</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${locationDropdownOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`w-5 h-5 transition-transform ${locationDropdownOpen ? "rotate-180" : ""}`} />
                   </button>
                   
                   {locationDropdownOpen && (
@@ -453,28 +453,28 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
         </section>
 
       {/* ─── Hardware Specs Bar ─── */}
-      <section className="py-6 border-b border-white/5" style={{ background: "rgba(255,255,255,0.02)" }}>
+      <section className="py-8 border-b border-white/5" style={{ background: "rgba(255,255,255,0.02)" }}>
         <div className="mx-auto max-w-5xl px-4">
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-            <div className="flex items-center gap-2 text-sm">
-              <Cpu className="w-4 h-4 text-primary" />
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+            <div className="flex items-center gap-3 text-base">
+              <Cpu className="w-5 h-5 text-primary" />
               <span className="text-muted-foreground">CPU:</span>
-              <span className="text-foreground font-medium">{hardwareSpecs.cpu}</span>
+              <span className="text-foreground font-semibold">{hardwareSpecs.cpu}</span>
             </div>
-            <div className="flex items-center gap-2 text-sm">
-              <HardDrive className="w-4 h-4 text-primary" />
+            <div className="flex items-center gap-3 text-base">
+              <HardDrive className="w-5 h-5 text-primary" />
               <span className="text-muted-foreground">Storage:</span>
-              <span className="text-foreground font-medium">{hardwareSpecs.storage}</span>
+              <span className="text-foreground font-semibold">{hardwareSpecs.storage}</span>
             </div>
-            <div className="flex items-center gap-2 text-sm">
-              <MapPin className="w-4 h-4 text-primary" />
+            <div className="flex items-center gap-3 text-base">
+              <MapPin className="w-5 h-5 text-primary" />
               <span className="text-muted-foreground">Ubicacion:</span>
-              <span className="text-foreground font-medium">{hardwareSpecs.location}</span>
+              <span className="text-foreground font-semibold">{hardwareSpecs.location}</span>
             </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Shield className="w-4 h-4 text-primary" />
+            <div className="flex items-center gap-3 text-base">
+              <Shield className="w-5 h-5 text-primary" />
               <span className="text-muted-foreground">DDoS:</span>
-              <span className="text-foreground font-medium">{hardwareSpecs.ddosProtection}</span>
+              <span className="text-foreground font-semibold">{hardwareSpecs.ddosProtection}</span>
             </div>
           </div>
         </div>
