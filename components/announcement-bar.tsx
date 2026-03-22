@@ -11,7 +11,7 @@ export function AnnouncementBar() {
             NUEVO
           </span>
           <span className="text-[15px] font-semibold text-foreground">
-            {"Servidores de Hytale ya disponibles."}
+            {"Servidores de DayZ ya disponibles."}
           </span>
           <ArrowRight className="h-4 w-4 text-foreground" />
         </div>
