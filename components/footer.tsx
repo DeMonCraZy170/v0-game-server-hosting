@@ -5,7 +5,21 @@ import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 
 const footerLinks: Record<string, { label: string; href: string }[]> = {
   "Hosting de Juegos": [
-    { label: "DayZ Hosting", href: "/game-server-hosting/dayz" },
+    { label: "Minecraft Java", href: "/game-server-hosting/minecraft-java" },
+    { label: "Minecraft Bedrock", href: "/game-server-hosting/minecraft-bedrock" },
+    { label: "DayZ", href: "/game-server-hosting/dayz" },
+    { label: "Rust", href: "/game-server-hosting/rust" },
+    { label: "CS2", href: "/game-server-hosting/cs2" },
+    { label: "Garry's Mod", href: "/game-server-hosting/garrys-mod" },
+    { label: "Project Zomboid", href: "/game-server-hosting/project-zomboid" },
+    { label: "7 Days to Die", href: "/game-server-hosting/7-days-to-die" },
+    { label: "SA-MP", href: "/game-server-hosting/sa-mp" },
+    { label: "MTA", href: "/game-server-hosting/mta" },
+    { label: "Unturned", href: "/game-server-hosting/unturned" },
+    { label: "Arma 3", href: "/game-server-hosting/arma-3" },
+    { label: "Arma Reforger", href: "/game-server-hosting/arma-reforger" },
+    { label: "Assetto Corsa", href: "/game-server-hosting/assetto-corsa" },
+    { label: "RAGE-MP", href: "/game-server-hosting/rage-mp" },
   ],
   "Cloud Hosting": [
     { label: "VPS KVM", href: "/proximamente" },
