@@ -22,7 +22,7 @@ const contactMethods = [
     description:
       "Unete a nuestra comunidad para chatear con otros usuarios y recibir soporte de la comunidad.",
     cta: "Unirse a Discord",
-    href: "https://discord.gg/forzahost",
+    href: "https://discord.gg/YRHckAJD",
     disabled: false,
     external: true,
   },
