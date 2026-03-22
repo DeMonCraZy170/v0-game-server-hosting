@@ -359,7 +359,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
 
             <div className="flex-1 max-w-2xl">
               {(isModded || isBudget) && (
-                <a href="/minecraft" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
+                <a href="/game-server-hosting" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
                   <ArrowLeft className="w-4 h-4" />
                   Seleccionar un juego diferente
                 </a>
