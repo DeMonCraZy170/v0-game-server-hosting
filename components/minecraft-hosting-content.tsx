@@ -52,33 +52,33 @@ function FlagEmoji({ code }: { code: string }) {
 const serverTypes = [
   {
     id: "vanilla",
-    label: "VANILLA",
+    label: "STANDARD",
     color: "#22c55e",
-    price: "$2.59",
-    unit: "/GB Por Mes",
-    processor: "Ryzen 9 7900 o equivalente",
-    features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
-    description: "Ideal para un servidor Minecraft pequeno con amigos.",
+    price: "$5.99",
+    unit: "/mes desde",
+    processor: "AMD Ryzen 7 9800X3D",
+    features: ["DDR5 RAM", "Dual NVMe SSD", "DDoS Layer 7", "Soporte 24/7", "Panel Pterodactyl"],
+    description: "Ideal para servidores Vanilla, Spigot, Paper o Fabric.",
   },
   {
     id: "modded",
     label: "MODDED",
     color: "#3b82f6",
-    price: "$2.59",
-    unit: "/GB Por Mes",
-    processor: "Ryzen 9 7900 o equivalente",
-    features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
-    description: "Perfecto para jugar modpacks e instalar mods y plugins.",
+    price: "$5.99",
+    unit: "/mes desde",
+    processor: "AMD Ryzen 7 9800X3D",
+    features: ["DDR5 RAM", "Dual NVMe SSD", "DDoS Layer 7", "Soporte 24/7", "Instalador Modpacks"],
+    description: "Perfecto para Forge, Fabric y modpacks pesados.",
   },
   {
     id: "community",
     label: "COMUNIDAD",
     color: "#a855f7",
-    price: "$4",
-    unit: "/GB Por Mes",
-    processor: "Ryzen 9 9900X o equivalente",
-    features: ["DDR5 RAM", "Almacenamiento NVMe", "Proteccion DDoS", "Soporte Activo 24/7", "Listo En Pocos Clics"],
-    description: "Para comunidades Minecraft con muchos jugadores en linea.",
+    price: "$89.99",
+    unit: "/mes",
+    processor: "AMD Ryzen 7 9800X3D",
+    features: ["32GB DDR5 RAM", "300GB NVMe SSD", "DDoS Layer 7", "Soporte Prioritario", "Ideal para Networks"],
+    description: "Para redes y comunidades con 200+ jugadores.",
   },
 ]
 
@@ -120,34 +120,19 @@ interface PlanDef {
   popular?: boolean
   bestSeller?: boolean
   extras?: string[]
-  whmcsId: string
+  players?: string
+  whmcsUrl: string
 }
 
 const vanillaPlans: PlanDef[] = [
-  { name: "Asteroide", planet: "asteroid", ram: "512MB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 1.30, whmcsId: "1" },
-  { name: "Pluton", planet: "pluto", ram: "1GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 2.59, whmcsId: "2" },
-  { name: "Triton", planet: "triton", ram: "2GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 5.18, whmcsId: "3" },
-  { name: "Luna", planet: "moon", ram: "3GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 7.77, whmcsId: "4" },
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, popular: true, whmcsId: "5" },
-  { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "6" },
-  { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "7" },
-  { name: "Tierra", planet: "earth", ram: "7GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 18.13, extras: ["1 Splitter Slot"], whmcsId: "8" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 20.72, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "9" },
-  { name: "Saturno", planet: "saturn", ram: "9GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 23.31, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "10" },
-  { name: "Jupiter", planet: "jupiter", ram: "10GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 25.90, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "11" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "15" },
+  { name: "Stone", planet: "moon", ram: "2GB", cores: "Ryzen 7 9800X3D", storage: "20GB NVMe", basePrice: 5.99, players: "10-20", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/stone" },
+  { name: "Iron", planet: "mercury", ram: "4GB", cores: "Ryzen 7 9800X3D", storage: "40GB NVMe", basePrice: 8.99, popular: true, players: "30-50", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/iron" },
+  { name: "Diamond", planet: "neptune", ram: "8GB", cores: "Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 15.99, bestSeller: true, players: "80-100", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/diamond" },
+  { name: "Netherite", planet: "jupiter", ram: "16GB", cores: "Ryzen 7 9800X3D", storage: "160GB NVMe", basePrice: 27.99, players: "150-200", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/netherite" },
 ]
 
 const communityPlans: PlanDef[] = [
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 16.00, popular: true, whmcsId: "c5" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 32.00, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "c9" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "c12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "c13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 80.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "c14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "c15" },
+  { name: "Community", planet: "sun", ram: "32GB", cores: "Ryzen 7 9800X3D", storage: "300GB NVMe", basePrice: 89.99, bestSeller: true, players: "200+", extras: ["Ideal para redes"], whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/community" },
 ]
 
 /* ── Feature / DDoS / FAQ Data ── */
@@ -197,62 +182,26 @@ function calcMonthlyPrice(base: number, cycle: BillingCycle): number {
   return parseFloat((base * (1 - discount / 100)).toFixed(2))
 }
 
-/* ── Bedrock-specific plans (same planet names, slightly different specs) ── */
+/* ── Bedrock-specific plans ── */
 const bedrockVanillaPlans: PlanDef[] = [
-  { name: "Asteroide", planet: "asteroid", ram: "512MB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 1.30, whmcsId: "b1" },
-  { name: "Pluton", planet: "pluto", ram: "1GB", cores: "2 Core/s", storage: "100GB NVMe", basePrice: 2.59, whmcsId: "b2" },
-  { name: "Triton", planet: "triton", ram: "2GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 5.18, whmcsId: "b3" },
-  { name: "Luna", planet: "moon", ram: "3GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 7.77, whmcsId: "b4" },
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, popular: true, whmcsId: "b5" },
-  { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "b6" },
-  { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "b7" },
-  { name: "Tierra", planet: "earth", ram: "7GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 18.13, extras: ["1 Splitter Slot"], whmcsId: "b8" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 20.72, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b9" },
-  { name: "Saturno", planet: "saturn", ram: "9GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 23.31, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b10" },
-  { name: "Jupiter", planet: "jupiter", ram: "10GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 25.90, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "b11" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "b12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "b13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "b14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "b15" },
+  { name: "Stone Bedrock", planet: "moon", ram: "2GB", cores: "Ryzen 7 9800X3D", storage: "10GB NVMe", basePrice: 5.99, players: "10-20", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/stone-bedrock" },
+  { name: "Iron Bedrock", planet: "mercury", ram: "4GB", cores: "Ryzen 7 9800X3D", storage: "20GB NVMe", basePrice: 8.99, popular: true, players: "30-50", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/iron-bedrock" },
+  { name: "Diamond Bedrock", planet: "neptune", ram: "8GB", cores: "Ryzen 7 9800X3D", storage: "40GB NVMe", basePrice: 15.99, bestSeller: true, players: "80-100", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/diamond-bedrock" },
+  { name: "Netherite Bedrock", planet: "jupiter", ram: "16GB", cores: "Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 27.99, players: "150-200", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/netherite-bedrock" },
 ]
 
-const bedrockCommunityPlans: PlanDef[] = [
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 16.00, popular: true, whmcsId: "bc5" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 32.00, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "bc9" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "4 Core/s", storage: "150GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "bc12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "bc13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "4 Core/s", storage: "200GB NVMe", basePrice: 80.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "bc14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "24GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 96.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "bc15" },
-]
+const bedrockCommunityPlans: PlanDef[] = []
 
-/* ── Modded-specific plans (higher RAM recommendations for modpacks) ── */
+/* ── Modded-specific plans (same as Java plans for now) ── */
 const moddedVanillaPlans: PlanDef[] = [
-  { name: "Mercurio", planet: "mercury", ram: "4GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 10.36, whmcsId: "m5" },
-  { name: "Marte", planet: "mars", ram: "5GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 12.95, whmcsId: "m6" },
-  { name: "Venus", planet: "venus", ram: "6GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 15.54, extras: ["1 Splitter Slot"], whmcsId: "m7" },
-  { name: "Tierra", planet: "earth", ram: "7GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 18.13, extras: ["1 Splitter Slot"], whmcsId: "m8" },
-  { name: "Neptuno", planet: "neptune", ram: "8GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 20.72, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m9" },
-  { name: "Saturno", planet: "saturn", ram: "9GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 23.31, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m10" },
-  { name: "Jupiter", planet: "jupiter", ram: "10GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 25.90, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "m11" },
-  { name: "Sol", planet: "sun", ram: "12GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 31.08, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "m12" },
-  { name: "Via Lactea", planet: "milkyway", ram: "16GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 41.44, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "m13" },
-  { name: "Supernova", planet: "supernova", ram: "20GB", cores: "3 Core/s", storage: "100GB NVMe", basePrice: 51.80, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "m14" },
-  { name: "Agujero Negro", planet: "blackhole", ram: "26GB", cores: "3.5 Core/s", storage: "100GB NVMe", basePrice: 67.34, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "m15" },
+  { name: "Stone", planet: "moon", ram: "2GB", cores: "Ryzen 7 9800X3D", storage: "20GB NVMe", basePrice: 5.99, players: "10-20", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/stone" },
+  { name: "Iron", planet: "mercury", ram: "4GB", cores: "Ryzen 7 9800X3D", storage: "40GB NVMe", basePrice: 8.99, popular: true, players: "30-50", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/iron" },
+  { name: "Diamond", planet: "neptune", ram: "8GB", cores: "Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 15.99, bestSeller: true, players: "80-100", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/diamond" },
+  { name: "Netherite", planet: "jupiter", ram: "16GB", cores: "Ryzen 7 9800X3D", storage: "160GB NVMe", basePrice: 27.99, players: "150-200", whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/netherite" },
 ]
 
 const moddedCommunityPlans: PlanDef[] = [
-  { name: "Moon", planet: "moon", ram: "4GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 16.00, whmcsId: "mc1" },
-  { name: "Mercury", planet: "mercury", ram: "5GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 20.00, whmcsId: "mc2" },
-  { name: "Mars", planet: "mars", ram: "6GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 24.00, extras: ["1 Splitter Slot"], whmcsId: "mc3" },
-  { name: "Venus", planet: "venus", ram: "7GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 28.00, extras: ["1 Splitter Slot"], whmcsId: "mc4" },
-  { name: "Earth", planet: "earth", ram: "8GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 32.00, bestSeller: true, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "mc5" },
-  { name: "Neptune", planet: "neptune", ram: "9GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 36.00, extras: ["Game Vault", "2 Splitter Slots"], whmcsId: "mc6" },
-  { name: "Saturn", planet: "saturn", ram: "10GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 40.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "mc7" },
-  { name: "Jupiter", planet: "jupiter", ram: "12GB", cores: "3 Core/s", storage: "250GB NVMe", basePrice: 48.00, extras: ["Game Vault", "3 Splitter Slots"], whmcsId: "mc8" },
-  { name: "Sun", planet: "sun", ram: "16GB", cores: "3.5 Core/s", storage: "250GB NVMe", basePrice: 64.00, extras: ["Game Vault", "4 Splitter Slots"], whmcsId: "mc9" },
-  { name: "Milky Way", planet: "milkyway", ram: "20GB", cores: "3.5 Core/s", storage: "250GB NVMe", basePrice: 75.00, extras: ["Game Vault", "5 Splitter Slots"], whmcsId: "mc10" },
-  { name: "Supernova", planet: "supernova", ram: "24GB", cores: "4 Core/s", storage: "250GB NVMe", basePrice: 90.00, extras: ["Game Vault", "6 Splitter Slots"], whmcsId: "mc11" },
-  { name: "Black Hole", planet: "blackhole", ram: "32GB", cores: "4.5 Core/s", storage: "250GB NVMe", basePrice: 110.00, extras: ["Game Vault", "8 Splitter Slots"], whmcsId: "mc12" },
+  { name: "Community", planet: "sun", ram: "32GB", cores: "Ryzen 7 9800X3D", storage: "300GB NVMe", basePrice: 89.99, bestSeller: true, players: "200+", extras: ["Ideal para redes"], whmcsUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/community" },
 ]
 
 /* ── Modded-specific server capabilities ── */
@@ -418,11 +367,10 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
     document.getElementById("wizard")?.scrollIntoView({ behavior: "smooth", block: "start" })
   }, [])
 
-  const handlePlanSelect = (plan: PlanDef) => {
-    setSelectedPlan(plan.whmcsId)
-    // Redirect to WHMCS billing
-    const url = `https://billing.forzahost.com/cart.php?a=add&pid=${plan.whmcsId}&billingcycle=${billingCycle}&configoption[1]=${selectedLocation}`
-    window.open(url, "_blank")
+const handlePlanSelect = (plan: PlanDef) => {
+  setSelectedPlan(plan.name)
+  // Redirect to WHMCS billing using direct plan URL
+  window.open(plan.whmcsUrl, "_blank")
   }
 
   return (
@@ -635,7 +583,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               {/* ── Budget Plan cards in 4-column grid ── */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {budgetPlans.map((plan) => (
-                  <BudgetPlanCard key={plan.whmcsId} plan={plan} cycle={billingCycle} location={selectedLocation || "ca-bhs"} onSelect={() => handlePlanSelect(plan as unknown as PlanDef)} />
+                  <BudgetPlanCard key={plan.name} plan={plan} cycle={billingCycle} location={selectedLocation || "ca-bhs"} onSelect={() => {}} />
                 ))}
               </div>
             </div>
@@ -762,7 +710,7 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               {/* ── Plan cards in 4-column grid ── */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {plans.map((plan) => (
-                  <ModdedPlanCard key={plan.whmcsId} plan={plan} cycle={billingCycle} location={selectedLocation || "ca-bhs"} onSelect={() => handlePlanSelect(plan)} />
+                  <ModdedPlanCard key={plan.name} plan={plan} cycle={billingCycle} location={selectedLocation || "ca-bhs"} onSelect={() => handlePlanSelect(plan)} />
                 ))}
               </div>
             </div>
@@ -1189,15 +1137,25 @@ function ModdedPlanCard({ plan, cycle, location, onSelect }: { plan: PlanDef; cy
       <ul className="flex flex-col gap-2 mb-5 flex-1">
         <li className="flex items-center gap-2 text-xs text-muted-foreground">
           <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
-          {plan.cores}
-        </li>
-        <li className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
-          {plan.ram} RAM
+          {plan.ram} DDR5 RAM
         </li>
         <li className="flex items-center gap-2 text-xs text-muted-foreground">
           <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
           {plan.storage}
+        </li>
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+          {plan.cores}
+        </li>
+        {plan.players && (
+          <li className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#22c55e" }} />
+            Hasta {plan.players} jugadores
+          </li>
+        )}
+        <li className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#f5a623" }} />
+          Proteccion DDoS Layer 7
         </li>
         {plan.extras?.map((extra) => (
           <li key={extra} className="flex items-center gap-2 text-xs text-muted-foreground">

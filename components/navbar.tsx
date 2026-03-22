@@ -42,24 +42,22 @@ const minecraftCards = [
 
 /* ── Game Hosting mega-dropdown data ── */
 const gameNewReleases = [
-  { label: "Palworld", href: "/game-server-hosting/palworld", icon: Globe, badge: "NUEVO!", badgeColor: "#f5a623" },
-  { label: "Enshrouded", href: "/game-server-hosting/enshrouded", icon: Flame, badge: "NUEVO!", badgeColor: "#f5a623" },
-  { label: "Soulmask", href: "/proximamente", icon: Skull, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "Arma Reforger", href: "/game-server-hosting/arma-reforger", icon: Crosshair, badge: "NUEVO!", badgeColor: "#f5a623" },
+  { label: "CS2", href: "/game-server-hosting/cs2", icon: Crosshair, badge: "NUEVO!", badgeColor: "#f5a623" },
 ]
 
 const gamePopular = [
-  { label: "Rust", href: "/game-server-hosting/rust", icon: Shield, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
-  { label: "Valheim", href: "/game-server-hosting/valheim", icon: Sword },
-  { label: "Unturned", href: "/game-server-hosting/unturned", icon: Bug },
-  { label: "Terraria", href: "/game-server-hosting/terraria", icon: Pickaxe, badge: "NUEVA ACT!", badgeColor: "#ef4444" },
   { label: "DayZ", href: "/game-server-hosting/dayz", icon: Crosshair },
-  { label: "Project Zomboid", href: "/game-server-hosting/project-zomboid", icon: Skull },
+  { label: "Rust", href: "/game-server-hosting/rust", icon: Shield },
   { label: "Garry's Mod", href: "/game-server-hosting/garrys-mod", icon: Gamepad2 },
+  { label: "Project Zomboid", href: "/game-server-hosting/project-zomboid", icon: Skull },
   { label: "7 Days to Die", href: "/game-server-hosting/7-days-to-die", icon: Swords },
-  { label: "Ark: Survival", href: "/game-server-hosting/ark-survival-evolved", icon: Mountain },
-  { label: "Satisfactory", href: "/game-server-hosting/satisfactory", icon: Factory },
-  { label: "Astroneer", href: "/proximamente", icon: Rocket },
-  { label: "Factorio", href: "/game-server-hosting/factorio", icon: Compass },
+  { label: "Unturned", href: "/game-server-hosting/unturned", icon: Bug },
+  { label: "Arma 3", href: "/game-server-hosting/arma-3", icon: Shield },
+  { label: "Assetto Corsa", href: "/game-server-hosting/assetto-corsa", icon: Compass },
+  { label: "SAMP", href: "/game-server-hosting/samp", icon: Gamepad2 },
+  { label: "MTA", href: "/game-server-hosting/mta", icon: Gamepad2 },
+  { label: "RAGE-MP", href: "/game-server-hosting/rage-mp", icon: Gamepad2 },
 ]
 
 /* ── Cloud Hosting mega-dropdown data ── */
