@@ -602,9 +602,11 @@ export function MinecraftHostingContent({ variant = "java" }: { variant?: "java"
               <div className="mb-8 px-5 py-3 rounded-lg flex items-center gap-3 text-sm" style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}>
                 <Zap className="w-4 h-4 text-primary shrink-0" />
                 <span className="text-foreground font-medium">
-                  {isBedrock
-                    ? "Todos los planes de Minecraft Bedrock estan listos para la version 1.21.80"
-                    : "Todos los planes de Minecraft Java estan listos para la version 1.21.4"}
+                  {isModded
+                    ? "Todos los planes de Minecraft Java estan listos para modded, compatible con Forge. Cambia el tipo de servidor compatible con mods desde el panel de versiones."
+                    : isBedrock
+                      ? "Todos los planes de Minecraft Bedrock estan listos para la version 1.21.80"
+                      : "Todos los planes de Minecraft Java estan listos para la version 1.21.4"}
                 </span>
               </div>
 
