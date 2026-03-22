@@ -27,6 +27,7 @@ import {
 import { useScrollReveal, staggerDelay } from "@/hooks/use-scroll-reveal"
 import { Footer } from "@/components/footer"
 import type { GameDetail } from "@/lib/game-data"
+import { hardwareSpecs } from "@/lib/game-data"
 
 /* ─── DDoS features ─── */
 
@@ -451,17 +452,45 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
           </div>
         </section>
 
+      {/* ─── Hardware Specs Bar ─── */}
+      <section className="py-6 border-b border-white/5" style={{ background: "rgba(255,255,255,0.02)" }}>
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
+            <div className="flex items-center gap-2 text-sm">
+              <Cpu className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">CPU:</span>
+              <span className="text-foreground font-medium">{hardwareSpecs.cpu}</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <HardDrive className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">Storage:</span>
+              <span className="text-foreground font-medium">{hardwareSpecs.storage}</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <MapPin className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">Ubicacion:</span>
+              <span className="text-foreground font-medium">{hardwareSpecs.location}</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <Shield className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">DDoS:</span>
+              <span className="text-foreground font-medium">{hardwareSpecs.ddosProtection}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── Pricing Plans ─── */}
       <section id="planes" className="py-20 bg-background">
         <div
           ref={plansRef}
-          className="mx-auto max-w-5xl px-4 transition-all duration-700 ease-out"
+          className="mx-auto max-w-6xl px-4 transition-all duration-700 ease-out"
           style={{
             opacity: plansVisible ? 1 : 0,
             transform: plansVisible ? "translateY(0)" : "translateY(30px)",
           }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className={`grid grid-cols-1 gap-6 ${game.plans.length <= 3 ? 'md:grid-cols-3' : game.plans.length === 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'}`}>
             {game.plans.map((plan, index) => (
               <div
                 key={plan.name}
@@ -517,7 +546,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                   <p className="text-3xl font-extrabold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>
                     ${getDiscountedPrice(plan.basePrice).toFixed(2)}
                   </p>
-                  <p className="text-xs text-primary font-medium mb-5">
+                  <p className="text-xs text-primary font-medium mb-4">
                     Facturado {billingOptions.find(b => b.id === selectedBilling)?.label.toLowerCase()}
                     {selectedBilling !== "monthly" && (
                       <span className="ml-1 text-green-500">
@@ -525,6 +554,17 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                       </span>
                     )}
                   </p>
+
+                  {/* Recommended Players Badge */}
+                  {plan.recommendedPlayers && (
+                    <div 
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium mb-4"
+                      style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.3)" }}
+                    >
+                      <Users className="w-3 h-3" />
+                      {plan.recommendedPlayers}
+                    </div>
+                  )}
 
                   <ul className="flex flex-col gap-2.5">
                     <li className="flex items-center gap-2.5 text-sm text-foreground/90">
@@ -549,7 +589,9 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                 </div>
 
                 <a
-                  href={game.comingSoon ? undefined : "#"}
+                  href={game.comingSoon ? undefined : plan.orderUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center mx-4 mb-4 px-4 py-3.5 text-sm font-bold tracking-wide rounded-lg transition-all duration-300 group-hover:brightness-110 group-hover:translate-y-[-1px] whitespace-nowrap"
                   style={{
                     background: plan.bestSeller
@@ -563,7 +605,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
                     opacity: game.comingSoon ? 0.5 : 1,
                   }}
                 >
-                  {game.comingSoon ? "Proximamente" : `Ordenar en ${selectedLocation.split(",")[1]?.trim() || "Canada"}, ${selectedLocation.split(",")[0]?.replace("OVH ", "") || "Beauharnois"}`}
+                  {game.comingSoon ? "Proximamente" : "Ordenar Ahora"}
                 </a>
               </div>
             ))}

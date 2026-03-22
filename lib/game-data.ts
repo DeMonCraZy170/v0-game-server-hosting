@@ -5,8 +5,10 @@ export interface GamePlan {
   storage: string
   basePrice: number
   players: string
+  recommendedPlayers?: string
   bestSeller?: boolean
   icon?: string
+  orderUrl: string
 }
 
 export interface GameFaq {
@@ -37,6 +39,16 @@ export interface GameDetail {
   comingSoon?: boolean
   basePrice: string
   multiplayerDescription: string
+  storeUrl?: string
+}
+
+/* ─── Hardware Specs (shown on all plans) ─── */
+export const hardwareSpecs = {
+  cpu: "AMD Ryzen 7 9800X3D",
+  cpuDetails: "8 cores / 16 threads",
+  storage: "Dual NVMe SSD",
+  location: "Canada (BHS8, OVH)",
+  ddosProtection: "OVH Game Shield 50+ Tbps",
 }
 
 /* ─── Universal features shared by all games ─── */
@@ -78,6 +90,161 @@ function makeBaseFaqs(gameName: string): GameFaq[] {
 /* ─── All Games Data ─── */
 
 const gameDataArray: GameDetail[] = [
+  // ─── Minecraft Java ───
+  {
+    slug: "minecraft",
+    name: "Minecraft Java",
+    tagline: "Minecraft Java Server Hosting",
+    description: "Minecraft es el juego de supervivencia y construccion mas popular del mundo. Crea mundos infinitos, construye estructuras increibles y explora con amigos en servidores personalizados con mods, plugins y configuraciones ilimitadas.",
+    coverImage: "/images/games/minecraft.jpg",
+    steamUrl: undefined,
+    officialUrl: "https://www.minecraft.net",
+    steamPrice: "$29.99",
+    basePrice: "$5.99/mo",
+    platforms: ["pc", "java"],
+    isUpdate: true,
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/",
+    multiplayerDescription: "Minecraft Java es la experiencia multijugador definitiva. Crea servidores con plugins, mods, minijuegos y mas. Forma comunidades, construye mundos epicos y juega con amigos de todo el mundo.",
+    features: [
+      ...universalFeatures,
+      { label: "Soporte de Plugins (Spigot/Paper)" },
+      { label: "Soporte de Mods (Forge/Fabric)" },
+      { label: "Instalador de Modpacks" },
+      { label: "Subdominios Gratis" },
+      { label: "MySQL Ilimitado" },
+      { label: "FTP Completo" },
+    ],
+    plans: [
+      { 
+        name: "Stone", 
+        ram: "2GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "20GB NVMe", 
+        basePrice: 5.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "10-20 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/stone"
+      },
+      { 
+        name: "Iron", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "40GB NVMe", 
+        basePrice: 8.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "30-50 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/iron"
+      },
+      { 
+        name: "Diamond", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "80GB NVMe", 
+        basePrice: 15.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "80-100 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/diamond"
+      },
+      { 
+        name: "Netherite", 
+        ram: "16GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "160GB NVMe", 
+        basePrice: 27.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "150-200 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/netherite"
+      },
+      { 
+        name: "Community", 
+        ram: "32GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "300GB NVMe", 
+        basePrice: 89.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "200+ jugadores / redes",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-hosting/community"
+      },
+    ],
+    faqs: [
+      ...makeBaseFaqs("Minecraft Java"),
+      {
+        question: "Puedo instalar mods y plugins en mi servidor?",
+        answer: "Si! Soportamos Spigot, Paper, Forge, Fabric y todos los frameworks populares. Nuestro panel facilita la instalacion con un solo click.",
+      },
+      {
+        question: "Puedo migrar mi servidor existente?",
+        answer: "Absolutamente. Nuestro equipo de soporte puede ayudarte a migrar tu mundo, plugins y configuraciones sin perdida de datos.",
+      },
+    ],
+  },
+  // ─── Minecraft Bedrock ───
+  {
+    slug: "minecraft-bedrock",
+    name: "Minecraft Bedrock",
+    tagline: "Minecraft Bedrock Server Hosting",
+    description: "Minecraft Bedrock Edition permite jugar en multiples plataformas incluyendo PC, consolas y dispositivos moviles. Crea servidores crossplay para que todos tus amigos puedan jugar juntos sin importar su dispositivo.",
+    coverImage: "/images/games/minecraft-bedrock.jpg",
+    officialUrl: "https://www.minecraft.net",
+    steamPrice: "$29.99",
+    basePrice: "$5.99/mo",
+    platforms: ["pc", "console", "mobile"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/",
+    multiplayerDescription: "Minecraft Bedrock es perfecto para comunidades crossplay. Juega con amigos en Xbox, PlayStation, Switch, moviles y PC, todos en el mismo servidor.",
+    features: [
+      ...universalFeatures,
+      { label: "Crossplay Multi-Plataforma" },
+      { label: "Soporte de Addons" },
+      { label: "Soporte de Behavior Packs" },
+      { label: "Subdominios Gratis" },
+    ],
+    plans: [
+      { 
+        name: "Stone Bedrock", 
+        ram: "2GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "10GB NVMe", 
+        basePrice: 5.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "10-20 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/stone-bedrock"
+      },
+      { 
+        name: "Iron Bedrock", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "20GB NVMe", 
+        basePrice: 8.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "30-50 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/iron-bedrock"
+      },
+      { 
+        name: "Diamond Bedrock", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "40GB NVMe", 
+        basePrice: 15.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "80-100 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/diamond-bedrock"
+      },
+      { 
+        name: "Netherite Bedrock", 
+        ram: "16GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "80GB NVMe", 
+        basePrice: 27.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "150-200 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/minecraft-bedrock/netherite-bedrock"
+      },
+    ],
+    faqs: makeBaseFaqs("Minecraft Bedrock"),
+  },
+  // ─── DayZ ───
   {
     slug: "dayz",
     name: "DayZ",
@@ -86,9 +253,10 @@ const gameDataArray: GameDetail[] = [
     coverImage: "/images/games/dayz.png",
     steamUrl: "https://store.steampowered.com/app/221100/DayZ/",
     steamPrice: "$44.99",
-    basePrice: "$4.00/mo",
+    basePrice: "$24.99/mo",
     platforms: ["steam"],
     isUpdate: true,
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/dayz-hosting/",
     multiplayerDescription: "DayZ es una experiencia de supervivencia brutal, pero mucho mejor en grupo. Forma alianzas, construye bases y explora el vasto mundo de Chernarus con tus amigos. Un servidor propio te da control total sobre la experiencia.",
     features: [
       ...universalFeatures,
@@ -101,29 +269,35 @@ const gameDataArray: GameDetail[] = [
     ],
     plans: [
       { 
-        name: "Superviviente", 
-        ram: "6GB", 
-        cores: "2.5 Cores/s", 
-        storage: "60GB NVMe", 
-        basePrice: 5.50, 
-        players: "20 Jugadores",
+        name: "Fortress", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "30GB NVMe", 
+        basePrice: 24.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "Hasta 40 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/dayz-hosting/fortress"
       },
       { 
-        name: "Explorador", 
-        ram: "10GB", 
-        cores: "3.5 Cores/s", 
-        storage: "100GB NVMe", 
-        basePrice: 9.00, 
-        players: "40 Jugadores", 
+        name: "Survivor", 
+        ram: "12GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "40GB NVMe", 
+        basePrice: 32.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "Hasta 60 jugadores",
         bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/dayz-hosting/survivor"
       },
       { 
-        name: "Apocalipsis", 
+        name: "Elite", 
         ram: "16GB", 
-        cores: "4.5 Cores/s", 
-        storage: "150GB NVMe", 
-        basePrice: 16.00, 
-        players: "60+ Jugadores",
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "60GB NVMe", 
+        basePrice: 40.99, 
+        players: "Ilimitados",
+        recommendedPlayers: "Hasta 80 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/dayz-hosting/elite"
       },
     ],
     faqs: [
@@ -138,6 +312,7 @@ const gameDataArray: GameDetail[] = [
       },
     ],
   },
+  // ─── Rust ───
   {
     slug: "rust",
     name: "Rust",
@@ -146,9 +321,10 @@ const gameDataArray: GameDetail[] = [
     coverImage: "/images/games/rust.jpg",
     steamUrl: "https://store.steampowered.com/app/252490/Rust/",
     steamPrice: "$39.99",
-    basePrice: "$8.00/mo",
+    basePrice: "$21.99/mo",
     platforms: ["steam"],
     isUpdate: true,
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/rust-hosting/",
     multiplayerDescription: "Rust es brutal, pero mucho mas divertido en grupo. Forma equipo con amigos para construir una base, defenderla de raiders, hacer loot runs y sobrevivir el caos. Ejecutar tu servidor en ForzaHost lo convierte en una experiencia increible.",
     features: [
       ...universalFeatures,
@@ -157,12 +333,661 @@ const gameDataArray: GameDetail[] = [
       { label: "Servidores Dedicados" },
     ],
     plans: [
-      { name: "Tela", ram: "10GB", cores: "2.5 Cores/s", storage: "100GB NVMe", basePrice: 15.00, players: "40 Jugadores", icon: "/images/plans/rust-cloth.png" },
-      { name: "Cuero", ram: "16GB", cores: "3 Cores/s", storage: "100GB NVMe", basePrice: 24.00, players: "80 Jugadores", bestSeller: true, icon: "/images/plans/rust-leather.png" },
-      { name: "Combustible", ram: "24GB", cores: "3.5 Cores/s", storage: "100GB NVMe", basePrice: 36.00, players: "120 Jugadores", icon: "/images/plans/rust-fuel.png" },
+      { 
+        name: "Survivor", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "40GB NVMe", 
+        basePrice: 21.99, 
+        players: "25 Jugadores",
+        recommendedPlayers: "Hasta 25 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/rust-hosting/survivor"
+      },
+      { 
+        name: "Raider", 
+        ram: "12GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "50GB NVMe", 
+        basePrice: 31.99, 
+        players: "50 Jugadores",
+        recommendedPlayers: "Hasta 50 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/rust-hosting/raider"
+      },
+      { 
+        name: "Warlord", 
+        ram: "16GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "70GB NVMe", 
+        basePrice: 40.99, 
+        players: "100 Jugadores",
+        recommendedPlayers: "Hasta 100 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/rust-hosting/warlord"
+      },
     ],
     faqs: makeBaseFaqs("Rust"),
   },
+  // ─── CS2 ───
+  {
+    slug: "cs2",
+    name: "CS2",
+    tagline: "CS2 Server Hosting",
+    description: "Counter-Strike 2 es el shooter tactico mas popular del mundo. Compite en partidas 5v5, crea servidores personalizados con modos de juego unicos y entrena con tu equipo en tu propio servidor dedicado.",
+    coverImage: "/images/games/cs2.jpg",
+    steamUrl: "https://store.steampowered.com/app/730/CounterStrike_2/",
+    steamPrice: "Gratis",
+    basePrice: "$10.99/mo",
+    platforms: ["steam"],
+    isNew: true,
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/cs2-hosting/",
+    multiplayerDescription: "CS2 es el shooter competitivo por excelencia. Crea tu propio servidor para practicas de equipo, torneos personalizados o modos de juego casuales con amigos.",
+    features: [
+      ...universalFeatures,
+      { label: "Plugins Metamod" },
+      { label: "Configuracion de Mapas" },
+      { label: "RCON Completo" },
+      { label: "Workshop de Steam" },
+    ],
+    plans: [
+      { 
+        name: "Dust", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "35GB NVMe", 
+        basePrice: 10.99, 
+        players: "32 Jugadores",
+        recommendedPlayers: "Hasta 32 jugadores (5v5)",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/cs2-hosting/dust"
+      },
+      { 
+        name: "Mirage", 
+        ram: "6GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "40GB NVMe", 
+        basePrice: 15.99, 
+        players: "64 Jugadores",
+        recommendedPlayers: "Hasta 64 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/cs2-hosting/mirage"
+      },
+      { 
+        name: "Inferno", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "50GB NVMe", 
+        basePrice: 18.99, 
+        players: "128 Jugadores",
+        recommendedPlayers: "Hasta 128 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/cs2-hosting/inferno"
+      },
+    ],
+    faqs: makeBaseFaqs("CS2"),
+  },
+  // ─── Garry's Mod ───
+  {
+    slug: "garrys-mod",
+    name: "Garry's Mod",
+    tagline: "Garry's Mod Server Hosting",
+    description: "Garry's Mod es un sandbox de fisica sin objetivos predefinidos. Usa herramientas para experimentar con la fisica, crear escenas, o juega modos como Trouble in Terrorist Town, Prop Hunt, DarkRP y muchos mas con la comunidad.",
+    coverImage: "/images/games/garrysmod.jpg",
+    steamUrl: "https://store.steampowered.com/app/4000/Garrys_Mod/",
+    steamPrice: "$9.99",
+    basePrice: "$10.99/mo",
+    platforms: ["steam"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/garrys-mod-hosting/",
+    multiplayerDescription: "Garry's Mod es sinonimo de diversion multijugador. Desde DarkRP hasta Prop Hunt, TTT y mas, las posibilidades son infinitas. Crea tu comunidad con un servidor personalizado y divertanse sin limites.",
+    features: [
+      ...universalFeatures,
+      { label: "Soporte de Addons" },
+      { label: "Workshop de Steam" },
+      { label: "Modos de Juego Ilimitados" },
+    ],
+    plans: [
+      { 
+        name: "Sandbox", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "20GB NVMe", 
+        basePrice: 10.99, 
+        players: "32 Jugadores",
+        recommendedPlayers: "Hasta 32 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/garrys-mod-hosting/sandbox"
+      },
+      { 
+        name: "DarkRP", 
+        ram: "6GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "30GB NVMe", 
+        basePrice: 15.99, 
+        players: "64 Jugadores",
+        recommendedPlayers: "Hasta 64 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/garrys-mod-hosting/darkrp"
+      },
+      { 
+        name: "SWRP", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "40GB NVMe", 
+        basePrice: 22.99, 
+        players: "128 Jugadores",
+        recommendedPlayers: "Hasta 128 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/garrys-mod-hosting/swrp"
+      },
+    ],
+    faqs: makeBaseFaqs("Garry's Mod"),
+  },
+  // ─── Project Zomboid ───
+  {
+    slug: "project-zomboid",
+    name: "Project Zomboid",
+    tagline: "Project Zomboid Server Hosting",
+    description: "Project Zomboid es un RPG de supervivencia zombie isometrico. Es la simulacion de supervivencia definitiva: saquea, construye, cultiva, pesca y lucha por tu vida en un mundo donde los zombies recuerdan todo y la muerte es permanente.",
+    coverImage: "/images/games/projectzomboid.jpg",
+    steamUrl: "https://store.steampowered.com/app/108600/Project_Zomboid/",
+    steamPrice: "$14.99",
+    basePrice: "$11.99/mo",
+    platforms: ["steam"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/project-zomboid-hosting/",
+    multiplayerDescription: "Project Zomboid en multijugador es una experiencia de supervivencia unica. Construyan refugios, compartan recursos y sobrevivan juntos en un mundo donde cada zombie es una amenaza. Crea tu propia comunidad de supervivientes.",
+    features: [
+      ...universalFeatures,
+      { label: "Soporte de Mods" },
+      { label: "Workshop de Steam" },
+      { label: "Sandbox Personalizable" },
+    ],
+    plans: [
+      { 
+        name: "Starter", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "40GB NVMe", 
+        basePrice: 11.99, 
+        players: "15 Jugadores",
+        recommendedPlayers: "Hasta 15 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/project-zomboid-hosting/starter"
+      },
+      { 
+        name: "Survival", 
+        ram: "6GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "50GB NVMe", 
+        basePrice: 17.99, 
+        players: "25 Jugadores",
+        recommendedPlayers: "Hasta 25 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/project-zomboid-hosting/survival"
+      },
+      { 
+        name: "Apocalypse", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "60GB NVMe", 
+        basePrice: 23.99, 
+        players: "35 Jugadores",
+        recommendedPlayers: "Hasta 35 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/project-zomboid-hosting/apocalypse"
+      },
+      { 
+        name: "Hardcore", 
+        ram: "12GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "70GB NVMe", 
+        basePrice: 29.99, 
+        players: "50 Jugadores",
+        recommendedPlayers: "Hasta 50 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/project-zomboid-hosting/hardcore"
+      },
+    ],
+    faqs: makeBaseFaqs("Project Zomboid"),
+  },
+  // ─── 7 Days to Die ───
+  {
+    slug: "7-days-to-die",
+    name: "7 Days to Die",
+    tagline: "7 Days to Die Server Hosting",
+    description: "7 Days to Die combina supervivencia, crafting, looting, mineria, exploracion, manejo de terreno y defensa de torre en un impresionante mundo voxel post-apocaliptico. Sobrevive a las hordas de zombies que atacan cada septima noche.",
+    coverImage: "/images/games/7daystodie.jpg",
+    steamUrl: "https://store.steampowered.com/app/251570/7_Days_to_Die/",
+    steamPrice: "$44.99",
+    basePrice: "$11.99/mo",
+    platforms: ["steam"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/7-days-to-die-hosting/",
+    multiplayerDescription: "7 Days to Die es mucho mejor en cooperativo. Construyan fortalezas juntos, preparen defensas para la horda del septimo dia y exploren el mundo en busca de suministros. Tu servidor garantiza una experiencia intensa y continua.",
+    features: [
+      ...universalFeatures,
+      { label: "Soporte de Mods" },
+      { label: "Anti-Cheat Integrado" },
+      { label: "Configuracion XML" },
+    ],
+    plans: [
+      { 
+        name: "Survivor", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "30GB NVMe", 
+        basePrice: 11.99, 
+        players: "5 Jugadores",
+        recommendedPlayers: "Hasta 5 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/7-days-to-die-hosting/survivor"
+      },
+      { 
+        name: "Builder", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "50GB NVMe", 
+        basePrice: 23.99, 
+        players: "11 Jugadores",
+        recommendedPlayers: "Hasta 11 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/7-days-to-die-hosting/builder"
+      },
+      { 
+        name: "Horde", 
+        ram: "10GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "70GB NVMe", 
+        basePrice: 29.99, 
+        players: "16 Jugadores",
+        recommendedPlayers: "Hasta 16 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/7-days-to-die-hosting/horde"
+      },
+    ],
+    faqs: makeBaseFaqs("7 Days to Die"),
+  },
+  // ─── SAMP ───
+  {
+    slug: "samp",
+    name: "SA-MP",
+    tagline: "SA-MP Server Hosting",
+    description: "San Andreas Multiplayer (SA-MP) es una modificacion para GTA San Andreas que permite jugar en linea con cientos de jugadores. Crea servidores de roleplay, deathmatch, racing y mas.",
+    coverImage: "/images/games/samp.jpg",
+    officialUrl: "https://www.sa-mp.com/",
+    steamPrice: undefined,
+    basePrice: "$7.99/mo",
+    platforms: ["pc"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/samp-hosting/",
+    multiplayerDescription: "SA-MP es la comunidad de roleplay mas grande de GTA. Crea servidores con cientos de jugadores, economia personalizada, facciones y mas. Tu servidor dedicado garantiza una experiencia sin lag.",
+    features: [
+      ...universalFeatures,
+      { label: "Plugins Personalizados" },
+      { label: "Gamemodes Ilimitados" },
+      { label: "Panel de Administracion" },
+    ],
+    plans: [
+      { 
+        name: "Starter", 
+        ram: "2GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "10GB NVMe", 
+        basePrice: 7.99, 
+        players: "100 Jugadores",
+        recommendedPlayers: "Hasta 100 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/samp-hosting/starter"
+      },
+      { 
+        name: "RP", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "20GB NVMe", 
+        basePrice: 11.99, 
+        players: "500 Jugadores",
+        recommendedPlayers: "Hasta 500 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/samp-hosting/rp"
+      },
+      { 
+        name: "Pro", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "30GB NVMe", 
+        basePrice: 17.99, 
+        players: "1000 Jugadores",
+        recommendedPlayers: "Hasta 1000 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/samp-hosting/pro"
+      },
+    ],
+    faqs: makeBaseFaqs("SA-MP"),
+  },
+  // ─── MTA ───
+  {
+    slug: "mta",
+    name: "MTA",
+    tagline: "MTA Server Hosting",
+    description: "Multi Theft Auto (MTA) es una modificacion para GTA San Andreas que permite crear servidores multijugador con scripting completo en Lua. Crea gamemodes unicos, servidores de roleplay y mas.",
+    coverImage: "/images/games/mta.jpg",
+    officialUrl: "https://mtasa.com/",
+    steamPrice: undefined,
+    basePrice: "$7.99/mo",
+    platforms: ["pc"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/mta-hosting/",
+    multiplayerDescription: "MTA ofrece la mayor flexibilidad para servidores de GTA. Con scripting Lua completo, puedes crear cualquier tipo de servidor imaginable. Tu servidor dedicado asegura rendimiento optimo.",
+    features: [
+      ...universalFeatures,
+      { label: "Scripting Lua Completo" },
+      { label: "Resources Ilimitados" },
+      { label: "Panel de Administracion" },
+    ],
+    plans: [
+      { 
+        name: "Starter", 
+        ram: "2GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "10GB NVMe", 
+        basePrice: 7.99, 
+        players: "100 Jugadores",
+        recommendedPlayers: "Hasta 100 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/mta-hosting/starter"
+      },
+      { 
+        name: "RP", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "20GB NVMe", 
+        basePrice: 11.99, 
+        players: "500 Jugadores",
+        recommendedPlayers: "Hasta 500 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/mta-hosting/rp"
+      },
+      { 
+        name: "Pro", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "30GB NVMe", 
+        basePrice: 17.99, 
+        players: "1000 Jugadores",
+        recommendedPlayers: "Hasta 1000 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/mta-hosting/pro"
+      },
+    ],
+    faqs: makeBaseFaqs("MTA"),
+  },
+  // ─── Unturned ───
+  {
+    slug: "unturned",
+    name: "Unturned",
+    tagline: "Unturned Server Hosting",
+    description: "Unturned es un juego de supervivencia zombie gratuito donde tus alianzas son tu salvacion. Unete con amigos para luchar contra hordas de no-muertos, construye comunidades y navega un mundo post-apocaliptico donde cada decision puede significar la vida o la muerte.",
+    coverImage: "/images/games/unturned.jpg",
+    steamUrl: "https://store.steampowered.com/app/304930/Unturned/",
+    steamPrice: "Gratis",
+    basePrice: "$5.99/mo",
+    platforms: ["steam"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/unturned-hosting/",
+    multiplayerDescription: "Ya sea que empieces un servidor con unos pocos amigos o busques construir la comunidad mas grande de Unturned, tenemos las soluciones mas rapidas a los precios mas bajos.",
+    features: [
+      ...universalFeatures,
+      { label: "Soporte OpenMod" },
+      { label: "Soporte RocketMod" },
+      { label: "Soporte uScript" },
+    ],
+    plans: [
+      { 
+        name: "Survivor", 
+        ram: "2GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "15GB NVMe", 
+        basePrice: 5.99, 
+        players: "8 Jugadores",
+        recommendedPlayers: "Hasta 8 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/unturned-hosting/survivor"
+      },
+      { 
+        name: "Warrior", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "25GB NVMe", 
+        basePrice: 11.99, 
+        players: "13 Jugadores",
+        recommendedPlayers: "Hasta 13 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/unturned-hosting/warrior"
+      },
+      { 
+        name: "Elite", 
+        ram: "6GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "35GB NVMe", 
+        basePrice: 17.99, 
+        players: "24 Jugadores",
+        recommendedPlayers: "Hasta 24 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/unturned-hosting/elite"
+      },
+    ],
+    faqs: makeBaseFaqs("Unturned"),
+  },
+  // ─── Arma 3 ───
+  {
+    slug: "arma-3",
+    name: "Arma 3",
+    tagline: "Arma 3 Server Hosting",
+    description: "Arma 3 es el simulador militar mas completo disponible. Con un mapa masivo, vehiculos realistas y combate tactico, es perfecto para comunidades milsim y misiones cooperativas.",
+    coverImage: "/images/games/arma3.jpg",
+    steamUrl: "https://store.steampowered.com/app/107410/Arma_3/",
+    steamPrice: "$29.99",
+    basePrice: "$12.99/mo",
+    platforms: ["steam"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/arma-3-hosting/",
+    multiplayerDescription: "Arma 3 es el estandar para simulacion militar. Crea operaciones militares realistas, entrena con tu unidad y ejecuta misiones complejas en tu servidor dedicado.",
+    features: [
+      ...universalFeatures,
+      { label: "Soporte de Mods" },
+      { label: "Workshop de Steam" },
+      { label: "Headless Clients" },
+      { label: "Misiones Personalizadas" },
+    ],
+    plans: [
+      { 
+        name: "Recruit", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "40GB NVMe", 
+        basePrice: 12.99, 
+        players: "10 Jugadores",
+        recommendedPlayers: "Hasta 10 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/arma-3-hosting/recruit"
+      },
+      { 
+        name: "Sergeant", 
+        ram: "6GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "60GB NVMe", 
+        basePrice: 18.99, 
+        players: "32 Jugadores",
+        recommendedPlayers: "Hasta 32 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/arma-3-hosting/sergeant"
+      },
+      { 
+        name: "Commander", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "80GB NVMe", 
+        basePrice: 24.99, 
+        players: "48 Jugadores",
+        recommendedPlayers: "Hasta 48 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/arma-3-hosting/commander"
+      },
+    ],
+    faqs: makeBaseFaqs("Arma 3"),
+  },
+  // ─── Arma Reforger ───
+  {
+    slug: "arma-reforger",
+    name: "Arma Reforger",
+    tagline: "Arma Reforger Server Hosting",
+    description: "Arma Reforger es la nueva generacion de simulacion militar de Bohemia Interactive. Con un motor completamente nuevo y soporte crossplay entre PC, Xbox y PlayStation, lleva la simulacion militar a un nuevo nivel.",
+    coverImage: "/images/games/armareforger.jpg",
+    steamUrl: "https://store.steampowered.com/app/1874880/Arma_Reforger/",
+    steamPrice: "$29.99",
+    basePrice: "$19.99/mo",
+    platforms: ["steam", "console"],
+    isNew: true,
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/arma-reforger-hosting/",
+    multiplayerDescription: "Arma Reforger trae la simulacion militar a la nueva generacion con crossplay entre PC, Xbox y PlayStation. Tu servidor dedicado permite operaciones masivas con hasta 64 jugadores.",
+    features: [
+      ...universalFeatures,
+      { label: "Crossplay PC/Xbox/PS5" },
+      { label: "Soporte de Mods" },
+      { label: "Workshop de Steam" },
+      { label: "Escenarios Personalizados" },
+    ],
+    plans: [
+      { 
+        name: "Recon", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "50GB NVMe", 
+        basePrice: 19.99, 
+        players: "30 Jugadores",
+        recommendedPlayers: "Hasta 30 jugadores (PC/Xbox/PS5)",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/arma-reforger-hosting/recon"
+      },
+      { 
+        name: "Assault", 
+        ram: "12GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "70GB NVMe", 
+        basePrice: 29.99, 
+        players: "50 Jugadores",
+        recommendedPlayers: "Hasta 50 jugadores (PC/Xbox/PS5)",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/arma-reforger-hosting/assault"
+      },
+      { 
+        name: "Warfare", 
+        ram: "16GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "90GB NVMe", 
+        basePrice: 44.99, 
+        players: "64 Jugadores",
+        recommendedPlayers: "Hasta 64 jugadores (PC/Xbox/PS5)",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/arma-reforger-hosting/warfare"
+      },
+    ],
+    faqs: makeBaseFaqs("Arma Reforger"),
+  },
+  // ─── Assetto Corsa ───
+  {
+    slug: "assetto-corsa",
+    name: "Assetto Corsa",
+    tagline: "Assetto Corsa Server Hosting",
+    description: "Assetto Corsa es el simulador de carreras mas realista disponible. Con fisica precisa, graficos impresionantes y soporte de mods extensivo, es perfecto para carreras competitivas y eventos de comunidad.",
+    coverImage: "/images/games/assettocorsa.jpg",
+    steamUrl: "https://store.steampowered.com/app/244210/Assetto_Corsa/",
+    steamPrice: "$19.99",
+    basePrice: "$9.99/mo",
+    platforms: ["steam"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/assetto-corsa-hosting/",
+    multiplayerDescription: "Assetto Corsa es el estandar para simulacion de carreras. Organiza ligas, torneos y sesiones de practica con tu comunidad en tu servidor dedicado.",
+    features: [
+      ...universalFeatures,
+      { label: "Soporte Content Manager" },
+      { label: "Mods de Coches y Pistas" },
+      { label: "Configuracion Avanzada" },
+    ],
+    plans: [
+      { 
+        name: "Amateur", 
+        ram: "2GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "15GB NVMe", 
+        basePrice: 9.99, 
+        players: "16 Jugadores",
+        recommendedPlayers: "Hasta 16 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/assetto-corsa-hosting/amateur"
+      },
+      { 
+        name: "Pro", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "30GB NVMe", 
+        basePrice: 15.99, 
+        players: "32 Jugadores",
+        recommendedPlayers: "Hasta 32 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/assetto-corsa-hosting/pro"
+      },
+      { 
+        name: "Elite", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "50GB NVMe", 
+        basePrice: 24.99, 
+        players: "64 Jugadores",
+        recommendedPlayers: "Hasta 64 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/assetto-corsa-hosting/elite"
+      },
+    ],
+    faqs: makeBaseFaqs("Assetto Corsa"),
+  },
+  // ─── RAGE-MP ───
+  {
+    slug: "ragemp",
+    name: "RAGE-MP",
+    tagline: "RAGE-MP Server Hosting",
+    description: "RAGE Multiplayer (RAGE-MP) es la plataforma de multijugador mas avanzada para GTA V. Crea servidores de roleplay con graficos de ultima generacion, vehiculos personalizados y sistemas complejos.",
+    coverImage: "/images/games/ragemp.jpg",
+    officialUrl: "https://rage.mp/",
+    steamPrice: undefined,
+    basePrice: "$9.99/mo",
+    platforms: ["pc"],
+    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/ragemp-hosting/",
+    multiplayerDescription: "RAGE-MP es la plataforma premium para servidores de GTA V. Con soporte para C# y JavaScript, puedes crear experiencias de roleplay increiblemente detalladas.",
+    features: [
+      ...universalFeatures,
+      { label: "Scripting C#/JavaScript" },
+      { label: "Recursos Ilimitados" },
+      { label: "Voice Chat Integrado" },
+      { label: "Anti-Cheat Avanzado" },
+    ],
+    plans: [
+      { 
+        name: "Starter", 
+        ram: "2GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "15GB NVMe", 
+        basePrice: 9.99, 
+        players: "30 Jugadores",
+        recommendedPlayers: "Hasta 30 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/ragemp-hosting/starter"
+      },
+      { 
+        name: "Community", 
+        ram: "4GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "30GB NVMe", 
+        basePrice: 16.99, 
+        players: "60 Jugadores",
+        recommendedPlayers: "Hasta 60 jugadores",
+        bestSeller: true,
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/ragemp-hosting/community"
+      },
+      { 
+        name: "Server", 
+        ram: "8GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "50GB NVMe", 
+        basePrice: 28.99, 
+        players: "100 Jugadores",
+        recommendedPlayers: "Hasta 100 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/ragemp-hosting/server"
+      },
+      { 
+        name: "Metropolis", 
+        ram: "12GB", 
+        cores: "AMD Ryzen 7 9800X3D", 
+        storage: "70GB NVMe", 
+        basePrice: 42.99, 
+        players: "150 Jugadores",
+        recommendedPlayers: "Hasta 150 jugadores",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/ragemp-hosting/metropolis"
+      },
+    ],
+    faqs: makeBaseFaqs("RAGE-MP"),
+  },
+  // ─── Valheim ───
   {
     slug: "valheim",
     name: "Valheim",
@@ -181,12 +1006,13 @@ const gameDataArray: GameDetail[] = [
       { label: "Backups del Mundo" },
     ],
     plans: [
-      { name: "Greyling", ram: "4GB", cores: "2 Cores/s", storage: "30GB SSD", basePrice: 4.80, players: "4 Jugadores", icon: "/images/plans/valheim-leather.png" },
-      { name: "Viking", ram: "6GB", cores: "2.5 Cores/s", storage: "50GB SSD", basePrice: 7.20, players: "6 Jugadores", bestSeller: true, icon: "/images/plans/valheim-cyan.png" },
-      { name: "Odin", ram: "8GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 10.00, players: "10 Jugadores", icon: "/images/plans/valheim-blue.png" },
+      { name: "Greyling", ram: "4GB", cores: "AMD Ryzen 7 9800X3D", storage: "30GB SSD", basePrice: 4.80, players: "4 Jugadores", icon: "/images/plans/valheim-leather.png", orderUrl: "#" },
+      { name: "Viking", ram: "6GB", cores: "AMD Ryzen 7 9800X3D", storage: "50GB SSD", basePrice: 7.20, players: "6 Jugadores", bestSeller: true, icon: "/images/plans/valheim-cyan.png", orderUrl: "#" },
+      { name: "Odin", ram: "8GB", cores: "AMD Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 10.00, players: "10 Jugadores", icon: "/images/plans/valheim-blue.png", orderUrl: "#" },
     ],
     faqs: makeBaseFaqs("Valheim"),
   },
+  // ─── Palworld ───
   {
     slug: "palworld",
     name: "Palworld",
@@ -205,12 +1031,13 @@ const gameDataArray: GameDetail[] = [
       { label: "Administracion Remota" },
     ],
     plans: [
-      { name: "Novato", ram: "8GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 6.00, players: "8 Jugadores" },
-      { name: "Explorador", ram: "16GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 12.00, players: "16 Jugadores", bestSeller: true },
-      { name: "Maestro", ram: "32GB", cores: "4 Cores/s", storage: "120GB NVMe", basePrice: 20.00, players: "32 Jugadores" },
+      { name: "Novato", ram: "8GB", cores: "AMD Ryzen 7 9800X3D", storage: "50GB SSD", basePrice: 6.00, players: "8 Jugadores", orderUrl: "#" },
+      { name: "Explorador", ram: "16GB", cores: "AMD Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 12.00, players: "16 Jugadores", bestSeller: true, orderUrl: "#" },
+      { name: "Maestro", ram: "32GB", cores: "AMD Ryzen 7 9800X3D", storage: "120GB NVMe", basePrice: 20.00, players: "32 Jugadores", orderUrl: "#" },
     ],
     faqs: makeBaseFaqs("Palworld"),
   },
+  // ─── Ark: Survival Evolved ───
   {
     slug: "ark-survival-evolved",
     name: "Ark: Survival Evolved",
@@ -229,12 +1056,13 @@ const gameDataArray: GameDetail[] = [
       { label: "Configuracion de Tasas" },
     ],
     plans: [
-      { name: "Tatch", ram: "8GB", cores: "2 Cores/s", storage: "80GB SSD", basePrice: 8.00, players: "20 Jugadores" },
-      { name: "Metal", ram: "16GB", cores: "3 Cores/s", storage: "120GB NVMe", basePrice: 14.00, players: "40 Jugadores", bestSeller: true },
-      { name: "Tek", ram: "24GB", cores: "4 Cores/s", storage: "200GB NVMe", basePrice: 22.00, players: "70 Jugadores" },
+      { name: "Tatch", ram: "8GB", cores: "AMD Ryzen 7 9800X3D", storage: "80GB SSD", basePrice: 8.00, players: "20 Jugadores", orderUrl: "#" },
+      { name: "Metal", ram: "16GB", cores: "AMD Ryzen 7 9800X3D", storage: "120GB NVMe", basePrice: 14.00, players: "40 Jugadores", bestSeller: true, orderUrl: "#" },
+      { name: "Tek", ram: "24GB", cores: "AMD Ryzen 7 9800X3D", storage: "200GB NVMe", basePrice: 22.00, players: "70 Jugadores", orderUrl: "#" },
     ],
     faqs: makeBaseFaqs("ARK: Survival Evolved"),
   },
+  // ─── Terraria ───
   {
     slug: "terraria",
     name: "Terraria",
@@ -254,60 +1082,13 @@ const gameDataArray: GameDetail[] = [
       { label: "Mundos Multiples" },
     ],
     plans: [
-      { name: "Cobre", ram: "2GB", cores: "1 Core/s", storage: "30GB SSD", basePrice: 2.50, players: "8 Jugadores" },
-      { name: "Plata", ram: "3GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 3.50, players: "16 Jugadores", bestSeller: true },
-      { name: "Oro", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 5.00, players: "32 Jugadores" },
+      { name: "Cobre", ram: "2GB", cores: "AMD Ryzen 7 9800X3D", storage: "30GB SSD", basePrice: 2.50, players: "8 Jugadores", orderUrl: "#" },
+      { name: "Plata", ram: "3GB", cores: "AMD Ryzen 7 9800X3D", storage: "50GB SSD", basePrice: 3.50, players: "16 Jugadores", bestSeller: true, orderUrl: "#" },
+      { name: "Oro", ram: "4GB", cores: "AMD Ryzen 7 9800X3D", storage: "50GB SSD", basePrice: 5.00, players: "32 Jugadores", orderUrl: "#" },
     ],
     faqs: makeBaseFaqs("Terraria"),
   },
-  {
-    slug: "unturned",
-    name: "Unturned",
-    tagline: "Unturned Server Hosting",
-    description: "Unturned es un juego de supervivencia zombie gratuito donde tus alianzas son tu salvacion. Unete con amigos para luchar contra hordas de no-muertos, construye comunidades y navega un mundo post-apocaliptico donde cada decision puede significar la vida o la muerte.",
-    coverImage: "/images/games/unturned.jpg",
-    steamUrl: "https://store.steampowered.com/app/304930/Unturned/",
-    steamPrice: "Gratis",
-    basePrice: "$2.50/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Ya sea que empieces un servidor con unos pocos amigos o busques construir la comunidad mas grande de Unturned, tenemos las soluciones mas rapidas a los precios mas bajos.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte OpenMod" },
-      { label: "Soporte RocketMod" },
-      { label: "Soporte uScript" },
-    ],
-    plans: [
-      { name: "Palo", ram: "2GB", cores: "1 Core/s", storage: "50GB SSD", basePrice: 2.50, players: "10 Jugadores" },
-      { name: "Tronco", ram: "3GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 3.25, players: "16 Jugadores", bestSeller: true },
-      { name: "Tabla", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 4.00, players: "20 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Unturned"),
-  },
-  {
-    slug: "garrys-mod",
-    name: "Garry's Mod",
-    tagline: "Garry's Mod Server Hosting",
-    description: "Garry's Mod es un sandbox de fisica sin objetivos predefinidos. Usa herramientas para experimentar con la fisica, crear escenas, o juega modos como Trouble in Terrorist Town, Prop Hunt, DarkRP y muchos mas con la comunidad.",
-    coverImage: "/images/games/garrysmod.jpg",
-    steamUrl: "https://store.steampowered.com/app/4000/Garrys_Mod/",
-    steamPrice: "$9.99",
-    basePrice: "$2.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Garry's Mod es sinomino de diversion multijugador. Desde DarkRP hasta Prop Hunt, TTT y mas, las posibilidades son infinitas. Crea tu comunidad con un servidor personalizado y divertanse sin limites.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte de Addons" },
-      { label: "Workshop de Steam" },
-      { label: "Modos de Juego Ilimitados" },
-    ],
-    plans: [
-      { name: "Sandbox", ram: "2GB", cores: "1 Core/s", storage: "50GB SSD", basePrice: 2.00, players: "12 Jugadores" },
-      { name: "DarkRP", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 4.00, players: "24 Jugadores", bestSeller: true },
-      { name: "TTT Pro", ram: "6GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 6.00, players: "40 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Garry's Mod"),
-  },
+  // ─── Satisfactory ───
   {
     slug: "satisfactory",
     name: "Satisfactory",
@@ -326,60 +1107,13 @@ const gameDataArray: GameDetail[] = [
       { label: "Actualizaciones Automaticas" },
     ],
     plans: [
-      { name: "Basico", ram: "6GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 8.00, players: "4 Jugadores" },
-      { name: "Automatizado", ram: "10GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 12.00, players: "6 Jugadores", bestSeller: true },
-      { name: "Megafabrica", ram: "16GB", cores: "4 Cores/s", storage: "120GB NVMe", basePrice: 18.00, players: "8 Jugadores" },
+      { name: "Basico", ram: "6GB", cores: "AMD Ryzen 7 9800X3D", storage: "50GB SSD", basePrice: 8.00, players: "4 Jugadores", orderUrl: "#" },
+      { name: "Automatizado", ram: "10GB", cores: "AMD Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 12.00, players: "6 Jugadores", bestSeller: true, orderUrl: "#" },
+      { name: "Megafabrica", ram: "16GB", cores: "AMD Ryzen 7 9800X3D", storage: "120GB NVMe", basePrice: 18.00, players: "8 Jugadores", orderUrl: "#" },
     ],
     faqs: makeBaseFaqs("Satisfactory"),
   },
-  {
-    slug: "7-days-to-die",
-    name: "7 Days to Die",
-    tagline: "7 Days to Die Server Hosting",
-    description: "7 Days to Die combina supervivencia, crafting, looting, mineria, exploracion, manejo de terreno y defensa de torre en un impresionante mundo voxel post-apocaliptico. Sobrevive a las hordas de zombies que atacan cada septima noche.",
-    coverImage: "/images/games/7daystodie.jpg",
-    steamUrl: "https://store.steampowered.com/app/251570/7_Days_to_Die/",
-    steamPrice: "$44.99",
-    basePrice: "$4.50/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "7 Days to Die es mucho mejor en cooperativo. Construyan fortalezas juntos, preparen defensas para la horda del septimo dia y exploren el mundo en busca de suministros. Tu servidor garantiza una experiencia intensa y continua.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte de Mods" },
-      { label: "Anti-Cheat Integrado" },
-      { label: "Configuracion XML" },
-    ],
-    plans: [
-      { name: "Dia 1", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 4.50, players: "8 Jugadores" },
-      { name: "Dia 4", ram: "8GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 8.00, players: "16 Jugadores", bestSeller: true },
-      { name: "Dia 7", ram: "12GB", cores: "3.5 Cores/s", storage: "100GB NVMe", basePrice: 12.00, players: "24 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("7 Days to Die"),
-  },
-  {
-    slug: "project-zomboid",
-    name: "Project Zomboid",
-    tagline: "Project Zomboid Server Hosting",
-    description: "Project Zomboid es un RPG de supervivencia zombie isometrico. Es la simulacion de supervivencia definitiva: saquea, construye, cultiva, pesca y lucha por tu vida en un mundo donde los zombies recuerdan todo y la muerte es permanente.",
-    coverImage: "/images/games/projectzomboid.jpg",
-    steamUrl: "https://store.steampowered.com/app/108600/Project_Zomboid/",
-    steamPrice: "$14.99",
-    basePrice: "$4.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Project Zomboid en multijugador es una experiencia de supervivencia unica. Construyan refugios, compartan recursos y sobrevivan juntos en un mundo donde cada zombie es una amenaza. Crea tu propia comunidad de supervivientes.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte de Mods" },
-      { label: "Workshop de Steam" },
-      { label: "Sandbox Personalizable" },
-    ],
-    plans: [
-      { name: "Refugio", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 4.00, players: "10 Jugadores" },
-      { name: "Comunidad", ram: "6GB", cores: "2.5 Cores/s", storage: "50GB SSD", basePrice: 6.00, players: "20 Jugadores", bestSeller: true },
-      { name: "Fortaleza", ram: "8GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 9.00, players: "32 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Project Zomboid"),
-  },
+  // ─── The Forest ───
   {
     slug: "the-forest",
     name: "The Forest",
@@ -390,379 +1124,57 @@ const gameDataArray: GameDetail[] = [
     steamPrice: "$19.99",
     basePrice: "$8.80/mo",
     platforms: ["steam"],
-    multiplayerDescription: "The Forest en cooperativo es una experiencia de terror y supervivencia increible. Exploren cuevas, construyan bases fortificadas y enfrenten los horrores del bosque juntos. Un servidor dedicado mantiene su mundo activo 24/7.",
+    multiplayerDescription: "The Forest en cooperativo es una experiencia de terror y supervivencia unica. Construyan juntos, exploren las profundidades y enfrenten los horrores del bosque como equipo.",
     features: [
       ...universalFeatures,
-      { label: "Soporte Cooperativo" },
-      { label: "Caves Persistentes" },
-      { label: "Saves Automaticos" },
+      { label: "Saves Persistentes" },
+      { label: "Configuracion Avanzada" },
     ],
     plans: [
-      { name: "Campamento", ram: "4GB", cores: "2 Cores/s", storage: "30GB SSD", basePrice: 8.80, players: "4 Jugadores" },
-      { name: "Base", ram: "6GB", cores: "2.5 Cores/s", storage: "50GB SSD", basePrice: 10.00, players: "6 Jugadores", bestSeller: true },
-      { name: "Fortaleza", ram: "8GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 14.00, players: "8 Jugadores" },
+      { name: "Shelter", ram: "4GB", cores: "AMD Ryzen 7 9800X3D", storage: "30GB SSD", basePrice: 8.80, players: "4 Jugadores", orderUrl: "#" },
+      { name: "Camp", ram: "6GB", cores: "AMD Ryzen 7 9800X3D", storage: "50GB SSD", basePrice: 12.00, players: "6 Jugadores", bestSeller: true, orderUrl: "#" },
+      { name: "Village", ram: "8GB", cores: "AMD Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 16.00, players: "8 Jugadores", orderUrl: "#" },
     ],
     faqs: makeBaseFaqs("The Forest"),
   },
+  // ─── Sons of the Forest ───
   {
     slug: "sons-of-the-forest",
     name: "Sons of the Forest",
     tagline: "Sons of the Forest Server Hosting",
-    description: "Sons of the Forest es la secuela del aclamado The Forest. Enviado a buscar a un millonario desaparecido en una isla remota, te encuentras en un infierno infestado de canibales. Construye, crea y lucha para sobrevivir con graficos de nueva generacion.",
+    description: "Sons of the Forest es la secuela del aclamado The Forest. Enviado para encontrar a un multimillonario desaparecido en una isla remota, te encontraras en un infierno infestado de canibales. Construye, sobrevive y descubre los secretos de la isla.",
     coverImage: "/images/games/sonsoftheforest.jpg",
     steamUrl: "https://store.steampowered.com/app/1326470/Sons_Of_The_Forest/",
     steamPrice: "$29.99",
-    basePrice: "$8.80/mo",
+    basePrice: "$8.00/mo",
     platforms: ["steam"],
-    multiplayerDescription: "Sons of the Forest es una experiencia cooperativa de nueva generacion. Exploren la isla juntos, construyan defensas y enfrenten amenazas cada vez mas peligrosas. Tu servidor dedicado asegura la mejor experiencia posible.",
+    multiplayerDescription: "Sons of the Forest lleva la supervivencia cooperativa al siguiente nivel. Construyan bases elaboradas, cacen mutantes y descubran los misterios de la isla juntos.",
     features: [
       ...universalFeatures,
-      { label: "Soporte Cooperativo" },
-      { label: "Mundo Persistente" },
-      { label: "IA Avanzada de NPCs" },
-    ],
-    plans: [
-      { name: "Sobreviviente", ram: "6GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 8.80, players: "4 Jugadores" },
-      { name: "Explorador", ram: "8GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 12.00, players: "6 Jugadores", bestSeller: true },
-      { name: "Leyenda", ram: "12GB", cores: "3.5 Cores/s", storage: "100GB NVMe", basePrice: 16.00, players: "8 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Sons of the Forest"),
-  },
-  {
-    slug: "enshrouded",
-    name: "Enshrouded",
-    tagline: "Enshrouded Server Hosting",
-    description: "Enshrouded es un RPG de supervivencia cooperativo ambientado en un vasto continente destruido. Explora, construye, lucha y mejora a tu personaje en un mundo donde la Niebla amenaza con consumir todo. Personaliza tu clase y domina el crafting.",
-    coverImage: "/images/games/enshrouded.jpg",
-    steamUrl: "https://store.steampowered.com/app/1203620/Enshrouded/",
-    steamPrice: "$29.99",
-    basePrice: "$6.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Enshrouded esta disenado para la cooperacion. Exploren la Niebla juntos, construyan bases majestuosas y enfrenten jefes poderosos como equipo. Un servidor dedicado mantiene tu mundo activo para tus amigos en todo momento.",
-    features: [
-      ...universalFeatures,
-      { label: "Configuracion Avanzada" },
-      { label: "Mundo Persistente" },
-      { label: "Actualizaciones Automaticas" },
-    ],
-    plans: [
-      { name: "Viajero", ram: "6GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 6.00, players: "4 Jugadores" },
-      { name: "Guardian", ram: "8GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 10.00, players: "8 Jugadores", bestSeller: true },
-      { name: "Campeon", ram: "12GB", cores: "3.5 Cores/s", storage: "100GB NVMe", basePrice: 14.00, players: "16 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Enshrouded"),
-  },
-  {
-    slug: "conan-exiles",
-    name: "Conan Exiles",
-    tagline: "Conan Exiles Server Hosting",
-    description: "Conan Exiles es un juego de supervivencia en mundo abierto ambientado en el brutal universo de Conan el Barbaro. Construye desde una choza humilde hasta una fortaleza completa, domina esclavos, lucha contra jefes y domina las Tierras del Exilio.",
-    coverImage: "/images/games/conanexiles.jpg",
-    steamUrl: "https://store.steampowered.com/app/440900/Conan_Exiles/",
-    steamPrice: "$39.99",
-    basePrice: "$6.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Conan Exiles es una experiencia multijugador epica. Construye imperios, forma clanes, lucha en asedios y domina las Tierras del Exilio con tus aliados. Tu servidor te da control total sobre la experiencia de juego.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte de Mods" },
-      { label: "Workshop de Steam" },
-      { label: "Configuracion de Servidor" },
-    ],
-    plans: [
-      { name: "Exiliado", ram: "6GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 6.00, players: "10 Jugadores" },
-      { name: "Clan", ram: "10GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 10.00, players: "20 Jugadores", bestSeller: true },
-      { name: "Rey", ram: "16GB", cores: "4 Cores/s", storage: "120GB NVMe", basePrice: 16.00, players: "40 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Conan Exiles"),
-  },
-  {
-    slug: "v-rising",
-    name: "V Rising",
-    tagline: "V Rising Server Hosting",
-    description: "V Rising es un juego de supervivencia vampirica en mundo abierto. Despierta como un vampiro debilitado, caza sangre para recuperar tus poderes, construye tu castillo gotico y establece tu dominio sobre el mundo de los vivos.",
-    coverImage: "/images/games/vrising.jpg",
-    steamUrl: "https://store.steampowered.com/app/1604030/V_Rising/",
-    steamPrice: "$34.99",
-    basePrice: "$6.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "V Rising es perfecto para clanes de vampiros. Construyan castillos, cacen juntos, luchen por territorios y establezcan su reinado de oscuridad. Un servidor dedicado mantiene tu castillo siempre disponible.",
-    features: [
-      ...universalFeatures,
-      { label: "Configuracion PvP/PvE" },
-      { label: "Loot Tables Personalizables" },
-      { label: "Administracion Remota" },
-    ],
-    plans: [
-      { name: "Fledgling", ram: "4GB", cores: "2 Cores/s", storage: "30GB SSD", basePrice: 6.00, players: "10 Jugadores" },
-      { name: "Lord", ram: "6GB", cores: "2.5 Cores/s", storage: "50GB SSD", basePrice: 8.00, players: "20 Jugadores", bestSeller: true },
-      { name: "Dracul", ram: "8GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 12.00, players: "40 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("V Rising"),
-  },
-  {
-    slug: "space-engineers",
-    name: "Space Engineers",
-    tagline: "Space Engineers Server Hosting",
-    description: "Space Engineers es un sandbox de ingenieria, construccion, exploracion y supervivencia en el espacio y en planetas. Construye naves, estaciones espaciales, bases planetarias y mas con un motor de fisica realista.",
-    coverImage: "/images/games/spaceengineers.jpg",
-    steamUrl: "https://store.steampowered.com/app/244850/Space_Engineers/",
-    steamPrice: "$19.99",
-    basePrice: "$6.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Space Engineers multijugador te permite construir megaestructuras con amigos, organizar batallas espaciales y explorar el universo juntos. Un servidor dedicado soporta tus creaciones mas ambiciosas.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte de Mods" },
-      { label: "Workshop de Steam" },
-      { label: "Fisica Avanzada" },
-    ],
-    plans: [
-      { name: "Ingeniero", ram: "6GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 6.00, players: "8 Jugadores" },
-      { name: "Comandante", ram: "10GB", cores: "3 Cores/s", storage: "80GB NVMe", basePrice: 10.00, players: "16 Jugadores", bestSeller: true },
-      { name: "Almirante", ram: "16GB", cores: "4 Cores/s", storage: "120GB NVMe", basePrice: 16.00, players: "32 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Space Engineers"),
-  },
-  {
-    slug: "dont-starve-together",
-    name: "Don't Starve Together",
-    tagline: "Don't Starve Together Server Hosting",
-    description: "Don't Starve Together es la expansion multijugador independiente del juego de supervivencia Don't Starve. Coopera con amigos para sobrevivir en un mundo misterioso lleno de peligros, criaturas extranas y oscuridad.",
-    coverImage: "/images/games/dontstarvetogether.jpg",
-    steamUrl: "https://store.steampowered.com/app/322330/Dont_Starve_Together/",
-    steamPrice: "$14.99",
-    basePrice: "$3.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Don't Starve Together es la definicion de cooperacion. Sobrevivan juntos, dividan tareas, exploren cuevas y enfrenten jefes estacionales. Tu servidor te permite jugar con tus amigos cuando quieran.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte de Mods" },
-      { label: "Workshop de Steam" },
-      { label: "Caves Habilitadas" },
-    ],
-    plans: [
-      { name: "Wilson", ram: "2GB", cores: "1 Core/s", storage: "30GB SSD", basePrice: 3.00, players: "6 Jugadores" },
-      { name: "Wolfgang", ram: "3GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 4.50, players: "12 Jugadores", bestSeller: true },
-      { name: "Wicker", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 6.00, players: "24 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Don't Starve Together"),
-  },
-  {
-    slug: "factorio",
-    name: "Factorio",
-    tagline: "Factorio Server Hosting",
-    description: "Factorio es un juego de construccion y automatizacion de fabricas. Mina recursos, investiga tecnologias, construye infraestructura, automatiza la produccion y defiendete de las criaturas nativas hostiles del planeta.",
-    coverImage: "/images/games/factorio.jpg",
-    officialUrl: "https://www.factorio.com/",
-    steamUrl: "https://store.steampowered.com/app/427520/Factorio/",
-    steamPrice: "$35.00",
-    basePrice: "$3.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Factorio en multijugador es increiblemente adictivo. Dividan tareas, optimicen juntos y construyan la fabrica mas eficiente posible. Un servidor dedicado mantiene la fabrica funcionando 24/7.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte de Mods" },
       { label: "Saves Persistentes" },
       { label: "Actualizaciones Automaticas" },
     ],
     plans: [
-      { name: "Burner", ram: "2GB", cores: "1 Core/s", storage: "30GB SSD", basePrice: 3.00, players: "8 Jugadores" },
-      { name: "Electric", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 5.00, players: "16 Jugadores", bestSeller: true },
-      { name: "Nuclear", ram: "6GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 8.00, players: "32 Jugadores" },
+      { name: "Survivor", ram: "8GB", cores: "AMD Ryzen 7 9800X3D", storage: "50GB SSD", basePrice: 8.00, players: "4 Jugadores", orderUrl: "#" },
+      { name: "Explorer", ram: "12GB", cores: "AMD Ryzen 7 9800X3D", storage: "80GB NVMe", basePrice: 14.00, players: "6 Jugadores", bestSeller: true, orderUrl: "#" },
+      { name: "Conqueror", ram: "16GB", cores: "AMD Ryzen 7 9800X3D", storage: "100GB NVMe", basePrice: 20.00, players: "8 Jugadores", orderUrl: "#" },
     ],
-    faqs: makeBaseFaqs("Factorio"),
-  },
-  {
-    slug: "squad",
-    name: "Squad",
-    tagline: "Squad Server Hosting",
-    description: "Squad es un shooter tactico multijugador que busca cerrar la brecha entre shooters tipo arcade y simulaciones militares. Comunicacion, trabajo en equipo y tacticas son esenciales para la victoria en campos de batalla a gran escala.",
-    coverImage: "/images/games/squad.jpg",
-    steamUrl: "https://store.steampowered.com/app/393380/Squad/",
-    steamPrice: "$49.99",
-    basePrice: "$9.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Squad esta disenado al 100% para multijugador. Lidera escuadrones, coordina con tu equipo y experimenta batallas tacticas a gran escala. Un servidor dedicado te permite personalizar mapas, modos y reglas.",
-    features: [
-      ...universalFeatures,
-      { label: "100 Jugadores por Servidor" },
-      { label: "Licencia de Servidor" },
-      { label: "Mapas Personalizados" },
-    ],
-    plans: [
-      { name: "Escuadra", ram: "8GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 9.00, players: "50 Jugadores" },
-      { name: "Peloton", ram: "12GB", cores: "4 Cores/s", storage: "100GB NVMe", basePrice: 14.00, players: "80 Jugadores", bestSeller: true },
-      { name: "Batallon", ram: "16GB", cores: "4 Cores/s", storage: "150GB NVMe", basePrice: 20.00, players: "100 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Squad"),
-  },
-  {
-    slug: "icarus",
-    name: "Icarus",
-    tagline: "Icarus Server Hosting",
-    description: "Icarus es un juego de supervivencia PvE para hasta 8 jugadores cooperativos. Explora un planeta salvaje alienigenea en misiones basadas en sesiones. Construye refugios, crea herramientas, extrae recursos y vuelve a orbita con tu botin.",
-    coverImage: "/images/games/icarus.jpg",
-    steamUrl: "https://store.steampowered.com/app/1149460/ICARUS/",
-    steamPrice: "$34.99",
-    basePrice: "$6.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Icarus brilla en cooperativo. Trabajen juntos para completar misiones, sobrevivir tormentas y recolectar exoticos valiosos antes de que la ventana de extraccion se cierre. Un servidor dedicado mantiene sus mundos persistentes.",
-    features: [
-      ...universalFeatures,
-      { label: "Misiones Cooperativas" },
-      { label: "Mundos Persistentes" },
-      { label: "Actualizaciones Automaticas" },
-    ],
-    plans: [
-      { name: "Prospector", ram: "6GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 6.00, players: "4 Jugadores" },
-      { name: "Veterano", ram: "8GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 10.00, players: "6 Jugadores", bestSeller: true },
-      { name: "Elite", ram: "12GB", cores: "3.5 Cores/s", storage: "100GB NVMe", basePrice: 14.00, players: "8 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Icarus"),
-  },
-  {
-    slug: "team-fortress-2",
-    name: "Team Fortress 2",
-    tagline: "TF2 Server Hosting",
-    description: "Team Fortress 2 es un shooter multijugador basado en clases con un estilo visual unico. Elige entre 9 clases distintas y lucha en variados modos de juego con un tono humoristico y una comunidad activa desde hace mas de una decada.",
-    coverImage: "/images/games/tf2.jpg",
-    steamUrl: "https://store.steampowered.com/app/440/Team_Fortress_2/",
-    steamPrice: "Gratis",
-    basePrice: "$2.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "TF2 es 100% multijugador. Personaliza tu servidor con mapas, plugins y modos de juego. Desde servidores competitivos hasta trade servers y mas, las posibilidades son infinitas.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte SourceMod" },
-      { label: "Mapas Personalizados" },
-      { label: "Plugins de Servidor" },
-    ],
-    plans: [
-      { name: "Scout", ram: "2GB", cores: "1 Core/s", storage: "30GB SSD", basePrice: 2.00, players: "12 Jugadores" },
-      { name: "Soldier", ram: "3GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 3.50, players: "24 Jugadores", bestSeller: true },
-      { name: "Heavy", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 5.00, players: "32 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Team Fortress 2"),
-  },
-  {
-    slug: "euro-truck-simulator-2",
-    name: "Euro Truck Simulator 2",
-    tagline: "ETS2 Server Hosting",
-    description: "Euro Truck Simulator 2 te pone al volante de un camion en toda Europa. Conduce por carreteras detalladas, entrega cargas, expande tu empresa de transporte y explora ciudades europeas iconicas en el simulador de camiones mas popular del mundo.",
-    coverImage: "/images/games/eurotruck.jpg",
-    steamUrl: "https://store.steampowered.com/app/227300/Euro_Truck_Simulator_2/",
-    steamPrice: "$19.99",
-    basePrice: "$4.40/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "ETS2 en multijugador via TruckersMP te permite conducir con miles de jugadores en tiempo real. Forma convoyes, entreguen cargas juntos y disfruten de la carretera. Tu servidor dedicado garantiza la mejor experiencia.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte TruckersMP" },
-      { label: "Convoyes Privados" },
-      { label: "Mapa Expandido" },
-    ],
-    plans: [
-      { name: "Local", ram: "2GB", cores: "1 Core/s", storage: "30GB SSD", basePrice: 4.40, players: "8 Jugadores" },
-      { name: "Regional", ram: "4GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 6.00, players: "16 Jugadores", bestSeller: true },
-      { name: "Continental", ram: "6GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 8.00, players: "32 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Euro Truck Simulator 2"),
-  },
-  {
-    slug: "mindustry",
-    name: "Mindustry",
-    tagline: "Mindustry Server Hosting",
-    description: "Mindustry es un juego de defensa de torre hibrido con elementos de gestion de recursos. Construye cadenas de produccion elaboradas, defiende tus estructuras y juega con otros en un titulo indie estrategico y adictivo.",
-    coverImage: "/images/games/mindustry.jpg",
-    steamUrl: "https://store.steampowered.com/app/1127400/Mindustry/",
-    steamPrice: "$5.99",
-    basePrice: "$2.00/mo",
-    platforms: ["steam"],
-    multiplayerDescription: "Mindustry en multijugador es altamente estrategico. Cooperen para construir defensas, compartan recursos y enfrenten oleadas cada vez mas dificiles. Un servidor dedicado permite partidas continuas con tu comunidad.",
-    features: [
-      ...universalFeatures,
-      { label: "Soporte de Mods" },
-      { label: "Mapas Personalizados" },
-      { label: "Plugins de Servidor" },
-    ],
-    plans: [
-      { name: "Basico", ram: "1GB", cores: "1 Core/s", storage: "20GB SSD", basePrice: 2.00, players: "8 Jugadores" },
-      { name: "Avanzado", ram: "2GB", cores: "1 Core/s", storage: "30GB SSD", basePrice: 3.00, players: "16 Jugadores", bestSeller: true },
-      { name: "Pro", ram: "3GB", cores: "2 Cores/s", storage: "50GB SSD", basePrice: 4.00, players: "24 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("Mindustry"),
-  },
-  {
-    slug: "fivem",
-    name: "FiveM",
-    tagline: "FiveM Server Hosting",
-    description: "FiveM es un framework de modificacion para GTA V que te permite jugar multijugador en servidores personalizados. Crea tu propio servidor de roleplay, racing, o cualquier modo que imagines con scripts y recursos personalizados.",
-    coverImage: "/images/games/fivem.jpg",
-    officialUrl: "https://fivem.net/",
-    steamPrice: "Gratis",
-    basePrice: "$12.00/mo",
-    platforms: ["steam"],
-    comingSoon: true,
-    multiplayerDescription: "FiveM es 100% multijugador. Crea servidores de roleplay, racing, survival y mucho mas. Personaliza cada aspecto de la experiencia con scripts y recursos de la comunidad.",
-    features: [
-      ...universalFeatures,
-      { label: "Recursos Ilimitados" },
-      { label: "Scripts Personalizados" },
-      { label: "Base de Datos MySQL" },
-    ],
-    plans: [
-      { name: "Basico", ram: "8GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 12.00, players: "32 Jugadores" },
-      { name: "Avanzado", ram: "16GB", cores: "4 Cores/s", storage: "120GB NVMe", basePrice: 20.00, players: "64 Jugadores", bestSeller: true },
-      { name: "Premium", ram: "32GB", cores: "6 Cores/s", storage: "200GB NVMe", basePrice: 35.00, players: "128 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("FiveM"),
-  },
-  {
-    slug: "ragemp",
-    name: "RageMP",
-    tagline: "RageMP Server Hosting",
-    description: "RageMP es una plataforma de multijugador alternativa para GTA V. Permite crear servidores personalizados con scripting en C# y JavaScript para experiencias de roleplay, racing y mas con altas capacidades de jugadores.",
-    coverImage: "/images/games/ragemp.jpg",
-    officialUrl: "https://rage.mp/",
-    steamPrice: "Gratis",
-    basePrice: "$12.00/mo",
-    platforms: ["steam"],
-    comingSoon: true,
-    multiplayerDescription: "RageMP te permite crear servidores de GTA V completamente personalizados. Desde roleplay hasta racing y mas, las posibilidades son infinitas con scripting avanzado en C# y JavaScript.",
-    features: [
-      ...universalFeatures,
-      { label: "Scripting C#/JS" },
-      { label: "Alta Capacidad" },
-      { label: "Base de Datos MySQL" },
-    ],
-    plans: [
-      { name: "Basico", ram: "8GB", cores: "3 Cores/s", storage: "80GB SSD", basePrice: 12.00, players: "32 Jugadores" },
-      { name: "Avanzado", ram: "16GB", cores: "4 Cores/s", storage: "120GB NVMe", basePrice: 20.00, players: "64 Jugadores", bestSeller: true },
-      { name: "Premium", ram: "32GB", cores: "6 Cores/s", storage: "200GB NVMe", basePrice: 35.00, players: "128 Jugadores" },
-    ],
-    faqs: makeBaseFaqs("RageMP"),
+    faqs: makeBaseFaqs("Sons of the Forest"),
   },
 ]
 
-/* ─── Exports ─── */
+/* ─── Helpers ─── */
 
-export const gameDataMap: Record<string, GameDetail> = {}
-for (const game of gameDataArray) {
-  gameDataMap[game.slug] = game
-}
+export const gameData: Record<string, GameDetail> = Object.fromEntries(
+  gameDataArray.map((g) => [g.slug, g])
+)
+
+export const allGamesArray = gameDataArray
 
 export function getGameBySlug(slug: string): GameDetail | undefined {
-  return gameDataMap[slug]
+  return gameData[slug]
 }
 
 export function getAllGameSlugs(): string[] {
   return gameDataArray.map((g) => g.slug)
 }
-
-export function getGameSlugFromName(name: string): string {
-  const found = gameDataArray.find((g) => g.name === name)
-  return found?.slug ?? "proximamente"
-}
-
-export { gameDataArray }
