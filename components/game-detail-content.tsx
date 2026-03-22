@@ -189,7 +189,7 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* ─── Hero ─── */}
-      <section className="relative pt-28 pb-16 overflow-hidden">
+      <section className="relative pt-28 pb-8 overflow-hidden">
         {/* Background overlay with game image */}
         <div className="absolute inset-0">
           <Image
@@ -452,36 +452,8 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
           </div>
         </section>
 
-      {/* ─── Hardware Specs Bar ─── */}
-      <section className="py-6 border-b border-white/5" style={{ background: "rgba(255,255,255,0.02)" }}>
-        <div className="mx-auto max-w-5xl px-4">
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-            <div className="flex items-center gap-2 text-sm">
-              <Cpu className="w-4 h-4 text-primary" />
-              <span className="text-muted-foreground">CPU:</span>
-              <span className="text-foreground font-medium">{hardwareSpecs.cpu}</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <HardDrive className="w-4 h-4 text-primary" />
-              <span className="text-muted-foreground">Storage:</span>
-              <span className="text-foreground font-medium">{hardwareSpecs.storage}</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span className="text-muted-foreground">Ubicacion:</span>
-              <span className="text-foreground font-medium">{hardwareSpecs.location}</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Shield className="w-4 h-4 text-primary" />
-              <span className="text-muted-foreground">DDoS:</span>
-              <span className="text-foreground font-medium">{hardwareSpecs.ddosProtection}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ─── Pricing Plans ─── */}
-      <section id="planes" className="py-20 bg-background">
+      <section id="planes" className="pt-8 pb-16 bg-background">
         <div
           ref={plansRef}
           className="mx-auto max-w-6xl px-4 transition-all duration-700 ease-out"
@@ -490,7 +462,78 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
             transform: plansVisible ? "translateY(0)" : "translateY(30px)",
           }}
         >
-          <div className={`grid grid-cols-1 gap-6 ${game.plans.length <= 3 ? 'md:grid-cols-3' : game.plans.length === 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'}`}>
+          {/* ── Inline filter controls ── */}
+          <div className="flex flex-wrap items-start gap-8 mb-6">
+            {/* Billing Cycle */}
+            <div>
+              <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
+                <Sparkles className="w-4 h-4" />
+                <span>Ciclo de Facturacion</span>
+              </div>
+              <div className="flex gap-2">
+                {billingOptions.map((cycle) => (
+                  <button
+                    key={cycle.id}
+                    onClick={() => setSelectedBilling(cycle.id)}
+                    className="relative px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200"
+                    style={{
+                      background: selectedBilling === cycle.id ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.03)",
+                      border: selectedBilling === cycle.id ? "1px solid rgba(34,197,94,0.4)" : "1px solid rgba(255,255,255,0.06)",
+                      color: selectedBilling === cycle.id ? "#22c55e" : "rgba(255,255,255,0.5)",
+                    }}
+                  >
+                    {cycle.label}
+                    {cycle.discount > 0 && (
+                      <span className="absolute -top-2 -right-2 px-1 py-0.5 rounded text-[8px] font-bold" style={{ background: "rgba(245,166,35,0.2)", color: "#f5a623", border: "1px solid rgba(245,166,35,0.3)" }}>
+                        {`-${cycle.discount}%`}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Location */}
+            <div>
+              <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-2">
+                <MapPin className="w-4 h-4" />
+                <span>Ubicacion</span>
+              </div>
+              <div className="relative">
+                <select
+                  value={selectedLocation}
+                  onChange={(e) => setSelectedLocation(e.target.value)}
+                  className="appearance-none px-4 py-2 pr-8 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer"
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.06)",
+                    color: "rgba(255,255,255,0.7)",
+                    outline: "none",
+                  }}
+                >
+                  {regions.flatMap((r) =>
+                    r.locations.filter(loc => loc.active).map((loc) => (
+                      <option key={loc.name} value={loc.name}>
+                        {loc.name}
+                      </option>
+                    ))
+                  )}
+                </select>
+                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none" />
+              </div>
+            </div>
+          </div>
+
+          {/* AMD Badge */}
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>AMD</span>
+            <span className="text-sm text-muted-foreground">
+              {"Powered by "}
+              <span className="font-bold text-foreground">{hardwareSpecs.cpu}</span>
+            </span>
+          </div>
+          {/* ── Plan cards grid ── */}
+          <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${game.plans.length <= 3 ? 'lg:grid-cols-3' : game.plans.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3 xl:grid-cols-5'}`}>
             {game.plans.map((plan, index) => (
               <div
                 key={plan.name}
