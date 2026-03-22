@@ -22,7 +22,7 @@ const contactMethods = [
     description:
       "Unete a nuestra comunidad para chatear con otros usuarios y recibir soporte de la comunidad.",
     cta: "Unirse a Discord",
-    href: "https://discord.gg/EVxNxChX",
+    href: "https://discord.gg/forzahost",
     disabled: false,
     external: true,
   },
@@ -132,6 +132,33 @@ export function ContactPageContent() {
               </div>
             )
           })}
+        </div>
+      </div>
+
+      {/* Discord Widget Section */}
+      <div className="mx-auto max-w-4xl px-4 pb-16">
+        <div className="text-center mb-8">
+          <h2
+            className="text-2xl md:text-3xl font-bold text-foreground mb-3"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            Unete a Nuestra Comunidad
+          </h2>
+          <p className="text-muted-foreground">
+            Conecta con otros jugadores y recibe soporte en tiempo real
+          </p>
+        </div>
+        <div className="flex justify-center">
+          <iframe 
+            src="https://discord.com/widget?id=1475979443452514468&theme=dark" 
+            width="350" 
+            height="500" 
+            allowTransparency={true}
+            frameBorder="0" 
+            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+            className="rounded-xl"
+            title="Discord Widget"
+          />
         </div>
       </div>
 
