@@ -533,11 +533,11 @@ export function GameDetailContent({ game }: { game: GameDetail }) {
             </span>
           </div>
           {/* ── Plan cards grid ── */}
-          <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${game.plans.length <= 3 ? 'lg:grid-cols-3' : game.plans.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3 xl:grid-cols-5'}`}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {game.plans.map((plan, index) => (
               <div
                 key={plan.name}
-                className="group relative flex flex-col rounded-2xl overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 cursor-pointer"
+                className="group relative flex flex-col rounded-2xl overflow-hidden transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1 cursor-pointer min-h-[320px]"
                 style={{
                   background: "#1a1a1f",
                   transitionDelay: `${staggerDelay(index, 120)}ms`,
