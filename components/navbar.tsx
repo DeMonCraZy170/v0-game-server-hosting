@@ -94,7 +94,7 @@ const resourcesInfo = [
 const moreCompany = [
   { label: "Sobre Nosotros", href: "/sobre-nosotros", icon: Users },
   { label: "Empleos y Carreras", href: "/proximamente", icon: Briefcase, comingSoon: true },
-  { label: "Nuestra Marca", href: "/proximamente", icon: Palette, comingSoon: true },
+  { label: "Nuestra Marca", href: "/our-brand", icon: Palette},
 ]
 
 const morePrograms = [
