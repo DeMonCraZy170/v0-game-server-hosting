@@ -350,7 +350,7 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
           src={game.image}
           alt={game.name}
           fill
-          className="object-cover"
+          className="object-cover object-center"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
         />
         {/* Gradient overlay - transparent top, dark bottom */}
@@ -654,7 +654,7 @@ export function GameServerHostingContent() {
                       src={game.image}
                       alt={game.name}
                       fill
-                      className="object-cover"
+                      className="object-cover object-center"
                       sizes="(max-width: 640px) 50vw, 25vw"
                     />
                     {/* Gradient overlay - transparent to dark */}
