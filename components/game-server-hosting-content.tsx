@@ -39,20 +39,20 @@ interface GameData {
 
 const allGames: GameData[] = [
   // Popular games
-  { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$5.99/mo", popular: true, platforms: ["pc", "java"] },
-  { name: "DayZ", image: "/images/games/dayz.jpg", price: "$24.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
-  { name: "Rust", image: "/images/games/rust.jpg", price: "$21.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
+  { name: "Minecraft Java", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/minecraft%20%282%29-2Iy2Z13i3PrymdVW1UBIlwI8olvQce.avif", price: "$5.99/mo", popular: true, platforms: ["pc", "java"] },
+  { name: "DayZ", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dayz-NRtLGk10BHLn4H0FAp8QVb97FtD7W0.avif", price: "$24.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
+  { name: "Rust", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rust-8yFMzRQihRukVNsDNzg7odsdETm3b7.avif", price: "$21.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
   { name: "CS2", image: "/images/games/cs2.jpg", price: "$10.99/mo", popular: true, isNew: true, platforms: ["steam"] },
   // Other games
-  { name: "Minecraft Bedrock", image: "/images/games/minecraft-bedrock.jpg", price: "$5.99/mo", platforms: ["pc", "console", "mobile"] },
-  { name: "Garry's Mod", image: "/images/games/garrysmod.jpg", price: "$10.99/mo", platforms: ["steam"] },
-  { name: "Project Zomboid", image: "/images/games/projectzomboid.jpg", price: "$11.99/mo", platforms: ["steam"] },
-  { name: "7 Days to Die", image: "/images/games/7daystodie.jpg", price: "$11.99/mo", platforms: ["steam"] },
+  { name: "Minecraft Bedrock", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mcbedrock-F2HBKLQRj9EDXIf3IbRlQdPBH1jFVB.avif", price: "$5.99/mo", platforms: ["pc", "console", "mobile"] },
+  { name: "Garry's Mod", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/garrysmod-KW92I5yYCBHogtKl97UooHiEl9cRCm.avif", price: "$10.99/mo", platforms: ["steam"] },
+  { name: "Project Zomboid", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/zomboid-G8xFvNNKMRRK6VsNoCpvPgKxB4I2kD.avif", price: "$11.99/mo", platforms: ["steam"] },
+  { name: "7 Days to Die", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/7daystodie-Rt8ETtz9EpWewH3TcXPHmmd4P2nxgL.avif", price: "$11.99/mo", platforms: ["steam"] },
   { name: "SA-MP", image: "/images/games/samp.jpg", price: "$7.99/mo", platforms: ["pc"] },
   { name: "MTA", image: "/images/games/mta.jpg", price: "$7.99/mo", platforms: ["pc"] },
-  { name: "Unturned", image: "/images/games/unturned.jpg", price: "$5.99/mo", platforms: ["steam"] },
+  { name: "Unturned", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unturned-sWlSuIfgS0vIriUY2XUkDnbv9TPadj.avif", price: "$5.99/mo", platforms: ["steam"] },
   { name: "Arma 3", image: "/images/games/arma3.jpg", price: "$12.99/mo", platforms: ["steam"] },
-  { name: "Arma Reforger", image: "/images/games/armareforger.jpg", price: "$19.99/mo", isNew: true, platforms: ["steam", "console"] },
+  { name: "Arma Reforger", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/arma-reforger-wihQSrkYqK81jsNWxxu6LVv8dcoNJc.avif", price: "$19.99/mo", isNew: true, platforms: ["steam", "console"] },
   { name: "Assetto Corsa", image: "/images/games/assettocorsa.jpg", price: "$9.99/mo", platforms: ["steam"] },
   { name: "RAGE-MP", image: "/images/games/ragemp.jpg", price: "$9.99/mo", platforms: ["pc"] },
 ]
