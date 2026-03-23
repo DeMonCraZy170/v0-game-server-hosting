@@ -682,7 +682,7 @@ const gameDataArray: GameDetail[] = [
     name: "Arma 3",
     tagline: "Arma 3 Server Hosting",
     description: "Arma 3 es el simulador militar mas completo disponible. Crea misiones personalizadas, batallas epicas y escenarios tacticos con el editor de misiones mas avanzado.",
-    coverImage: "/images/games/arma3.jpg",
+    coverImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/arma3-zEQQXZkpfV8DzST9lbu61Oe0ohlahZ.webp",
     steamUrl: "https://store.steampowered.com/app/107410/Arma_3/",
     features: universalFeatures,
     plans: [
