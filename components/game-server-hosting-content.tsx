@@ -54,7 +54,7 @@ const allGames: GameData[] = [
   { name: "Arma 3", image: "/images/games/arma3.jpg", price: "$12.99/mo", platforms: ["steam"] },
   { name: "Arma Reforger", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/arma-reforger-wihQSrkYqK81jsNWxxu6LVv8dcoNJc.avif", price: "$19.99/mo", isNew: true, platforms: ["steam", "console"] },
   { name: "Assetto Corsa", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/assetocorsa-cjTTcmKptX5p2CjSjXvNxNFZh3f7U3.jpg", price: "$9.99/mo", platforms: ["steam"] },
-  { name: "RAGE-MP", image: "/images/games/ragemp.jpg", price: "$9.99/mo", platforms: ["pc"] },
+  { name: "RAGE-MP", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ragemp-YpnaScCpxoq3czsOMz6LOKU25FCBxn.jpg", price: "$9.99/mo", platforms: ["pc"] },
 ]
 
 const popularGames = allGames.filter((g) => g.popular)

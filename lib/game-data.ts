@@ -830,7 +830,7 @@ const gameDataArray: GameDetail[] = [
     name: "RAGE-MP",
     tagline: "RAGE-MP Server Hosting",
     description: "RAGE-MP es la plataforma de modificacion multijugador para GTA V. Crea servidores de roleplay, carreras y experiencias unicas en Los Santos.",
-    coverImage: "/images/games/ragemp.jpg",
+    coverImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ragemp-YpnaScCpxoq3czsOMz6LOKU25FCBxn.jpg",
     steamUrl: undefined,
     officialUrl: "https://rage.mp/",
     features: universalFeatures,
