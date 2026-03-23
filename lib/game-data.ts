@@ -323,10 +323,10 @@ const gameDataArray: GameDetail[] = [
   // ─── CS2 ───
   {
     slug: "cs2",
-    name: "CS2",
+    name: "Counter Strike 2",
     tagline: "Counter-Strike 2 Server Hosting",
     description: "Counter-Strike 2 es el shooter tactico mas competitivo del mundo. Crea servidores personalizados para practicar, competir o jugar con amigos.",
-    coverImage: "/images/games/cs2.jpg",
+    coverImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cs2-QEwsNTGWQEx1blPPo972908cP1NAGW.jpg",
     steamUrl: "https://store.steampowered.com/app/730/CounterStrike_2/",
     features: universalFeatures,
     plans: [

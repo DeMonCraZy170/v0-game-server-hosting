@@ -42,7 +42,7 @@ const allGames: GameData[] = [
   { name: "Minecraft Java", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/minecraft%20%282%29-2Iy2Z13i3PrymdVW1UBIlwI8olvQce.avif", price: "$5.99/mo", popular: true, platforms: ["pc", "java"] },
   { name: "DayZ", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dayz-NRtLGk10BHLn4H0FAp8QVb97FtD7W0.avif", price: "$24.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
   { name: "Rust", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rust-8yFMzRQihRukVNsDNzg7odsdETm3b7.avif", price: "$21.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
-  { name: "CS2", image: "/images/games/cs2.jpg", price: "$10.99/mo", popular: true, isNew: true, platforms: ["steam"] },
+  { name: "Counter Strike 2", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cs2-QEwsNTGWQEx1blPPo972908cP1NAGW.jpg", price: "$10.99/mo", popular: true, isNew: true, platforms: ["steam"] },
   // Other games
   { name: "Minecraft Bedrock", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mcbedrock-F2HBKLQRj9EDXIf3IbRlQdPBH1jFVB.avif", price: "$5.99/mo", platforms: ["pc", "console", "mobile"] },
   { name: "Garry's Mod", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/garrysmod-KW92I5yYCBHogtKl97UooHiEl9cRCm.avif", price: "$10.99/mo", platforms: ["steam"] },

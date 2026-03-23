@@ -175,7 +175,7 @@ const allGames: GameData[] = [
   { name: "Minecraft Java", image: "/images/games/minecraft.jpg", price: "$5.99/mo", popular: true, platforms: ["pc", "java"] },
   { name: "DayZ", image: "/images/games/dayz.jpg", price: "$24.99/mo", popular: true, platforms: ["steam"] },
   { name: "Rust", image: "/images/games/rust.jpg", price: "$21.99/mo", popular: true, platforms: ["steam"] },
-  { name: "CS2", image: "/images/games/cs2.jpg", price: "$10.99/mo", popular: true, platforms: ["steam"] },
+  { name: "Counter Strike 2", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cs2-QEwsNTGWQEx1blPPo972908cP1NAGW.jpg", price: "$10.99/mo", popular: true, platforms: ["steam"] },
   { name: "Minecraft Bedrock", image: "/images/games/minecraft-bedrock.jpg", price: "$5.99/mo", platforms: ["pc", "console", "mobile"] },
   { name: "Garry's Mod", image: "/images/games/garrysmod.jpg", price: "$10.99/mo", platforms: ["steam"] },
   { name: "Project Zomboid", image: "/images/games/projectzomboid.jpg", price: "$11.99/mo", platforms: ["steam"] },
