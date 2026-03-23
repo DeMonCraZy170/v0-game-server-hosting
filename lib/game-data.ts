@@ -530,10 +530,10 @@ const gameDataArray: GameDetail[] = [
   // ─── SA-MP ───
   {
     slug: "samp",
-    name: "San Andreas Multiplayer",
+    name: "SA-MP",
     tagline: "San Andreas Multiplayer Server Hosting",
     description: "SA-MP (San Andreas Multiplayer) transforma GTA San Andreas en una experiencia multijugador masiva con servidores de roleplay, carreras, deathmatch y mas.",
-    coverImage: "/images/games/samp.jpg",
+    coverImage: "/images/games/samp-cover.jpg",
     steamUrl: undefined,
     officialUrl: "https://www.sa-mp.mp/",
     features: universalFeatures,
@@ -580,10 +580,10 @@ const gameDataArray: GameDetail[] = [
   // ─── MTA ───
   {
     slug: "mta",
-    name: "Multi Theft Auto",
+    name: "MTA",
     tagline: "Multi Theft Auto Server Hosting",
     description: "MTA (Multi Theft Auto) es una modificacion de codigo abierto para GTA San Andreas que permite multijugador masivo con scripts Lua personalizados.",
-    coverImage: "/images/games/mta.jpg",
+    coverImage: "/images/games/mta-cover.jpg",
     steamUrl: undefined,
     officialUrl: "https://multitheftauto.com/",
     features: universalFeatures,
