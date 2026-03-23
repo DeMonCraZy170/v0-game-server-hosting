@@ -580,10 +580,10 @@ const gameDataArray: GameDetail[] = [
   // ─── MTA ───
   {
     slug: "mta",
-    name: "MTA",
+    name: "Multi Theft Auto",
     tagline: "Multi Theft Auto Server Hosting",
     description: "MTA (Multi Theft Auto) es una modificacion de codigo abierto para GTA San Andreas que permite multijugador masivo con scripts Lua personalizados.",
-    coverImage: "/images/games/mta-cover.jpg",
+    coverImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mtas-aLhXpvVKJZ1npTxPclUXmFulrE7qLa.webp",
     steamUrl: undefined,
     officialUrl: "https://multitheftauto.com/",
     features: universalFeatures,

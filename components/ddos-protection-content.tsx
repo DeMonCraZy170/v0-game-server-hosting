@@ -181,7 +181,7 @@ const allGames: GameData[] = [
   { name: "Project Zomboid", image: "/images/games/projectzomboid.jpg", price: "$11.99/mo", platforms: ["steam"] },
   { name: "7 Days to Die", image: "/images/games/7daystodie.jpg", price: "$11.99/mo", platforms: ["steam"] },
   { name: "SA-MP", image: "/images/games/samp-cover.jpg", price: "$7.99/mo", platforms: ["pc"] },
-  { name: "MTA", image: "/images/games/mta-cover.jpg", price: "$7.99/mo", platforms: ["pc"] },
+  { name: "Multi Theft Auto", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mtas-aLhXpvVKJZ1npTxPclUXmFulrE7qLa.webp", price: "$7.99/mo", platforms: ["pc"] },
   { name: "Unturned", image: "/images/games/unturned.jpg", price: "$5.99/mo", platforms: ["steam"] },
   { name: "Arma 3", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/arma3-zEQQXZkpfV8DzST9lbu61Oe0ohlahZ.webp", price: "$12.99/mo", platforms: ["steam"] },
   { name: "Arma Reforger", image: "/images/games/armareforger.jpg", price: "$19.99/mo", platforms: ["steam", "console"] },
