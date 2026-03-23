@@ -781,7 +781,7 @@ const gameDataArray: GameDetail[] = [
     name: "Assetto Corsa",
     tagline: "Assetto Corsa Server Hosting",
     description: "Assetto Corsa es el simulador de carreras mas realista. Compite con amigos en pistas reales con fisica de conduccion autentica y soporte masivo de mods.",
-    coverImage: "/images/games/assettocorsa.jpg",
+    coverImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/assetocorsa-cjTTcmKptX5p2CjSjXvNxNFZh3f7U3.jpg",
     steamUrl: "https://store.steampowered.com/app/244210/Assetto_Corsa/",
     features: universalFeatures,
     plans: [
