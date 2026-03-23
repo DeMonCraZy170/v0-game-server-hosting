@@ -345,12 +345,12 @@ function GameCard({ game, index, isVisible }: { game: GameData; index: number; i
       )}
       
       {/* Full card image with overlay - NO scale on hover */}
-      <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-slate-900">
+      <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
         <Image
           src={game.image}
           alt={game.name}
           fill
-          className="object-contain object-center"
+          className="object-cover object-center"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
         />
         {/* Gradient overlay - transparent top, dark bottom */}
@@ -649,12 +649,12 @@ export function GameServerHostingContent() {
                   )}
                   
                   {/* Full image with text overlay - NO scale on hover */}
-                  <div className="relative aspect-[4/5] rounded-lg overflow-hidden bg-slate-900">
+                  <div className="relative aspect-[4/5] rounded-lg overflow-hidden">
                     <Image
                       src={game.image}
                       alt={game.name}
                       fill
-                      className="object-contain object-center"
+                      className="object-cover object-center"
                       sizes="(max-width: 640px) 50vw, 25vw"
                     />
                     {/* Gradient overlay - transparent to dark */}
