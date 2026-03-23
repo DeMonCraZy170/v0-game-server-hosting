@@ -73,6 +73,7 @@ const getGameSlug = (name: string) => {
     "7 Days to Die": "7-days-to-die",
     "SA-MP": "samp",
     "MTA": "mta",
+    "Multi Theft Auto": "mta",
     "Unturned": "unturned",
     "Arma 3": "arma-3",
     "Arma Reforger": "arma-reforger",
