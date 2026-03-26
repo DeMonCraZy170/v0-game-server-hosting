@@ -941,7 +941,7 @@ const gameDataArray: GameDetail[] = [
         players: "32 Slots",
         recommendedPlayers: "Hasta 32 jugadores",
         bestSeller: true,
-        orderUrl: "https://billing.forzahost.com/store/cs16-hosting/pro",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/cs16-hosting/pro-3",
         features: [
           "Arranque instantaneo",
           "1GB RAM • 10GB NVMe",
