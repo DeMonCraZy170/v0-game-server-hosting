@@ -1,14 +1,22 @@
+export interface BillingCycle {
+  period: 'monthly' | 'quarterly' | 'semi-annual' | 'annual'
+  price: number
+  label: string
+}
+
 export interface GamePlan {
   name: string
   ram: string
   cores: string
   storage: string
   basePrice: number
+  billingCycles?: BillingCycle[]
   players: string
   recommendedPlayers?: string
   bestSeller?: boolean
   icon?: string
   orderUrl: string
+  features?: string[]
 }
 
 export interface GameFaq {
@@ -889,41 +897,83 @@ const gameDataArray: GameDetail[] = [
     slug: "cs16",
     name: "Counter-Strike 1.6",
     tagline: "Counter-Strike 1.6 Server Hosting",
-    description: "El legendario shooter tactico que definio una generacion. Counter-Strike 1.6 sigue siendo uno de los juegos mas jugados del mundo con una comunidad activa de millones de jugadores.",
+    description: "El legendario shooter tactico que definio una generacion. Counter-Strike 1.6 sigue siendo uno de los juegos mas jugados del mundo con una comunidad activa de millones de jugadores. Disfruta de servidores rapidos con proteccion DDoS y soporte completo para mods.",
     coverImage: "/images/games/cs16-cover.jpg",
     steamUrl: "https://store.steampowered.com/app/10/CounterStrike/",
     features: universalFeatures,
     plans: [
       {
         name: "Classic",
-        ram: "2GB",
+        ram: "512MB",
         cores: "AMD Ryzen 7 9800X3D",
-        storage: "20GB NVMe",
+        storage: "10GB NVMe",
         basePrice: 3.99,
+        billingCycles: [
+          { period: 'monthly', price: 3.99, label: 'Mensual' },
+          { period: 'quarterly', price: 10.77, label: 'Trimestral' },
+          { period: 'semi-annual', price: 20.34, label: 'Semestral' },
+          { period: 'annual', price: 38.30, label: 'Anual' },
+        ],
         players: "32 Slots",
         recommendedPlayers: "Hasta 32 jugadores",
-        orderUrl: "https://billing.forzahost.com/store/cs16-hosting/classic",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/cs16-hosting/classic",
+        features: [
+          "Arranque instantaneo",
+          "512MB RAM • 10GB NVMe",
+          "Panel de control completo",
+          "Subdomain Manager — IP personalizada con Cloudflare",
+          "Proteccion DDoS 50+ Tbps",
+          "Soporte 24/7",
+        ],
       },
       {
         name: "Pro",
-        ram: "4GB",
+        ram: "1GB",
         cores: "AMD Ryzen 7 9800X3D",
-        storage: "40GB NVMe",
+        storage: "10GB NVMe",
         basePrice: 5.99,
+        billingCycles: [
+          { period: 'monthly', price: 5.99, label: 'Mensual' },
+          { period: 'quarterly', price: 16.17, label: 'Trimestral' },
+          { period: 'semi-annual', price: 30.54, label: 'Semestral' },
+          { period: 'annual', price: 57.50, label: 'Anual' },
+        ],
         players: "32 Slots",
         recommendedPlayers: "Hasta 32 jugadores",
         bestSeller: true,
         orderUrl: "https://billing.forzahost.com/store/cs16-hosting/pro",
+        features: [
+          "Arranque instantaneo",
+          "1GB RAM • 10GB NVMe",
+          "Panel de control completo",
+          "Subdomain Manager — IP personalizada con Cloudflare",
+          "Proteccion DDoS 50+ Tbps",
+          "Soporte 24/7",
+        ],
       },
       {
         name: "Elite",
-        ram: "8GB",
+        ram: "2GB",
         cores: "AMD Ryzen 7 9800X3D",
-        storage: "80GB NVMe",
+        storage: "15GB NVMe",
         basePrice: 8.99,
+        billingCycles: [
+          { period: 'monthly', price: 8.99, label: 'Mensual' },
+          { period: 'quarterly', price: 24.27, label: 'Trimestral' },
+          { period: 'semi-annual', price: 45.84, label: 'Semestral' },
+          { period: 'annual', price: 86.30, label: 'Anual' },
+        ],
         players: "32 Slots",
         recommendedPlayers: "Hasta 32 jugadores",
-        orderUrl: "https://billing.forzahost.com/store/cs16-hosting/elite",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/cs16-hosting/elite",
+        features: [
+          "Arranque instantaneo",
+          "2GB RAM • 15GB NVMe",
+          "Panel de control completo",
+          "Subdomain Manager — IP personalizada con Cloudflare",
+          "Proteccion DDoS 50+ Tbps",
+          "Soporte 24/7",
+        ],
       },
     ],
     faqs: [
@@ -939,9 +989,9 @@ const gameDataArray: GameDetail[] = [
     ],
     platforms: ["steam", "pc"],
     isNew: true,
-    basePrice: "$4.99/mo",
+    basePrice: "$3.99/mo",
     multiplayerDescription: "Servidores clasicos de CS 1.6 con soporte para AMX Mod X, modos personalizados y hasta 32 jugadores.",
-    storeUrl: "https://billing.forzahost.com/index.php?rp=/store/cs16-hosting/",
+    storeUrl: "https://billing.forzahost.com/store/cs16-hosting/",
   },
 
   // ─── Counter-Strike: Source ───
