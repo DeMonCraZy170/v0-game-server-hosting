@@ -44,6 +44,8 @@ const allGames: GameData[] = [
   { name: "Rust", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rust-8yFMzRQihRukVNsDNzg7odsdETm3b7.avif", price: "$21.99/mo", popular: true, isUpdate: true, platforms: ["steam"] },
   { name: "Counter Strike 2", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cs2-QEwsNTGWQEx1blPPo972908cP1NAGW.jpg", price: "$10.99/mo", popular: true, isNew: true, platforms: ["steam"] },
   // Other games
+  { name: "Counter-Strike 1.6", image: "/images/games/cs16-cover.jpg", price: "$4.99/mo", isNew: true, platforms: ["steam", "pc"] },
+  { name: "Counter-Strike: Source", image: "/images/games/cssource-cover.jpg", price: "$6.99/mo", isNew: true, platforms: ["steam"] },
   { name: "Minecraft Bedrock", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mcbedrock-F2HBKLQRj9EDXIf3IbRlQdPBH1jFVB.avif", price: "$5.99/mo", platforms: ["pc", "console", "mobile"] },
   { name: "Garry's Mod", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/garrysmod-KW92I5yYCBHogtKl97UooHiEl9cRCm.avif", price: "$10.99/mo", platforms: ["steam"] },
   { name: "Project Zomboid", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/zomboid-G8xFvNNKMRRK6VsNoCpvPgKxB4I2kD.avif", price: "$11.99/mo", platforms: ["steam"] },
@@ -68,6 +70,8 @@ const getGameSlug = (name: string) => {
     "DayZ": "dayz",
     "Rust": "rust",
     "CS2": "cs2",
+    "Counter-Strike 1.6": "cs16",
+    "Counter-Strike: Source": "cssource",
     "Garry's Mod": "garrys-mod",
     "Project Zomboid": "project-zomboid",
     "7 Days to Die": "7-days-to-die",
