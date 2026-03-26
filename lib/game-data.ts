@@ -965,7 +965,7 @@ const gameDataArray: GameDetail[] = [
         ],
         players: "32 Slots",
         recommendedPlayers: "Hasta 32 jugadores",
-        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/cs16-hosting/elite",
+        orderUrl: "https://billing.forzahost.com/index.php?rp=/store/cs16-hosting/elite-3",
         features: [
           "Arranque instantaneo",
           "2GB RAM • 15GB NVMe",
